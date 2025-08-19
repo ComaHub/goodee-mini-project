@@ -8,7 +8,9 @@ public class AnimalService {
 	@Autowired
 	private AnimalDAO animalDAO;
 	
-	public int insertAnimal(AnimalDTO animalDTO) throws Exception {
+	public int addAnimal(AnimalDTO animalDTO) throws Exception {
+		animalDTO.setStatus("보호중");
+		
 		return animalDAO.insertAnimal(animalDTO);
 	}
 }
