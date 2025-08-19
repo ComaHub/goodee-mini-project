@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 @RequestMapping("/animal/*")
@@ -19,8 +20,8 @@ public class AnimalController {
 	}
 	
 	@PostMapping("add")
-	public String postAnimalAdd(AnimalDTO animalDTO, Model model) throws Exception {
-		int result = animalService.addAnimal(animalDTO);
+	public String postAnimalAdd(AnimalDTO animalDTO, MultipartFile animalAttach, Model model) throws Exception {
+		int result = animalService.addAnimal(animalDTO, animalAttach);
 		
 		String resultMsg = "보호 동물 등록 중 오류가 발생했습니다.";
 		String resultIcon = "warning";

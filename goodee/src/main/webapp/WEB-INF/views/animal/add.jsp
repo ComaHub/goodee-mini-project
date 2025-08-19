@@ -57,6 +57,10 @@
 						</div>
 					</div>
 					
+					<div>
+						<input type="file" name="animalAttach" />
+					</div>
+					
 					<div class="d-flex gap-2 justify-content-center align-items-center">
 						<button type="submit" class="btn btn-primary mr-2">등록</button>
 						<button type="button" class="btn btn-outline-secondary">취소</button>
