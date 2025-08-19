@@ -10,17 +10,21 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.goodee.proj.common.file.FileService;
+
+import jakarta.servlet.http.HttpServletResponse;
+
 @Controller
 @RequestMapping("/animal/*")
 public class AnimalController {
 	@Autowired
 	private AnimalService animalService;
+	@Autowired
+	private FileService fileService;
 	
 	@GetMapping("list")
 	public void getAnimalList(Model model) throws Exception {
 		List<AnimalDTO> animalList = animalService.getAnimalList();
-		System.out.println(animalList.size());
-		System.out.println(animalList.get(0).getAnimalProfileDTO().getSaved());
 		
 		model.addAttribute("animalList", animalList);
 	}
@@ -48,5 +52,11 @@ public class AnimalController {
 		model.addAttribute("resultMsg", resultMsg);
 		model.addAttribute("resultIcon", resultIcon);
 		return "common/result";
+	}
+	
+	@GetMapping("fileView")
+	public void getAnimalFileView(Long fileNum, HttpServletResponse response) throws Exception {
+		AnimalProfileDTO animalProfileDTO = animalService.getAnimalProfile(fileNum);
+		fileService.viewFile(animalProfileDTO, response);
 	}
 }

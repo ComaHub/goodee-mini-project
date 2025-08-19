@@ -28,7 +28,7 @@ public class AnimalService {
 			
 			AnimalProfileDTO animalProfileDTO = new AnimalProfileDTO();
 			animalProfileDTO.setType(FileService.ANIMAL);
-			animalProfileDTO.setKeyData(animalDTO.getNumber());
+			animalProfileDTO.setKeyData(animalDTO.getAnimalNumber());
 			animalProfileDTO.setOrigin(animalAttach.getOriginalFilename());
 			animalProfileDTO.setSaved(fileName);
 			
@@ -36,6 +36,10 @@ public class AnimalService {
 		}
 		
 		return result;
+	}
+
+	public AnimalProfileDTO getAnimalProfile(Long fileNum) throws Exception {
+		return animalDAO.selectAnimalProfile(fileNum);
 	}
 
 }
