@@ -19,10 +19,10 @@ public class AnimalService {
 		int result = animalDAO.insertAnimal(animalDTO);
 		
 		if (animalAttach != null && !animalAttach.isEmpty()) {
-			String fileName = fileService.saveFile(fileService.animal, animalAttach);
+			String fileName = fileService.saveFile(FileService.ANIMAL, animalAttach);
 			
 			FileDTO fileDTO = new FileDTO();
-			fileDTO.setType(fileService.animal);
+			fileDTO.setType(FileService.ANIMAL);
 			fileDTO.setKeyData(animalDTO.getNumber());
 			fileDTO.setOrigin(animalAttach.getOriginalFilename());
 			fileDTO.setSaved(fileName);
