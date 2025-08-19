@@ -13,8 +13,8 @@
 <body class="d-flex flex-column h-100">
 	<main class="flex-shrink-0">
 		<c:import url="/WEB-INF/views/includes/nav.jsp"></c:import>
-		
-		
+	
+		<!-- Contents here! -->
 	
 	</main>
 	<c:import url="/WEB-INF/views/includes/footer.jsp"></c:import>
