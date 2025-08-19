@@ -10,9 +10,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Component
 public class FileService {
-	public final int account = 1;
-	public final int animal = 2;
-	public final int product = 3;
+	public static final int ACCOUNT = 1;
+	public static final int ANIMAL = 2;
+	public static final int PRODUCT = 3;
 	
 	@Value("${upload.base.directory}")
 	private String dir;
