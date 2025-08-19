@@ -1,5 +1,7 @@
 package com.goodee.proj.animal;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +15,15 @@ import org.springframework.web.multipart.MultipartFile;
 public class AnimalController {
 	@Autowired
 	private AnimalService animalService;
+	
+	@GetMapping("list")
+	public void getAnimalList(Model model) throws Exception {
+		List<AnimalDTO> animalList = animalService.getAnimalList();
+		System.out.println(animalList.size());
+		System.out.println(animalList.get(0).getAnimalProfileDTO().getSaved());
+		
+		model.addAttribute("animalList", animalList);
+	}
 	
 	@GetMapping("add")
 	public void getAnimalAdd(AnimalDTO animalDTO) throws Exception {

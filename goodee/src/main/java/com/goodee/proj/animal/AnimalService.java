@@ -1,10 +1,11 @@
 package com.goodee.proj.animal;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.goodee.proj.common.file.FileDTO;
 import com.goodee.proj.common.file.FileService;
 
 @Service
@@ -14,6 +15,10 @@ public class AnimalService {
 	@Autowired
 	private FileService fileService;
 	
+	public List<AnimalDTO> getAnimalList() throws Exception {
+		return animalDAO.selectAnimalList();
+	}
+	
 	public int addAnimal(AnimalDTO animalDTO, MultipartFile animalAttach) throws Exception {
 		animalDTO.setStatus("보호중");
 		int result = animalDAO.insertAnimal(animalDTO);
@@ -21,15 +26,16 @@ public class AnimalService {
 		if (animalAttach != null && !animalAttach.isEmpty()) {
 			String fileName = fileService.saveFile(FileService.ANIMAL, animalAttach);
 			
-			FileDTO fileDTO = new FileDTO();
-			fileDTO.setType(FileService.ANIMAL);
-			fileDTO.setKeyData(animalDTO.getNumber());
-			fileDTO.setOrigin(animalAttach.getOriginalFilename());
-			fileDTO.setSaved(fileName);
+			AnimalProfileDTO animalProfileDTO = new AnimalProfileDTO();
+			animalProfileDTO.setType(FileService.ANIMAL);
+			animalProfileDTO.setKeyData(animalDTO.getNumber());
+			animalProfileDTO.setOrigin(animalAttach.getOriginalFilename());
+			animalProfileDTO.setSaved(fileName);
 			
-			animalDAO.insertAnimalAttach(fileDTO);
+			animalDAO.insertAnimalAttach(animalProfileDTO);
 		}
 		
 		return result;
 	}
+
 }

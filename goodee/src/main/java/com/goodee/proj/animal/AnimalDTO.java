@@ -19,4 +19,6 @@ public class AnimalDTO {
 	private Double weight;
 	private Boolean neutered;
 	private String status;
+	
+	private AnimalProfileDTO animalProfileDTO;
 }
