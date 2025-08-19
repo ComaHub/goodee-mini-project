@@ -5,9 +5,9 @@
 <mapper namespace="com.goodee.proj.product.ProductDAO">
 	<insert id="insert" parameterType="ProductDTO">
 		INSERT INTO product
-			(name, category, price)
+			(name, category, amount, price)
 		VALUES
-			(#{name}, #{category}, #{price})
+			(#{name}, #{category}, #{amount}, #{price})
 	</insert>
 	
 	<select id="list" resultType="ProductDTO">

@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import jakarta.validation.Valid;
+
 @Service
 public class AccountService {
 
@@ -21,5 +23,17 @@ public class AccountService {
 
 	public int updateAdmin(AccountDTO accountDTO) throws Exception {
 		return accountDAO.updateAdmin(accountDTO);
+	}
+
+	public AccountDTO login(AccountDTO accountDTO) throws Exception {
+		return accountDAO.login(accountDTO);
+	}
+
+	public AccountDTO detail(AccountDTO accountDTO) throws Exception {
+		return accountDAO.detail(accountDTO);
+	}
+
+	public int update(AccountDTO accountDTO) throws Exception {
+		return accountDAO.update(accountDTO);
 	}
 }

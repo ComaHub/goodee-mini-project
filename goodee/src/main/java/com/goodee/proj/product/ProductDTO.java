@@ -22,5 +22,7 @@ public class ProductDTO {
 	@NotBlank
 	private String category;
 	@NotNull
+	private Long amount;
+	@NotNull
 	private Long price;
 }

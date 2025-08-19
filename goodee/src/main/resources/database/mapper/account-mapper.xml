@@ -23,4 +23,26 @@
 		SET admin = #{admin}
 		WHERE number = #{number}
 	</update>
+	
+	<select id="login">
+		SELECT number, id, name
+		FROM account
+		WHERE NOT active = 0 AND id = #{id} AND password = #{password}
+	</select>
+	
+	<select id="detail" resultType="AccountDTO">
+		SELECT *
+		FROM account
+		WHERE number = #{number}
+	</select>
+	
+	<update id="update" parameterType="AccountDTO">
+		UPDATE account
+		SET name = #{name}, 
+			email = #{email}, 
+			phone = #{phone}, 
+			postcode = #{postcode}, 
+			address = #{address}, 
+			address_detail = #{addressDetail}
+	</update>
 </mapper>

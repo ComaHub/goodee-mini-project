@@ -1,31 +1,37 @@
 package com.goodee.proj.account;
 
+import com.goodee.proj.account.groups.Join;
+import com.goodee.proj.account.groups.Login;
+import com.goodee.proj.account.groups.Update;
+
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
+@ToString
 public class AccountDTO {
 
 	private Long number;
-	@NotBlank
+	@NotBlank(groups = {Login.class, Join.class})
 	private String id;
 	private String password;
-	@NotBlank
+	@NotBlank(groups = {Join.class, Update.class})
 	private String name;
-	@Email
+	@Email(groups = {Join.class, Update.class})
 	private String email;
-	@NotBlank
+	@NotBlank(groups = {Join.class, Update.class})
 	private String phone;
-	@NotBlank
+	@NotBlank(groups = {Join.class, Update.class})
 	private String postcode;
-	@NotBlank
+	@NotBlank(groups = {Join.class, Update.class})
 	private String address;
 	private String addressDetail;
 	private Boolean admin;

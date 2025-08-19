@@ -16,7 +16,8 @@
 		<c:import url="/WEB-INF/views/includes/nav.jsp"></c:import>
 	
 		<!-- Contents here! -->
-		<section>
+		<h1>List</h1>
+		<section class="col-10 m-auto">
 			<table class="table">
 				<thead>
 					<tr>

@@ -16,33 +16,14 @@
 		<c:import url="/WEB-INF/views/includes/nav.jsp"></c:import>
 	
 		<!-- Contents here! -->
-		<h1>List</h1>
+		<h1>Login</h1>
 		<section class="col-10 m-auto">
-			<table class="table">
-				<thead>
-					<tr>
-						<th>상품번호</th>
-						<th>상품명</th>
-						<th>종류</th>
-						<th>가격</th>
-					</tr>
-				</thead>
-				<tbody>
-					<c:forEach var="p" items="${list}">
-						<tr>
-							<td>${p.number}</td>
-							<td>${p.name}</td>
-							<td>${p.category}</td>
-							<td>${p.price}</td>
-						</tr>
-					</c:forEach>
-				</tbody>
-			</table>
-			<div class="mb-3 d-flex justify-content-end">
-				<a class="btn btn-primary" href="/product/add">추가</a>
-			</div>
+			<form:form modelAttribute="accountDTO" method="post">
+				<form:input path="id"/>
+				<form:password path="password"/>
+				<form:button class="btn btn-primary">로그인</form:button>
+			</form:form>
 		</section>
-		
 	
 	</main>
 	<c:import url="/WEB-INF/views/includes/footer.jsp"></c:import>

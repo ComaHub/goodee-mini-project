@@ -16,8 +16,8 @@
 		<c:import url="/WEB-INF/views/includes/nav.jsp"></c:import>
 	
 		<!-- Contents here! -->
-		<h2>Join</h2>
-		<section>
+		<h2>Add</h2>
+		<section class="col-10 m-auto">
 			<form:form modelAttribute="productDTO" method="post">
 				<div class="mb-3">
 					<label for="exampleFormControlInput1" class="form-label">상품명</label>
@@ -34,7 +34,19 @@
 					<form:input path="price" class="form-control"/>
 					<form:errors path="price"/>
 				</div>
-				<form:button>상품 등록</form:button>
+				<div class="mb-3">
+					<label for="exampleFormControlInput1" class="form-label">재고</label>
+					<form:input path="amount" class="form-control"/>
+					<form:errors path="amount"/>
+				</div>
+				<div class="mb-3">
+					<label for="exampleFormControlInput1" class="form-label">가격</label>
+					<form:input path="price" class="form-control"/>
+					<form:errors path="price"/>
+				</div>
+				<div class="mb-3 d-flex justify-content-end">
+					<form:button class="btn btn-primary">상품 등록</form:button>
+				</div>
 			</form:form>
 		</section>
 		

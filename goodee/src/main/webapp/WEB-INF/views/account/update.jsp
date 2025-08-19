@@ -16,19 +16,9 @@
 		<c:import url="/WEB-INF/views/includes/nav.jsp"></c:import>
 	
 		<!-- Contents here! -->
-		<h2>Join</h2>
+		<h2>Update</h2>
 		<section class="col-10 m-auto">
 			<form:form modelAttribute="accountDTO" method="post">
-				<div class="mb-3">
-					<label for="exampleFormControlInput1" class="form-label">ID</label>
-					<form:input path="id" class="form-control"/>
-					<form:errors path="id"/>
-				</div>
-				<div class="mb-3">
-					<label for="exampleFormControlInput1" class="form-label">비밀번호</label>
-					<form:password path="password" class="form-control"/>
-					<form:errors path="password"/>
-				</div>
 				<div class="mb-3">
 					<label for="exampleFormControlInput1" class="form-label">이름</label>
 					<form:input path="name" class="form-control"/>
@@ -59,7 +49,9 @@
 					<form:input path="addressDetail" class="form-control"/>
 					<form:errors path="addressDetail"/>
 				</div>
-				<form:button class="btn btn-primary">회원 가입</form:button>
+				<div class="mb-3 d-flex justify-content-end">
+					<form:button class="btn btn-primary">변경</form:button>
+				</div>
 			</form:form>
 		</section>
 		

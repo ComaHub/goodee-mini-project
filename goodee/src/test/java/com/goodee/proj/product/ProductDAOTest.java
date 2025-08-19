@@ -19,7 +19,8 @@ class ProductDAOTest {
 			ProductDTO productDTO = new ProductDTO();
 			productDTO.setName("name" + i);
 			productDTO.setCategory("cat" + i);
-			productDTO.setPrice(Long.valueOf(i));
+			productDTO.setAmount(Long.valueOf(i * 10));
+			productDTO.setPrice(Long.valueOf(i * 1000));
 			
 			productDAO.insert(productDTO);
 		}
