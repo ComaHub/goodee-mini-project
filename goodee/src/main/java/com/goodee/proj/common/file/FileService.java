@@ -43,7 +43,7 @@ public class FileService {
 		return fileName;
 	}
 
-	public void viewFile(FileDTO fileDTO, HttpServletResponse response) throws Exception {
+	public void downloadFile(FileDTO fileDTO, HttpServletResponse response) throws Exception {
 		String filePath = dir + getAttachTypeString(fileDTO.getType());
 		File file = new File(filePath, fileDTO.getSaved());
 		

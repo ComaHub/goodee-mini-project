@@ -54,9 +54,9 @@ public class AnimalController {
 		return "common/result";
 	}
 	
-	@GetMapping("fileView")
+	@GetMapping("fileDownload")
 	public void getAnimalFileView(Long fileNum, HttpServletResponse response) throws Exception {
 		AnimalProfileDTO animalProfileDTO = animalService.getAnimalProfile(fileNum);
-		fileService.viewFile(animalProfileDTO, response);
+		fileService.downloadFile(animalProfileDTO, response);
 	}
 }

@@ -32,7 +32,7 @@
 	    			
 	    				<div class="col-lg-4 mb-5">
 			          <div class="card h-100 shadow border-0">
-			            <img class="card-img-top" src="./fileView?fileNum=${ animal.animalProfileDTO.attachNumber }" alt="..." />
+			            <img class="card-img-top" src="/files/animal/${ animal.animalProfileDTO.saved }" alt="..." />
 			            <div class="card-body p-4">
 			               <div class="badge bg-primary bg-gradient rounded-pill mb-2">${ animal.status }</div>
 			               <a class="text-decoration-none link-dark stretched-link" href="#!"><h5 class="card-title mb-3">${ animal.name }</h5></a>
