@@ -44,7 +44,7 @@
 		WHERE account_number = #{accountNumber}
 	</select>
 	
-	<select id="detailProfile" parameterType="long" resultType="FileDTO">
+	<select id="detailAttach" parameterType="long" resultType="FileDTO">
 		SELECT *
 		FROM attach
 		WHERE type = 1 AND key_data = #{keyData}
@@ -58,7 +58,13 @@
 			postcode = #{postcode}, 
 			address = #{address}, 
 			address_detail = #{addressDetail}
+		WHERE account_number = #{accountNumber}
 	</update>
+	
+	<delete id="deleteAttach" parameterType="FileDTO">
+		DELETE FROM attach
+		WHERE attach_number = #{attachNumber}
+	</delete>
 	
 	<update id="dropOut" parameterType="AccountDTO">
 		UPDATE account

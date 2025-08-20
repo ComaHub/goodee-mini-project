@@ -67,9 +67,9 @@ public class AccountService {
 		if (result != 1) throw new Exception();
 		
 		if (attach != null && !attach.isEmpty()) {
-			accountDAO.detailProfile(accountDTO.getAccountNumber());
-			
-			
+			FileDTO oldFile = accountDAO.detailAttach(accountDTO.getAccountNumber());
+			fileService.deleteFile(oldFile);
+			result = accountDAO.deleteAttach(oldFile);
 			
 			String fileName = fileService.saveFile(FileService.ACCOUNT, attach);
 			
@@ -79,7 +79,7 @@ public class AccountService {
 			fileDTO.setOrigin(attach.getOriginalFilename());
 			fileDTO.setSaved(fileName);
 			
-			result = accountDAO.insertAttach(fileDTO);
+			 result = accountDAO.insertAttach(fileDTO);
 			
 			if (result != 1) {
 				fileService.deleteFile(fileDTO);
@@ -94,7 +94,7 @@ public class AccountService {
 		return accountDAO.dropOut(accountDTO);
 	}
 
-	public FileDTO detailProfile(Long keyData) throws Exception {
-		return accountDAO.detailProfile(keyData);
+	public FileDTO detailAttach(Long keyData) throws Exception {
+		return accountDAO.detailAttach(keyData);
 	}
 }

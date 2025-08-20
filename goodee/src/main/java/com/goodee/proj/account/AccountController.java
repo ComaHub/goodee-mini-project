@@ -78,7 +78,7 @@ public class AccountController {
 		AccountDTO accountDTO = (AccountDTO) session.getAttribute("logined");
 		accountDTO = accountService.detail(accountDTO);
 		
-		FileDTO fileDTO = accountService.detailProfile(accountDTO.getAccountNumber());
+		FileDTO fileDTO = accountService.detailAttach(accountDTO.getAccountNumber());
 		
 		model.addAttribute("accountDTO", accountDTO);
 		model.addAttribute("fileDTO", fileDTO);
@@ -89,7 +89,7 @@ public class AccountController {
 		AccountDTO accountDTO = (AccountDTO) session.getAttribute("logined");
 		accountDTO = accountService.detail(accountDTO);
 		
-		FileDTO fileDTO = accountService.detailProfile(accountDTO.getAccountNumber());
+		FileDTO fileDTO = accountService.detailAttach(accountDTO.getAccountNumber());
 		
 		model.addAttribute("accountDTO", accountDTO);
 		model.addAttribute("fileDTO", fileDTO);

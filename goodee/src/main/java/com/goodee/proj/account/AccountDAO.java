@@ -20,5 +20,6 @@ public interface AccountDAO {
 	int update(AccountDTO accountDTO) throws Exception;
 	int dropOut(AccountDTO accountDTO) throws Exception;
 	int insertAttach(FileDTO fileDTO) throws Exception;
-	FileDTO detailProfile(Long keyData) throws Exception;
+	FileDTO detailAttach(Long keyData) throws Exception;
+	int deleteAttach(FileDTO oldFile) throws Exception;
 }
