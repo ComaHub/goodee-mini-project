@@ -24,6 +24,14 @@
 			<div class="mt-5">
 				<form:form modelAttribute="animalDTO" method="POST" enctype="multipart/form-data">
 					<form:hidden path="animalNumber"/>
+					
+					<div class="mb-3">
+						<img id="preview" width="150" height="150" class="border border-1 border-dark p-1 rounded me-3" <c:if test="${ not empty animalDTO.animalProfileDTO }">src="/files/animal/${ animalDTO.animalProfileDTO.saved }"</c:if> />
+						<label for="animalAttach">
+							<div class="btn btn-outline-primary">등록</div>
+						</label>
+						<input type="file" class="d-none" id="animalAttach" name="animalAttach" />
+					</div>
 				
 					<div class="row mb-2">
 						<div class="col-4">
@@ -59,10 +67,6 @@
 						</div>
 					</div>
 					
-					<div>
-						<input type="file" name="animalAttach" />
-					</div>
-					
 					<div class="d-flex gap-2 justify-content-center align-items-center">
 						<button type="submit" class="btn btn-primary mr-2">등록</button>
 						<button type="button" class="btn btn-outline-secondary">취소</button>
@@ -73,6 +77,7 @@
 	
 	</main>
 	<c:import url="/WEB-INF/views/includes/footer.jsp"></c:import>
+	<script src="/js/animal/animal-form.js"></script>
 </body>
 
 </html>
