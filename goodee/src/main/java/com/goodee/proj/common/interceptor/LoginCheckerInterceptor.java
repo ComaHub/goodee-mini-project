@@ -20,7 +20,8 @@ public class LoginCheckerInterceptor implements HandlerInterceptor {
 			request.setAttribute("resultIcon", "warning");
 			request.setAttribute("url", "/");
 			request.getRequestDispatcher("/WEB-INF/views/common/result.jsp").forward(request, response);
+			return false;
 		}
-		return false;
+		return HandlerInterceptor.super.preHandle(request, response, handler);
 	}
 }
