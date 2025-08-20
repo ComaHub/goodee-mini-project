@@ -39,4 +39,31 @@ public class ProductController {
 		List<ProductDTO> list = productService.list();
 		model.addAttribute("list", list);
 	}
+	
+	@GetMapping("/detail")
+	public void detail(Model model, ProductDTO productDTO) throws Exception {
+		productDTO = productService.detail(productDTO);
+		model.addAttribute("productDTO", productDTO);
+	}
+	
+	@GetMapping("/update")
+	public void update(Model model, ProductDTO productDTO) throws Exception {
+		productDTO = productService.detail(productDTO);
+		model.addAttribute("productDTO", productDTO);
+	}
+
+	@PostMapping("/update")
+	public String update(@Valid ProductDTO productDTO, BindingResult bindingResult) throws Exception {
+		if (bindingResult.hasErrors()) {
+			return "redirect:/product/update?productNumber=" + productDTO.getProductNumber();
+		}
+		
+		int result = productService.update(productDTO);
+		
+		if (result > 0 ) {
+			return "redirect:/product/detail?productNumber=" + productDTO.getProductNumber();
+		}
+		
+		return "redirect:/product/update?productNumber=" + productDTO.getProductNumber();
+	}
 }

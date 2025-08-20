@@ -14,4 +14,19 @@
 		SELECT *
 		FROM product
 	</select>
+	
+	<select id="detail" parameterType="ProductDTO" resultType="ProductDTO">
+		SELECT *
+		FROM product
+		WHERE product_number = #{productNumber}
+	</select>
+	
+	<update id="update" parameterType="ProductDTO">
+		UPDATE product
+		SET name = #{name},
+			category = #{category},
+			amount = #{amount},
+			price = #{price}
+		WHERE product_number = #{productNumber}
+	</update>
 </mapper>

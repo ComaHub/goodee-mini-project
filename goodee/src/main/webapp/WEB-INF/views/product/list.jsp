@@ -23,7 +23,7 @@
 					<tr>
 						<th>상품번호</th>
 						<th>상품명</th>
-						<th>종류</th>
+						<th>카테고리</th>
 						<th>가격</th>
 					</tr>
 				</thead>
@@ -31,16 +31,19 @@
 					<c:forEach var="p" items="${list}">
 						<tr>
 							<td>${p.productNumber}</td>
-							<td>${p.name}</td>
+							<td><a href="./detail?productNumber=${ p.productNumber }">
+							${p.name}</a></td>
 							<td>${p.category}</td>
 							<td>${p.price}</td>
 						</tr>
 					</c:forEach>
 				</tbody>
 			</table>
-			<div class="mb-3 d-flex justify-content-end">
-				<a class="btn btn-primary" href="/product/add">추가</a>
-			</div>
+			<c:if test="${ logined.admin eq true }">
+				<div class="mb-3 d-flex justify-content-end">
+					<a class="btn btn-primary" href="/product/add">추가</a>
+				</div>
+			</c:if>
 		</section>
 		
 	
