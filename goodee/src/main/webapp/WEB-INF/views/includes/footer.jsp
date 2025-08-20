@@ -22,4 +22,4 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.22.4/dist/sweetalert2.all.min.js"></script>
 
 <!-- Core theme JS-->
-<script src="/js/scripts.js"></script>
+<script src="/js/template/scripts.js"></script>

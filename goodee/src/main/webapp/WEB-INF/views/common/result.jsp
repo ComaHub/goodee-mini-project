@@ -7,17 +7,20 @@
 	<meta charset="UTF-8">
 	<title></title>
 	
-	<c:import url="/WEB-INF/views/includes/header.jsp"></c:import>
+	<!-- Bootstrap icons-->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+	
+	<!-- Sweetalert 2 -->
+	<link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.22.4/dist/sweetalert2.min.css" rel="stylesheet">
 </head>
 
-<body class="d-flex flex-column h-100">
-	<main class="flex-shrink-0">
-		<c:import url="/WEB-INF/views/includes/nav.jsp"></c:import>
-	
-		<!-- Contents here! -->
+<body>
+	<!-- Bootstrap core JS-->
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 
-	</main>
-	<c:import url="/WEB-INF/views/includes/footer.jsp"></c:import>
+	<!-- Sweetalert 2 -->
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.22.4/dist/sweetalert2.all.min.js"></script>
+	
 	<script>
 			const message = "${ requestScope.resultMsg }";
 			const icon = "${ requestScope.resultIcon }";

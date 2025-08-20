@@ -82,4 +82,18 @@
 			attach_number = #{attachNumber}
 		</where>
 	</update>
+	
+	<delete id="deleteAnimal" parameterType="Long">
+		DELETE FROM animal
+		<where>
+			animal_number = #{animalNumber}
+		</where>
+	</delete>
+	
+	<delete id="deleteAnimalAttach" parameterType="Long">
+		DELETE FROM attach
+		<where>
+			attach_number = #{attachNumber}
+		</where>
+	</delete>
 </mapper>
