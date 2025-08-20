@@ -42,7 +42,7 @@ public class AccountController {
 		if (bindingResult.hasErrors()) {
 			return "/account/join";
 		}
-		System.out.println(attach);
+
 		int result = accountService.insert(accountDTO, attach);
 		
 		if (result > 0) {

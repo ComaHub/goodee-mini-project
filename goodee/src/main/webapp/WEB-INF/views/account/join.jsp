@@ -9,6 +9,7 @@
 	<title>회원 가입</title>
 	
 	<c:import url="/WEB-INF/views/includes/header.jsp"></c:import>
+	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 </head>
 
 <body class="d-flex flex-column h-100">
@@ -17,7 +18,7 @@
 	
 		<!-- Contents here! -->
 		<h2>Join</h2>
-		<section class="col-10 m-auto">
+		<section class="mb-3 col-10 m-auto">
 			<form:form modelAttribute="accountDTO" method="post" enctype="multipart/form-data">
 				<div class="mb-3">
 					<label for="exampleFormControlInput1" class="form-label">ID</label>
@@ -49,13 +50,16 @@
 					<form:errors path="phone"/>
 				</div>
 				<div class="mb-3">
+					<button type="button" id="postBtn" class="btn btn-primary">주소 입력</button>
+				</div>
+				<div class="mb-3">
 					<label for="exampleFormControlInput1" class="form-label">우편 번호</label>
-				<form:input path="postcode" class="form-control"/>
+					<form:input path="postcode" class="form-control" readonly="true"/>
 					<form:errors path="postcode"/>
 				</div>
 				<div class="mb-3">
 					<label for="exampleFormControlInput1" class="form-label">주소</label>
-					<form:input path="address" class="form-control"/>
+					<form:input path="address" class="form-control" readonly="true"/>
 					<form:errors path="address"/>
 				</div>
 				<div class="mb-3">
@@ -70,6 +74,7 @@
 	
 	</main>
 	<c:import url="/WEB-INF/views/includes/footer.jsp"></c:import>
+	<script type="text/javascript" src="/js/account/post.js"></script>
 </body>
 
 </html>
