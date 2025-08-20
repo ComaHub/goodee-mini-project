@@ -88,12 +88,16 @@ public class AccountController {
 	public void update(Model model, HttpSession session) throws Exception {
 		AccountDTO accountDTO = (AccountDTO) session.getAttribute("logined");
 		accountDTO = accountService.detail(accountDTO);
+		
+		FileDTO fileDTO = accountService.detailProfile(accountDTO.getAccountNumber());
+		
 		model.addAttribute("accountDTO", accountDTO);
+		model.addAttribute("fileDTO", fileDTO);
 	}
 	
 	@PostMapping("/update")
 	public String update(HttpSession session, @Validated(Update.class) AccountDTO accountDTO, 
-			BindingResult bindingResult) throws Exception {
+			BindingResult bindingResult, MultipartFile attach) throws Exception {
 		if (bindingResult.hasErrors()) {
 			return "/account/update";
 		}
@@ -101,7 +105,7 @@ public class AccountController {
 		AccountDTO dto = (AccountDTO) session.getAttribute("logined");
 		accountDTO.setAccountNumber(dto.getAccountNumber());
 		
-		int result = accountService.update(accountDTO);
+		int result = accountService.update(accountDTO, attach);
 		
 		return "redirect:/account/detail";
 	}

@@ -18,7 +18,13 @@
 		<!-- Contents here! -->
 		<h2>Update</h2>
 		<section class="col-10 m-auto">
-			<form:form modelAttribute="accountDTO" method="post">
+			<form:form modelAttribute="accountDTO" method="post" enctype="multipart/form-data">
+				<div class="mb-3">
+					<label for="attach">
+						<img alt="" src="/files/account/${fileDTO.saved}" height="300">
+					</label>
+					<input type="file" class="form-control" name="attach" id="attach">
+				</div>
 				<div class="mb-3">
 					<label for="exampleFormControlInput1" class="form-label">이름</label>
 					<form:input path="name" class="form-control"/>

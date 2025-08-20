@@ -60,8 +60,34 @@ public class AccountService {
 		return accountDAO.detail(accountDTO);
 	}
 
-	public int update(AccountDTO accountDTO) throws Exception {
-		return accountDAO.update(accountDTO);
+	@Transactional(rollbackFor = Exception.class)
+	public int update(AccountDTO accountDTO, MultipartFile attach) throws Exception {
+		int result = accountDAO.update(accountDTO);
+
+		if (result != 1) throw new Exception();
+		
+		if (attach != null && !attach.isEmpty()) {
+			accountDAO.detailProfile(accountDTO.getAccountNumber());
+			
+			
+			
+			String fileName = fileService.saveFile(FileService.ACCOUNT, attach);
+			
+			FileDTO fileDTO = new FileDTO();
+			fileDTO.setType(FileService.ACCOUNT);
+			fileDTO.setKeyData(accountDTO.getAccountNumber());
+			fileDTO.setOrigin(attach.getOriginalFilename());
+			fileDTO.setSaved(fileName);
+			
+			result = accountDAO.insertAttach(fileDTO);
+			
+			if (result != 1) {
+				fileService.deleteFile(fileDTO);
+				throw new Exception();
+			}
+		}
+		
+		return result;
 	}
 
 	public int dropOut(AccountDTO accountDTO) throws Exception {
