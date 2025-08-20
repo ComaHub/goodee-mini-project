@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.goodee.proj.animal.AnimalProfileDTO;
 import com.goodee.proj.common.file.FileService;
 
 @Service
@@ -37,12 +38,41 @@ public class ProductService {
 		return productDAO.selectProductList();
 	}
 
-	public ProductDTO detail(ProductDTO productDTO) throws Exception {
-		return productDAO.detail(productDTO);
+	public ProductDTO getProduct(ProductDTO productDTO) throws Exception {
+		return productDAO.selectProduct(productDTO);
 	}
 
-	public int update(ProductDTO productDTO) throws Exception {
-		return productDAO.update(productDTO);
+	public int updateProduct(ProductDTO productDTO, MultipartFile productImage) throws Exception {
+		int result = productDAO.updateProduct(productDTO);
+		
+		if (productImage != null && !productImage.isEmpty()) {
+			ProductImageDTO productImageDTO = productDAO.selectProductImage(productDTO.getProductNumber());
+			fileService.deleteFile(productImageDTO);
+			
+			String fileName = fileService.saveFile(FileService.PRODUCT, productImage);
+			productImageDTO.setOrigin(productImage.getOriginalFilename());
+			productImageDTO.setSaved(fileName);
+			
+			productDAO.updateProductImage(productImageDTO);
+		}
+		
+		return result;
+	}
+
+	public int deleteProduct(Long productNumber) throws Exception {
+		ProductImageDTO productImageDTO = productDAO.selectProductImage(productNumber);
+		
+		if (productImageDTO != null) {
+			productDAO.deleteProductImage(productImageDTO.getAttachNumber());
+		}
+		
+		int result = productDAO.deleteProduct(productNumber);
+		
+		if (result > 0) {
+			fileService.deleteFile(productImageDTO);
+		}
+		
+		return result;
 	}
 
 }

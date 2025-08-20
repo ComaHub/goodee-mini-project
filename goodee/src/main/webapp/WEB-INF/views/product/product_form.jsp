@@ -6,7 +6,7 @@
 
 <head>
 	<meta charset="UTF-8">
-	<title>회원 가입</title>
+	<title>상품 정보 관리</title>
 	
 	<c:import url="/WEB-INF/views/includes/header.jsp"></c:import>
 </head>
@@ -35,15 +35,17 @@
 						<input type="file" class="d-none" id="productImage" name="productImage" />
 					</div>
 				
-					<div class="row mb-2">
+					<div class="row mb-5">
 						<div class="col-6">
 							<form:label path="name" cssClass="form-label">상품명</form:label>
 							<form:input path="name" cssClass="form-control" />
+							<form:errors path="name"></form:errors>
 						</div>
 						
 						<div class="col-6">
 							<form:label path="category" cssClass="form-label">카테고리</form:label>
 							<form:input path="category" cssClass="form-control" />
+							<form:errors path="category"></form:errors>
 						</div>
 					</div>
 					
@@ -51,11 +53,13 @@
 						<div class="col-6">
 							<form:label path="amount" cssClass="form-label">재고</form:label>
 							<form:input path="amount" cssClass="form-control" />
+							<form:errors path="amount"></form:errors>
 						</div>
 						
 						<div class="col-6">
 							<form:label path="price" cssClass="form-label">가격</form:label>
 							<form:input path="price" cssClass="form-control" />
+							<form:errors path="price"></form:errors>
 						</div>
 					</div>
 					
