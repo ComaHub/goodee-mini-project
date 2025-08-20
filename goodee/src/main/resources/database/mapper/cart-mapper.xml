@@ -3,8 +3,48 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.goodee.proj.cart.CartDAO">
-	<insert id="insertCart">
+	<resultMap type="ProductDTO" id="productResultMap">
+		<id property="productNumber" column="product_number" />
+		<result property="name" column="name" />
+		<result property="category" column="category" />
+		<result property="amount" column="amount" />
+		<result property="price" column="price" />
+		
+		<association property="productImageDTO" javaType="ProductImageDTO">
+			<id property="attachNumber" column="attach_number" />
+			<result property="keyData" column="key_data" />
+			<result property="type" column="type" />
+			<result property="origin" column="origin" />
+			<result property="saved" column="saved" />
+		</association>
+	</resultMap>
+	
+	<select id="selectCartList" parameterType="Long" resultMap="productResultMap">
+		SELECT
+				*
+		FROM product P
+		INNER JOIN attach A ON A.type = 3 AND P.product_number = A.key_data
+		<where>
+			P.product_number IN (
+				SELECT
+					product_number
+				FROM cart
+				<where>
+					account_number = #{accountNumber}
+				</where>
+			)
+		</where>
+	</select>
+	
+	<insert id="insertCart" parameterType="CartDTO">
 		INSERT INTO cart
 		VALUES (#{accountNumber}, #{productNumber})
 	</insert>
+	
+	<delete id="deleteCart" parameterType="CartDTO">
+		DELETE FROM cart
+		<where>
+			account_number = #{accountNumber} AND product_number = #{productNumber}
+		</where>
+	</delete>
 </mapper>
