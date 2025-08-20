@@ -45,7 +45,7 @@
 				*
 		FROM attach
 		<where>
-			attach_number = #{fileNum}
+			type = 2 AND key_data = #{animalNumber}
 		</where>
 	</select>
 
@@ -70,6 +70,16 @@
 			, neutered = #{neutered}
 		<where>
 			animal_number = #{animalNumber}
+		</where>
+	</update>
+	
+	<update id="updateAnimalAttach">
+		UPDATE attach
+		SET
+				origin = #{origin}
+			, saved = #{saved}
+		<where>
+			attach_number = #{attachNumber}
 		</where>
 	</update>
 </mapper>

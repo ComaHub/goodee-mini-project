@@ -10,9 +10,10 @@ import com.goodee.proj.common.file.FileDTO;
 public interface AnimalDAO {
 	AnimalDTO selectAnimal(Long animalNumber) throws Exception;
 	List<AnimalDTO> selectAnimalList() throws Exception;
-	AnimalProfileDTO selectAnimalProfile(Long fileNum) throws Exception;
+	AnimalProfileDTO selectAnimalProfile(Long animalNumber) throws Exception;
 	int insertAnimal(AnimalDTO animalDTO) throws Exception;
 	int insertAnimalAttach(FileDTO fileDTO) throws Exception;
 	int updateAnimal(AnimalDTO animalDTO) throws Exception;
+	int updateAnimalAttach(AnimalProfileDTO animalProfileDTO) throws Exception;
 
 }

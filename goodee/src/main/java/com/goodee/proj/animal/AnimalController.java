@@ -89,8 +89,8 @@ public class AnimalController {
 	}
 	
 	@GetMapping("fileDownload")
-	public void getAnimalFileDownload(Long fileNum, HttpServletResponse response) throws Exception {
-		AnimalProfileDTO animalProfileDTO = animalService.getAnimalProfile(fileNum);
+	public void getAnimalFileDownload(Long animalNumber, HttpServletResponse response) throws Exception {
+		AnimalProfileDTO animalProfileDTO = animalService.getAnimalProfile(animalNumber);
 		fileService.downloadFile(animalProfileDTO, response);
 	}
 }

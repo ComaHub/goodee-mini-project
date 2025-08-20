@@ -63,5 +63,10 @@ public class FileService {
 		}
 	}
 	
-	
+	public void deleteFile(FileDTO fileDTO) throws Exception {
+		String filePath = dir + getAttachTypeString(fileDTO.getType());
+		File file = new File(filePath, fileDTO.getSaved());
+		
+		file.delete();
+	}
 }
