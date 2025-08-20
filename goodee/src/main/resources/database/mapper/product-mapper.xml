@@ -36,7 +36,7 @@
 		INNER JOIN attach A ON A.type = 3 AND P.product_number = A.key_data
 		<if test="keyword != null and keyword != ''">
 			<where>
-				name LIKE CONCAT('%', #{keyword} ,'%')
+				P.name LIKE CONCAT('%', #{keyword} ,'%')
 			</where>
 		</if>
 		LIMIT #{limitPageNo}, #{numPerPage}
@@ -44,10 +44,11 @@
 	
 	<select id="totalCount" parameterType="Paging">
 		SELECT COUNT(product_number)
-		FROM product
+		FROM product P
+		INNER JOIN attach A ON A.type = 3 AND P.product_number = A.key_data
 		<if test="keyword != null and keyword != ''">
 			<where>
-				name LIKE CONCAT('%', #{keyword} ,'%')
+				P.name LIKE CONCAT('%', #{keyword} ,'%')
 			</where>
 		</if>
 	</select>

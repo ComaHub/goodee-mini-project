@@ -25,8 +25,10 @@ public class ProductController {
 	@GetMapping("list")
 	public void getProductList(Model model, Paging paging) throws Exception {
 		Long totalCount = productService.totalCount(paging);
+		paging.setTotalData(totalCount);
 		
 		List<ProductDTO> productList = productService.getProductList(paging);
+		
 		model.addAttribute("productList", productList);
 	}
 	
