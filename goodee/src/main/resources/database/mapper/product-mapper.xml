@@ -18,6 +18,32 @@
 			<result property="saved" column="saved" />
 		</association>
 	</resultMap>
+	
+	<select id="selectProduct" parameterType="ProductDTO" resultMap="productResultMap">
+		SELECT
+				*
+		FROM product P
+		INNER JOIN attach A ON A.type = 3 AND P.product_number = A.key_data
+		<where>
+			product_number = #{productNumber}
+		</where>
+	</select>
+	
+	<select id="selectProductList" resultMap="productResultMap">
+		SELECT
+				*
+		FROM product P
+		INNER JOIN attach A ON A.type = 3 AND P.product_number = A.key_data
+	</select>
+	
+	<select id="selectProductImage" resultType="ProductImageDTO">
+		SELECT
+				*
+		FROM attach
+		<where>
+			type = 3 AND key_data = #{productNumber}
+		</where>
+	</select>
 
 	<insert id="insertProduct" parameterType="ProductDTO" useGeneratedKeys="true" keyProperty="productNumber">
 		INSERT INTO product
@@ -29,25 +55,25 @@
 		VALUES (NULL, #{keyData}, #{type}, #{origin}, #{saved})
 	</insert>
 	
-	<select id="selectProductList" resultMap="productResultMap">
-		SELECT
-				*
-		FROM product P
-		INNER JOIN attach A ON A.type = 3 AND P.product_number = A.key_data
-	</select>
-	
-	<select id="detail" parameterType="ProductDTO" resultType="ProductDTO">
-		SELECT *
-		FROM product
-		WHERE product_number = #{productNumber}
-	</select>
-	
-	<update id="update" parameterType="ProductDTO">
+	<update id="updateProduct" parameterType="ProductDTO">
 		UPDATE product
-		SET name = #{name},
-			category = #{category},
-			amount = #{amount},
-			price = #{price}
-		WHERE product_number = #{productNumber}
+		SET 
+				name = #{name}
+			, category = #{category}
+			, amount = #{amount}
+			, price = #{price}
+		<where>
+			product_number = #{productNumber}
+		</where>
+	</update>
+	
+	<update id="updateProductImage" parameterType="ProductImageDTO">
+		UPDATE attach
+		SET
+				origin = #{origin}
+			, saved = #{saved}
+		<where>
+			attach_number = #{attachNumber}
+		</where>
 	</update>
 </mapper>
