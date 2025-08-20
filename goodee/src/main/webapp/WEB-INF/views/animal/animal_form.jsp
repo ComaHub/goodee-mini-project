@@ -23,6 +23,8 @@
 			
 			<div class="mt-5">
 				<form:form modelAttribute="animalDTO" method="POST" enctype="multipart/form-data">
+					<form:hidden path="animalNumber"/>
+				
 					<div class="row mb-2">
 						<div class="col-4">
 							<form:label path="name" cssClass="form-label">이름</form:label>
