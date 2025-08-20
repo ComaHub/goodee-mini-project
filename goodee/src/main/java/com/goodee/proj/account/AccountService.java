@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.goodee.proj.common.Paging;
 import com.goodee.proj.common.file.FileDTO;
 import com.goodee.proj.common.file.FileService;
 
@@ -44,8 +45,8 @@ public class AccountService {
 		return result;
 	}
 
-	public List<AccountDTO> list() throws Exception {
-		return accountDAO.list();
+	public List<AccountDTO> list(Paging paging) throws Exception {
+		return accountDAO.list(paging);
 	}
 
 	public int updateAdmin(AccountDTO accountDTO) throws Exception {
@@ -96,5 +97,9 @@ public class AccountService {
 
 	public FileDTO detailAttach(Long keyData) throws Exception {
 		return accountDAO.detailAttach(keyData);
+	}
+
+	public Long totalCount(Paging paging) {
+		return accountDAO.totalCount(paging);
 	}
 }

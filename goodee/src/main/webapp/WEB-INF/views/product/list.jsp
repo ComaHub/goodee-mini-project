@@ -45,7 +45,7 @@
 				</div>
 			</c:if>
 			<!-- 페이징 -->
-				<c:import url="/WEB-INF/views/includes/paging.jsp"></c:import>
+			<c:import url="/WEB-INF/views/includes/paging.jsp"></c:import>
 			<!-- 페이징 -->
 		</section>
 		

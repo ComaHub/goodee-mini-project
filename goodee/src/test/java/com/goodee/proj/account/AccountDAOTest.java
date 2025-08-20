@@ -1,6 +1,6 @@
 package com.goodee.proj.account;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +15,7 @@ class AccountDAOTest {
 	@Test
 	void testInsert() throws Exception {
 		
-		for (int i = 0; i < 10; i++) {
+		for (int i = 0; i < 60; i++) {
 			AccountDTO accountDTO = new AccountDTO();
 			accountDTO.setId("user" + i);
 			accountDTO.setPassword("user" + i);

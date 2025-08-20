@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.goodee.proj.account.groups.Join;
 import com.goodee.proj.account.groups.Login;
 import com.goodee.proj.account.groups.Update;
+import com.goodee.proj.common.Paging;
 import com.goodee.proj.common.file.FileDTO;
 import com.goodee.proj.common.file.FileService;
 
@@ -132,8 +133,12 @@ public class AccountController {
 	}
 	
 	@GetMapping("/list")
-	public void list(Model model, AccountDTO accountDTO) throws Exception {
-		List<AccountDTO> list = accountService.list();
+	public void list(Model model, Paging paging) throws Exception {
+		Long totalCount = accountService.totalCount(paging);
+		
+		paging.setTotalData(totalCount);
+		
+		List<AccountDTO> list = accountService.list(paging);
 		model.addAttribute("list", list);
 	}
 	

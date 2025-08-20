@@ -20,10 +20,26 @@
 			(#{keyData}, #{type}, #{origin}, #{saved})
 	</insert>
 	
-	<select id="list" resultType="AccountDTO">
+	<select id="list" parameterType="Paging" resultType="AccountDTO">
 		SELECT account_number, id, name, email, phone, postcode, address, address_detail, admin
 		FROM account
-		WHERE active=1
+		<where>
+			active=1
+			<if test="keyword != null and keyword != ''">
+				AND name LIKE CONCAT('%', #{keyword} ,'%')
+			</if>
+		</where>
+		LIMIT #{limitPageNo}, #{numPerPage}
+	</select>
+	
+	<select id="totalCount" parameterType="Paging">
+		SELECT COUNT(account_number)
+		FROM account
+		<if test="keyword != null and keyword != ''">
+			<where>
+				name LIKE CONCAT('%', #{keyword} ,'%')
+			</where>
+		</if>
 	</select>
 	
 	<update id="updateAdmin">
