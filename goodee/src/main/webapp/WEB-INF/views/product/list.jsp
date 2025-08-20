@@ -21,40 +21,34 @@
 			<table class="table">
 				<thead>
 					<tr>
-						<th>아이디</th>
-						<th>이름</th>
-						<th>이메일</th>
-						<th>전화번호</th>
-						<th>우편번호</th>
-						<th>주소</th>
-						<th>상세주소</th>
-						<th>권한</th>
+						<th>상품번호</th>
+						<th>상품명</th>
+						<th>카테고리</th>
+						<th>가격</th>
 					</tr>
 				</thead>
 				<tbody>
-					<c:forEach var="a" items="${list}">
+					<c:forEach var="p" items="${list}">
 						<tr>
-							<td>${ a.id }</td>
-							<td>${ a.name }</td>
-							<td>${ a.email }</td>
-							<td>${ a.phone }</td>
-							<td>${ a.postcode }</td>
-							<td>${ a.address }</td>
-							<td>${ a.addressDetail }</td>
-							<td><select class="auth" data-number="${ a.accountNumber }">
-								<option ${ a.admin == true ? 'selected' : '' }>TRUE</option>
-								<option ${ a.admin == false ? 'selected' : '' }>FALSE</option>
-							</select></td>
+							<td>${p.productNumber}</td>
+							<td><a href="./detail?productNumber=${ p.productNumber }">
+							${p.name}</a></td>
+							<td>${p.category}</td>
+							<td>${p.price}</td>
 						</tr>
 					</c:forEach>
 				</tbody>
 			</table>
+			<c:if test="${ logined.admin eq true }">
+				<div class="mb-3 d-flex justify-content-end">
+					<a class="btn btn-primary" href="/product/add">추가</a>
+				</div>
+			</c:if>
 		</section>
 		
 	
 	</main>
 	<c:import url="/WEB-INF/views/includes/footer.jsp"></c:import>
-	<script type="text/javascript" src="/js/account/list.js"></script>
 </body>
 
 </html>

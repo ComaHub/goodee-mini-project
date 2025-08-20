@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goodee.proj.product.ProductDAO">
+	<insert id="insert" parameterType="ProductDTO">
+		INSERT INTO product
+			(name, category, amount, price)
+		VALUES
+			(#{name}, #{category}, #{amount}, #{price})
+	</insert>
+	
+	<select id="list" resultType="ProductDTO">
+		SELECT *
+		FROM product
+	</select>
+	
+	<select id="detail" parameterType="ProductDTO" resultType="ProductDTO">
+		SELECT *
+		FROM product
+		WHERE product_number = #{productNumber}
+	</select>
+	
+	<update id="update" parameterType="ProductDTO">
+		UPDATE product
+		SET name = #{name},
+			category = #{category},
+			amount = #{amount},
+			price = #{price}
+		WHERE product_number = #{productNumber}
+	</update>
+</mapper>

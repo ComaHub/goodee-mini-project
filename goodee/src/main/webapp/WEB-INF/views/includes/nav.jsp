@@ -9,16 +9,16 @@
       <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
         <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
         <li class="nav-item"><a class="nav-link" href="/animal/list">Animal</a></li>
-        <li class="nav-item"><a class="nav-link" href="pricing.html">Product</a></li>
+        <li class="nav-item"><a class="nav-link" href="/product/list">Product</a></li>
         <li class="nav-item"><a class="nav-link" href="contact.html">Donation</a></li>
         <c:if test="${ not empty sessionScope.logined }">
-        	<li class="nav-item"><a class="nav-link" href="faq.html">My Page</a></li>
-        	<li class="nav-item"><a class="nav-link" href="faq.html">Log Out</a></li>
+        	<li class="nav-item"><a class="nav-link" href="/account/detail">My Page</a></li>
+        	<li class="nav-item"><a class="nav-link" href="/account/logout">Log Out</a></li>
         </c:if>
         <c:if test="${ empty sessionScope.logined }">
-        	<li class="nav-item"><a class="nav-link" href="faq.html">Log In</a></li>
-        	<li class="nav-item"><a class="nav-link" href="faq.html">Register</a></li>
-        </c:if>        
+        	<li class="nav-item"><a class="nav-link" href="/account/login">Log In</a></li>
+        	<li class="nav-item"><a class="nav-link" href="/account/join">Register</a></li>
+        </c:if>
       </ul>
     </div>
   </div>
