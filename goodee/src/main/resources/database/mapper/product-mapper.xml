@@ -10,9 +10,25 @@
 			(#{name}, #{category}, #{amount}, #{price})
 	</insert>
 	
-	<select id="list" resultType="ProductDTO">
+	<select id="list" parameterType="Paging" resultType="ProductDTO">
 		SELECT *
 		FROM product
+		<if test="keyword != null and keyword != ''">
+			<where>
+				name LIKE CONCAT('%', #{keyword} ,'%')
+			</where>
+		</if>
+		LIMIT #{limitPageNo}, #{numPerPage}
+	</select>
+	
+	<select id="totalCount" parameterType="Paging">
+		SELECT COUNT(product_number)
+		FROM product
+		<if test="keyword != null and keyword != ''">
+			<where>
+				name LIKE CONCAT('%', #{keyword} ,'%')
+			</where>
+		</if>
 	</select>
 	
 	<select id="detail" parameterType="ProductDTO" resultType="ProductDTO">
@@ -29,4 +45,6 @@
 			price = #{price}
 		WHERE product_number = #{productNumber}
 	</update>
+	
+	
 </mapper>

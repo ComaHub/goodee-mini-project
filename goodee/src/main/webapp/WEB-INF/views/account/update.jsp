@@ -23,6 +23,8 @@
 					<label for="attach">
 						<img alt="" src="/files/account/${fileDTO.saved}" height="300">
 					</label>
+				</div>
+				<div class="mb-3">
 					<input type="file" class="form-control" name="attach" id="attach">
 				</div>
 				<div class="mb-3">

@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.goodee.proj.common.Paging;
+
 import jakarta.validation.Valid;
 
 @Controller
@@ -35,8 +37,13 @@ public class ProductController {
 	}
 	
 	@GetMapping("/list")
-	public void list(Model model) throws Exception {
-		List<ProductDTO> list = productService.list();
+	public void list(Model model, Paging paging) throws Exception {
+		Long totalCount = productService.totalCount(paging);
+		
+		paging.setTotalData(totalCount);
+		
+		List<ProductDTO> list = productService.list(paging);
+		
 		model.addAttribute("list", list);
 	}
 	
