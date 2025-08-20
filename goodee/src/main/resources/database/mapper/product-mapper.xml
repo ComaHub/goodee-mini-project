@@ -29,11 +29,28 @@
 		</where>
 	</select>
 	
-	<select id="selectProductList" resultMap="productResultMap">
+	<select id="selectProductList" parameterType="Paging" resultMap="productResultMap">
 		SELECT
 				*
 		FROM product P
 		INNER JOIN attach A ON A.type = 3 AND P.product_number = A.key_data
+		<if test="keyword != null and keyword != ''">
+			<where>
+				P.name LIKE CONCAT('%', #{keyword} ,'%')
+			</where>
+		</if>
+		LIMIT #{limitPageNo}, #{numPerPage}
+	</select>
+	
+	<select id="totalCount" parameterType="Paging">
+		SELECT COUNT(product_number)
+		FROM product P
+		INNER JOIN attach A ON A.type = 3 AND P.product_number = A.key_data
+		<if test="keyword != null and keyword != ''">
+			<where>
+				P.name LIKE CONCAT('%', #{keyword} ,'%')
+			</where>
+		</if>
 	</select>
 	
 	<select id="selectProductImage" resultType="ProductImageDTO">

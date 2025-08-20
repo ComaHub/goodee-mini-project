@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.goodee.proj.common.Paging;
+
 import jakarta.validation.Valid;
 
 @Controller
@@ -21,8 +23,12 @@ public class ProductController {
 	private ProductService productService;
 	
 	@GetMapping("list")
-	public void getProductList(Model model) throws Exception {
-		List<ProductDTO> productList = productService.getProductList();
+	public void getProductList(Model model, Paging paging) throws Exception {
+		Long totalCount = productService.totalCount(paging);
+		paging.setTotalData(totalCount);
+		
+		List<ProductDTO> productList = productService.getProductList(paging);
+		
 		model.addAttribute("productList", productList);
 	}
 	

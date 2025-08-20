@@ -20,10 +20,26 @@
 			(#{keyData}, #{type}, #{origin}, #{saved})
 	</insert>
 	
-	<select id="list" resultType="AccountDTO">
+	<select id="list" parameterType="Paging" resultType="AccountDTO">
 		SELECT account_number, id, name, email, phone, postcode, address, address_detail, admin
 		FROM account
-		WHERE active=1
+		<where>
+			active=1
+			<if test="keyword != null and keyword != ''">
+				AND id LIKE CONCAT('%', #{keyword} ,'%')
+			</if>
+		</where>
+		LIMIT #{limitPageNo}, #{numPerPage}
+	</select>
+	
+	<select id="totalCount" parameterType="Paging">
+		SELECT COUNT(account_number)
+		FROM account
+		<if test="keyword != null and keyword != ''">
+			<where>
+				name LIKE CONCAT('%', #{keyword} ,'%')
+			</where>
+		</if>
 	</select>
 	
 	<update id="updateAdmin">
@@ -44,7 +60,7 @@
 		WHERE account_number = #{accountNumber}
 	</select>
 	
-	<select id="detailProfile" parameterType="long" resultType="FileDTO">
+	<select id="detailAttach" parameterType="long" resultType="FileDTO">
 		SELECT *
 		FROM attach
 		WHERE type = 1 AND key_data = #{keyData}
@@ -58,7 +74,13 @@
 			postcode = #{postcode}, 
 			address = #{address}, 
 			address_detail = #{addressDetail}
+		WHERE account_number = #{accountNumber}
 	</update>
+	
+	<delete id="deleteAttach" parameterType="FileDTO">
+		DELETE FROM attach
+		WHERE attach_number = #{attachNumber}
+	</delete>
 	
 	<update id="dropOut" parameterType="AccountDTO">
 		UPDATE account

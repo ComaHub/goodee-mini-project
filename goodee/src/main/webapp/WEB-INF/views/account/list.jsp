@@ -49,6 +49,7 @@
 					</c:forEach>
 				</tbody>
 			</table>
+			<c:import url="/WEB-INF/views/includes/paging.jsp"></c:import>
 		</section>
 		
 	

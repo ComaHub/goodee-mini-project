@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.goodee.proj.animal.AnimalProfileDTO;
+import com.goodee.proj.common.Paging;
 import com.goodee.proj.common.file.FileService;
 
 @Service
@@ -34,8 +34,13 @@ public class ProductService {
 		return result;
 	}
 	
-	public List<ProductDTO> getProductList() throws Exception {
-		return productDAO.selectProductList();
+
+	public Long totalCount(Paging paging) throws Exception {
+		return productDAO.totalCount(paging);
+	}
+	
+	public List<ProductDTO> getProductList(Paging paging) throws Exception {
+		return productDAO.selectProductList(paging);
 	}
 
 	public ProductDTO getProduct(ProductDTO productDTO) throws Exception {

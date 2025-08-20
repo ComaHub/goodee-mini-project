@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.goodee.proj.common.Paging;
 import com.goodee.proj.common.file.FileDTO;
 import com.goodee.proj.common.file.FileService;
 
@@ -44,8 +45,8 @@ public class AccountService {
 		return result;
 	}
 
-	public List<AccountDTO> list() throws Exception {
-		return accountDAO.list();
+	public List<AccountDTO> list(Paging paging) throws Exception {
+		return accountDAO.list(paging);
 	}
 
 	public int updateAdmin(AccountDTO accountDTO) throws Exception {
@@ -60,15 +61,45 @@ public class AccountService {
 		return accountDAO.detail(accountDTO);
 	}
 
-	public int update(AccountDTO accountDTO) throws Exception {
-		return accountDAO.update(accountDTO);
+	@Transactional(rollbackFor = Exception.class)
+	public int update(AccountDTO accountDTO, MultipartFile attach) throws Exception {
+		int result = accountDAO.update(accountDTO);
+
+		if (result != 1) throw new Exception();
+		
+		if (attach != null && !attach.isEmpty()) {
+			FileDTO oldFile = accountDAO.detailAttach(accountDTO.getAccountNumber());
+			fileService.deleteFile(oldFile);
+			result = accountDAO.deleteAttach(oldFile);
+			
+			String fileName = fileService.saveFile(FileService.ACCOUNT, attach);
+			
+			FileDTO fileDTO = new FileDTO();
+			fileDTO.setType(FileService.ACCOUNT);
+			fileDTO.setKeyData(accountDTO.getAccountNumber());
+			fileDTO.setOrigin(attach.getOriginalFilename());
+			fileDTO.setSaved(fileName);
+			
+			 result = accountDAO.insertAttach(fileDTO);
+			
+			if (result != 1) {
+				fileService.deleteFile(fileDTO);
+				throw new Exception();
+			}
+		}
+		
+		return result;
 	}
 
 	public int dropOut(AccountDTO accountDTO) throws Exception {
 		return accountDAO.dropOut(accountDTO);
 	}
 
-	public FileDTO detailProfile(Long keyData) throws Exception {
-		return accountDAO.detailProfile(keyData);
+	public FileDTO detailAttach(Long keyData) throws Exception {
+		return accountDAO.detailAttach(keyData);
+	}
+
+	public Long totalCount(Paging paging) {
+		return accountDAO.totalCount(paging);
 	}
 }

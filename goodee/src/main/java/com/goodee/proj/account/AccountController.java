@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.goodee.proj.account.groups.Join;
 import com.goodee.proj.account.groups.Login;
 import com.goodee.proj.account.groups.Update;
+import com.goodee.proj.common.Paging;
 import com.goodee.proj.common.file.FileDTO;
 import com.goodee.proj.common.file.FileService;
 
@@ -78,7 +79,7 @@ public class AccountController {
 		AccountDTO accountDTO = (AccountDTO) session.getAttribute("logined");
 		accountDTO = accountService.detail(accountDTO);
 		
-		FileDTO fileDTO = accountService.detailProfile(accountDTO.getAccountNumber());
+		FileDTO fileDTO = accountService.detailAttach(accountDTO.getAccountNumber());
 		
 		model.addAttribute("accountDTO", accountDTO);
 		model.addAttribute("fileDTO", fileDTO);
@@ -88,12 +89,16 @@ public class AccountController {
 	public void update(Model model, HttpSession session) throws Exception {
 		AccountDTO accountDTO = (AccountDTO) session.getAttribute("logined");
 		accountDTO = accountService.detail(accountDTO);
+		
+		FileDTO fileDTO = accountService.detailAttach(accountDTO.getAccountNumber());
+		
 		model.addAttribute("accountDTO", accountDTO);
+		model.addAttribute("fileDTO", fileDTO);
 	}
 	
 	@PostMapping("/update")
 	public String update(HttpSession session, @Validated(Update.class) AccountDTO accountDTO, 
-			BindingResult bindingResult) throws Exception {
+			BindingResult bindingResult, MultipartFile attach) throws Exception {
 		if (bindingResult.hasErrors()) {
 			return "/account/update";
 		}
@@ -101,7 +106,7 @@ public class AccountController {
 		AccountDTO dto = (AccountDTO) session.getAttribute("logined");
 		accountDTO.setAccountNumber(dto.getAccountNumber());
 		
-		int result = accountService.update(accountDTO);
+		int result = accountService.update(accountDTO, attach);
 		
 		return "redirect:/account/detail";
 	}
@@ -128,8 +133,12 @@ public class AccountController {
 	}
 	
 	@GetMapping("/list")
-	public void list(Model model, AccountDTO accountDTO) throws Exception {
-		List<AccountDTO> list = accountService.list();
+	public void list(Model model, Paging paging) throws Exception {
+		Long totalCount = accountService.totalCount(paging);
+		
+		paging.setTotalData(totalCount);
+		
+		List<AccountDTO> list = accountService.list(paging);
 		model.addAttribute("list", list);
 	}
 	
