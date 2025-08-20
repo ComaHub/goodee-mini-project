@@ -20,7 +20,20 @@
 			<div class="row gx-5 justify-content-center">
         <div class="col-8">
           <div class="text-center">
-	          <h2 class="fw-bolder">상품 목록</h2>
+          	<c:choose>
+          		<c:when test="${ isCartList }">
+			          <h2 class="fw-bolder">장바구니 목록</h2>          		
+          		</c:when>
+          		
+          		<c:when test="${ isLikeList }">
+          			<h2 class="fw-bolder">찜 목록</h2>
+          		</c:when>
+          		
+          		<c:otherwise>
+          			<h2 class="fw-bolder">상품 목록</h2>    
+          		</c:otherwise>
+          	</c:choose>
+          
 	          <p class="lead fw-normal text-muted mb-5">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eaque fugit ratione dicta mollitia. Officiis ad.</p>
           </div>
         </div>
@@ -47,16 +60,17 @@
 							<td valign="middle">${ product.category }</td>
 							<td valign="middle">
 								<div class="d-flex gap-4 justify-content-center">
-									<a href="/liked/add?productNumber=${ productDTO.productNumber }" ><span class="material-symbols-outlined">favorite</span></a>
-									<a href="/cart/add?productNumber=${ productDTO.productNumber }" ><span class="material-symbols-outlined">add_shopping_cart</span></a>
-									<a href="#" ><span class="material-symbols-outlined">credit_card</span></a>
+									<a class="addLikeBtn" data-product-number="${ product.productNumber }" ><span class="material-symbols-outlined">favorite</span></a>
+									<c:if test="${ not isCartList }"><a class="addCartBtn" data-product-number="${ product.productNumber }" ><span class="material-symbols-outlined">add_shopping_cart</span></a></c:if>
+									<c:if test="${ isCartList }"><a class="removeCartBtn" data-product-number="${ product.productNumber }" ><span class="material-symbols-outlined">shopping_cart_off</span></a></c:if>
+									<a><span class="material-symbols-outlined">credit_card</span></a>
 								</div>
 							</td>
 						</tr>
 					</c:forEach>
 				</tbody>
 			</table>
-			<c:if test="${ logined.admin eq true }">
+			<c:if test="${ logined.admin and not isCartList and not isLikeList }">
 				<div class="mb-3 d-flex justify-content-end">
 					<a class="btn btn-primary" href="/product/add">추가</a>
 				</div>
@@ -66,6 +80,7 @@
 	
 	</main>
 	<c:import url="/WEB-INF/views/includes/footer.jsp"></c:import>
+	<script src="/js/product/product-list.js"></script>
 </body>
 
 </html>

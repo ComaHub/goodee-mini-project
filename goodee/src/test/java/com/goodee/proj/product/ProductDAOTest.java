@@ -22,7 +22,7 @@ class ProductDAOTest {
 			productDTO.setAmount(Long.valueOf(i * 10));
 			productDTO.setPrice(Long.valueOf(i * 1000));
 			
-			productDAO.insert(productDTO);
+			// productDAO.insert(productDTO);
 		}
 	}
 
