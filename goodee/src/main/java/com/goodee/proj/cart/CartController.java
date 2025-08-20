@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.goodee.proj.account.AccountDTO;
+import com.goodee.proj.common.Paging;
 import com.goodee.proj.product.ProductDTO;
 
 import jakarta.servlet.http.HttpSession;
@@ -21,10 +22,12 @@ public class CartController {
 	private CartService cartService;
 	
 	@GetMapping("list")
-	public String getCartList(HttpSession session, Model model) throws Exception {
+	public String getCartList(HttpSession session, Model model, Paging paging) throws Exception {
 		AccountDTO accountDTO = (AccountDTO) session.getAttribute("logined");
+		Long totalCount = cartService.totalCount(accountDTO, paging);
+		paging.setTotalData(totalCount);
 		
-		List<ProductDTO> productList = cartService.getCartList(accountDTO);
+		List<ProductDTO> productList = cartService.getCartList(accountDTO, paging);
 		model.addAttribute("productList", productList);
 		model.addAttribute("isCartList", true);
 		

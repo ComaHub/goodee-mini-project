@@ -22,10 +22,12 @@ public class LikeController {
 	private LikeService likeService;
 	
 	@GetMapping("list")
-	public String getLikeList(HttpSession session, Model model) throws Exception {
+	public String getLikeList(HttpSession session, Model model, Paging paging) throws Exception {
 		AccountDTO accountDTO = (AccountDTO) session.getAttribute("logined");
+		Long totalCount = likeService.totalCount(accountDTO, paging);
+		paging.setTotalData(totalCount);
 		
-		List<ProductDTO> productList = likeService.getLikeList(accountDTO);
+		List<ProductDTO> productList = likeService.getLikeList(accountDTO, paging);
 		model.addAttribute("productList", productList);
 		model.addAttribute("isLikeList", true);
 		
