@@ -63,6 +63,22 @@ public class AnimalService {
 		return result;
 	}
 
+	public int deleteAnimal(AnimalDTO animalDTO) throws Exception {
+		AnimalProfileDTO animalProfileDTO = animalDTO.getAnimalProfileDTO();
+		
+		if (animalProfileDTO != null) {
+			animalDAO.deleteAnimalAttach(animalProfileDTO.getAttachNumber());
+		}
+		
+		int result = animalDAO.deleteAnimal(animalDTO.getAnimalNumber());
+		
+		if (result > 0) {
+			fileService.deleteFile(animalProfileDTO);
+		}
+		
+		return result;
+	}
+
 	
 
 	

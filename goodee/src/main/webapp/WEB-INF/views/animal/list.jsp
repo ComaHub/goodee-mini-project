@@ -18,10 +18,14 @@
 		<div class="container px-5 my-5">
 	    <div class="row gx-5 justify-content-center">
         <div class="col-8">
-           <div class="text-center">
-              <h2 class="fw-bolder">보호동물 조회</h2>
-              <p class="lead fw-normal text-muted mb-5">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eaque fugit ratione dicta mollitia. Officiis ad.</p>
-           </div>
+          <div class="text-center">
+	          <h2 class="fw-bolder">보호 동물 조회</h2>
+	          <p class="lead fw-normal text-muted mb-5">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eaque fugit ratione dicta mollitia. Officiis ad.</p>
+          </div>
+          
+          <div class="text-center mb-5">
+          	<a href="add" class="btn btn-primary">보호 동물 등록</a>
+          </div>
         </div>
 	    </div>
 	    <div class="row gx-5">
@@ -30,9 +34,9 @@
 	    		<c:when test="${ not empty requestScope.animalList }">
 	    			<c:forEach var="animal" items="${ requestScope.animalList }">
 	    			
-	    				<div class="col-lg-4 mb-5">
+	    				<div class="col-4 mb-5">
 			          <div class="card h-100 shadow border-0">
-			            <img class="card-img-top" src="/files/animal/${ animal.animalProfileDTO.saved }" alt="..." />
+			            <img class="card-img-top" style="aspect-ratio: 1 / 1; object-fit: cover;" src="/files/animal/${ animal.animalProfileDTO.saved }" alt="..." />
 			            <div class="card-body p-4">
 			               <div class="badge bg-primary bg-gradient rounded-pill mb-2">${ animal.status }</div>
 			               <a class="text-decoration-none link-dark stretched-link" href="./detail?num=${ animal.animalNumber }"><h5 class="card-title mb-3">${ animal.name }</h5></a>

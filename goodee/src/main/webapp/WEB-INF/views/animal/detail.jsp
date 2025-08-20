@@ -23,7 +23,7 @@
 
      	<div class="col-8 offset-2">
      		<div class="col-8 offset-2">
-     			<img width="100%" class="border border-dark border-1 rounded p-1" src="/files/animal/${ animalDTO.animalProfileDTO.saved }" alt="Animal Profile Img" />
+     			<img width="100%" style="aspect-ratio: 1 / 1; object-fit: cover;" class="border border-dark border-1 rounded p-1" src="/files/animal/${ animalDTO.animalProfileDTO.saved }" alt="Animal Profile Img" />
      		</div>
      		
      		<div class="col-8 offset-2 mt-5 mb-5">
@@ -80,7 +80,7 @@
      		<div class="d-flex gap-2 justify-content-center mb-5">
      			<button type="button" id="adoptBtn" class="btn btn-primary">입양 신청</button>
      			<button type="button" id="updateBtn" data-animal-number="${ animalDTO.animalNumber }" class="btn btn-success">수정</button>
-     			<button type="button" id="deleteBtn" class="btn btn-danger">삭제</button>
+     			<button type="button" id="deleteBtn" data-animal-number="${ animalDTO.animalNumber }" class="btn btn-danger">삭제</button>
      		</div>
      	</div>
      	

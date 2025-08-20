@@ -88,6 +88,28 @@ public class AnimalController {
 		return "common/result";
 	}
 	
+	@GetMapping("delete")
+	public String getAnimalDelete(Long num, Model model) throws Exception {
+		AnimalDTO animalDTO = animalService.getAnimal(num);
+		
+		int result = animalService.deleteAnimal(animalDTO);
+		
+		String resultMsg = "보호 동물 정보 삭제 중 오류가 발생했습니다.";
+		String resultIcon = "warning";
+		
+		if (result > 0) {
+			resultMsg = "보호 동물 정보가 삭제되었습니다.";
+			resultIcon = "success";
+			
+			String url = "list";
+			model.addAttribute("url", url);
+		}
+		
+		model.addAttribute("resultMsg", resultMsg);
+		model.addAttribute("resultIcon", resultIcon);
+		return "common/result";
+	}
+	
 	@GetMapping("fileDownload")
 	public void getAnimalFileDownload(Long animalNumber, HttpServletResponse response) throws Exception {
 		AnimalProfileDTO animalProfileDTO = animalService.getAnimalProfile(animalNumber);

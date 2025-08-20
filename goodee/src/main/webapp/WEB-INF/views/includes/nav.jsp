@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <div class="container px-5">
@@ -7,24 +8,17 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
         <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
-        <li class="nav-item"><a class="nav-link" href="/animal/list">보호소</a></li>
-        <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
-        <li class="nav-item"><a class="nav-link" href="pricing.html">Pricing</a></li>
-        <li class="nav-item"><a class="nav-link" href="faq.html">FAQ</a></li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" id="navbarDropdownBlog" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Blog</a>
-          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownBlog">
-            <li><a class="dropdown-item" href="blog-home.html">Blog Home</a></li>
-            <li><a class="dropdown-item" href="blog-post.html">Blog Post</a></li>
-          </ul>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" id="navbarDropdownPortfolio" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Portfolio</a>
-          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownPortfolio">
-            <li><a class="dropdown-item" href="portfolio-overview.html">Portfolio Overview</a></li>
-            <li><a class="dropdown-item" href="portfolio-item.html">Portfolio Item</a></li>
-          </ul>
-        </li>
+        <li class="nav-item"><a class="nav-link" href="/animal/list">Animal</a></li>
+        <li class="nav-item"><a class="nav-link" href="pricing.html">Product</a></li>
+        <li class="nav-item"><a class="nav-link" href="contact.html">Donation</a></li>
+        <c:if test="${ not empty sessionScope.logined }">
+        	<li class="nav-item"><a class="nav-link" href="faq.html">My Page</a></li>
+        	<li class="nav-item"><a class="nav-link" href="faq.html">Log Out</a></li>
+        </c:if>
+        <c:if test="${ empty sessionScope.logined }">
+        	<li class="nav-item"><a class="nav-link" href="faq.html">Log In</a></li>
+        	<li class="nav-item"><a class="nav-link" href="faq.html">Register</a></li>
+        </c:if>        
       </ul>
     </div>
   </div>
