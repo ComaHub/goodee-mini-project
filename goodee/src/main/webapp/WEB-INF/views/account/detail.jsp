@@ -20,6 +20,9 @@
 		<h2>Detail</h2>
 		<section class="col-10 m-auto">
 			<div class="mb-3">
+				<img alt="" src="/files/account/${fileDTO.saved}" height="300">
+			</div>
+			<div class="mb-3">
 				<label for="exampleFormControlInput1" class="form-label">ID</label>
 				<p>${ accountDTO.id }</p>
 			</div>

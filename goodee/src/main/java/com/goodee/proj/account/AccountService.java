@@ -67,4 +67,8 @@ public class AccountService {
 	public int dropOut(AccountDTO accountDTO) throws Exception {
 		return accountDAO.dropOut(accountDTO);
 	}
+
+	public FileDTO detailProfile(Long keyData) throws Exception {
+		return accountDAO.detailProfile(keyData);
+	}
 }

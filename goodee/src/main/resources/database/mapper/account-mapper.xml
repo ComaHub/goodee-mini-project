@@ -39,9 +39,15 @@
 	</select>
 	
 	<select id="detail" resultType="AccountDTO">
-		SELECT id, name, email, phone, postcode, address, address_detail
+		SELECT account_number, id, name, email, phone, postcode, address, address_detail
 		FROM account
 		WHERE account_number = #{accountNumber}
+	</select>
+	
+	<select id="detailProfile" parameterType="long" resultType="FileDTO">
+		SELECT *
+		FROM attach
+		WHERE type = 1 AND key_data = #{keyData}
 	</select>
 	
 	<update id="update" parameterType="AccountDTO">

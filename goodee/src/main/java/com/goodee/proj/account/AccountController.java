@@ -16,6 +16,8 @@ import org.springframework.web.multipart.MultipartFile;
 import com.goodee.proj.account.groups.Join;
 import com.goodee.proj.account.groups.Login;
 import com.goodee.proj.account.groups.Update;
+import com.goodee.proj.common.file.FileDTO;
+import com.goodee.proj.common.file.FileService;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -25,6 +27,8 @@ public class AccountController {
 
 	@Autowired
 	private AccountService accountService;
+	@Autowired
+	private FileService fileService;
 	
 	@GetMapping("/join")
 	public void join(AccountDTO accountDTO) {
@@ -73,7 +77,11 @@ public class AccountController {
 	public void detail(Model model, HttpSession session) throws Exception {
 		AccountDTO accountDTO = (AccountDTO) session.getAttribute("logined");
 		accountDTO = accountService.detail(accountDTO);
+		
+		FileDTO fileDTO = accountService.detailProfile(accountDTO.getAccountNumber());
+		
 		model.addAttribute("accountDTO", accountDTO);
+		model.addAttribute("fileDTO", fileDTO);
 	}
 	
 	@GetMapping("/update")
