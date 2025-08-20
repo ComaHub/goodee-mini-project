@@ -69,8 +69,10 @@ public class AccountService {
 		
 		if (attach != null && !attach.isEmpty()) {
 			FileDTO oldFile = accountDAO.detailAttach(accountDTO.getAccountNumber());
-			fileService.deleteFile(oldFile);
-			result = accountDAO.deleteAttach(oldFile);
+			if (oldFile != null) {
+				fileService.deleteFile(oldFile);
+				result = accountDAO.deleteAttach(oldFile);
+			}
 			
 			String fileName = fileService.saveFile(FileService.ACCOUNT, attach);
 			

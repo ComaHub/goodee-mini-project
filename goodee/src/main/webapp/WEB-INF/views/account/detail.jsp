@@ -17,7 +17,9 @@
 		<c:import url="/WEB-INF/views/includes/nav.jsp"></c:import>
 	
 		<!-- Contents here! -->
-		<h2>Detail</h2>
+		<div class="my-5 text-center">
+			<h2 class="fw-bolder">회원 정보</h2>
+		</div>
 		<section class="col-10 m-auto">
 			<div class="mb-3">
 				<img alt="" src="/files/account/${fileDTO.saved}" height="300">
