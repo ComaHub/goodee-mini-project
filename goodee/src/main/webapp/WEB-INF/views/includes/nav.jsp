@@ -12,7 +12,14 @@
         <li class="nav-item"><a class="nav-link" href="/product/list">Product</a></li>
         <li class="nav-item"><a class="nav-link" href="contact.html">Donation</a></li>
         <c:if test="${ not empty sessionScope.logined }">
-        	<li class="nav-item"><a class="nav-link" href="/account/detail">My Page</a></li>
+        	<li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" id="navbarDropdownBlog" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">My Page</a>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownBlog">
+              <li><a class="dropdown-item" href="/account/detail">My Info</a></li>
+              <li><a class="dropdown-item" href="/cart/list">My Cart</a></li>
+              <li><a class="dropdown-item" href="/liked/list">Liked Product</a></li>
+            </ul>
+          </li>
         	<li class="nav-item"><a class="nav-link" href="/account/logout">Log Out</a></li>
         </c:if>
         <c:if test="${ empty sessionScope.logined }">
