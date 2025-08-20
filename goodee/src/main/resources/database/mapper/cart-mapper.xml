@@ -19,7 +19,7 @@
 		</association>
 	</resultMap>
 	
-	<select id="selectCartList" parameterType="Long" resultMap="productResultMap">
+	<select id="selectCartList" parameterType="map" resultMap="productResultMap">
 		SELECT
 				*
 		FROM product P
@@ -33,6 +33,29 @@
 					account_number = #{accountNumber}
 				</where>
 			)
+			<if test="keyword != null and keyword != ''">
+				P.name LIKE CONCAT('%', #{paging.keyword} ,'%')
+			</if>
+		</where>
+		LIMIT #{paging.limitPageNo}, #{paging.numPerPage}
+	</select>
+	
+	<select id="totalCount" parameterType="map">
+		SELECT COUNT(product_number)
+		FROM product P
+		INNER JOIN attach A ON A.type = 3 AND P.product_number = A.key_data
+		<where>
+			P.product_number IN (
+				SELECT
+					product_number
+				FROM cart
+				<where>
+					account_number = #{accountNumber}
+				</where>
+			)
+			<if test="keyword != null and keyword != ''">
+				P.name LIKE CONCAT('%', #{paging.keyword} ,'%')
+			</if>
 		</where>
 	</select>
 	

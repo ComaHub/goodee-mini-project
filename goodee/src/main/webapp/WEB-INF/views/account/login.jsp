@@ -12,22 +12,28 @@
 </head>
 
 <body class="d-flex flex-column h-100">
-	<main class="flex-shrink-0">
+	<main class=" h-100 flex-shrink-0">
 		<c:import url="/WEB-INF/views/includes/nav.jsp"></c:import>
 	
 		<!-- Contents here! -->
-		<h1>Login</h1>
-		<section class="col-10 m-auto">
-			<form:form modelAttribute="accountDTO" method="post">
-				<div class="mb-3 d-flex justify-content-center">
-					<form:input path="id"/>
-					<form:password path="password"/>
-				</div>
-				<div class="mb-3 d-flex justify-content-center">
-					<form:button class="btn btn-primary">로그인</form:button>
-					<a href="./join" class="btn btn-outline-primary">회원가입</a>
-				</div>
-			</form:form>
+		<div class="my-5 text-center">
+			<h2 class="fw-bolder">로그인</h2>
+		</div>
+		<section class="h-25 col-10 m-auto">
+			<div class="h-100 d-flex flex-column justify-content-center">
+				<form:form modelAttribute="accountDTO" method="post">
+					<div class="mb-3 d-flex justify-content-center">
+						<div class="mb-1 d-flex flex-column gap-3">
+							<form:input path="id" class="form-control" placeholder="ID"/>
+							<form:password path="password" class="form-control"  placeholder="PW"/>
+						</div>
+					</div>
+					<div class="mb-3 d-flex justify-content-center gap-3">
+						<form:button class="btn btn-primary">로그인</form:button>
+						<a href="./join" class="btn btn-outline-primary">회원가입</a>
+					</div>
+				</form:form>
+			</div>
 		</section>
 	
 	</main>
