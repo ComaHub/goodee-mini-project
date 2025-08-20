@@ -5,6 +5,7 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.goodee.proj.common.interceptor.AdminCheckerInterceptor;
+import com.goodee.proj.common.interceptor.LoginCheckerInterceptor;
 
 @Configuration
 public class InterceptorConfig implements WebMvcConfigurer {
@@ -16,8 +17,8 @@ public class InterceptorConfig implements WebMvcConfigurer {
 			.addPathPatterns("/account/list")
 			.addPathPatterns("/product/add", "/product/update", "/product/delete");
 		// 로그인 체크
-//		registry.addInterceptor(new LoginCheckerInterceptor())
-//			.addPathPatterns("/account/detail", "/account/update", "/account/delete")
-//			.addPathPatterns("/product/like", "/cart/**", "/product/buy");
+		registry.addInterceptor(new LoginCheckerInterceptor())
+			.addPathPatterns("/account/detail", "/account/update", "/account/delete")
+			.addPathPatterns("/product/like", "/cart/**", "/product/buy");
 	}
 }
