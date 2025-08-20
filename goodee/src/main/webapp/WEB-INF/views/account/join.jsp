@@ -18,7 +18,7 @@
 		<!-- Contents here! -->
 		<h2>Join</h2>
 		<section class="col-10 m-auto">
-			<form:form modelAttribute="accountDTO" method="post">
+			<form:form modelAttribute="accountDTO" method="post" enctype="multipart/form-data">
 				<div class="mb-3">
 					<label for="exampleFormControlInput1" class="form-label">ID</label>
 					<form:input path="id" class="form-control"/>
@@ -28,6 +28,10 @@
 					<label for="exampleFormControlInput1" class="form-label">비밀번호</label>
 					<form:password path="password" class="form-control"/>
 					<form:errors path="password"/>
+				</div>
+				<div class="mb-3">
+					<label for="exampleFormControlInput1" class="form-label">프로필 사진</label>
+					<input class="form-control" type="file" name="attach">
 				</div>
 				<div class="mb-3">
 					<label for="exampleFormControlInput1" class="form-label">이름</label>

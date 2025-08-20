@@ -4,15 +4,44 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.goodee.proj.common.file.FileDTO;
+import com.goodee.proj.common.file.FileService;
 
 @Service
 public class AccountService {
 
 	@Autowired
 	private AccountDAO accountDAO;
+	@Autowired
+	private FileService fileService;
 	
-	public int insert(AccountDTO accountDTO) throws Exception {
-		return accountDAO.insert(accountDTO);
+	@Transactional(rollbackFor = Exception.class)
+	public int insert(AccountDTO accountDTO, MultipartFile attach) throws Exception {
+		int result = accountDAO.insert(accountDTO);
+//		
+		if (result != 1) throw new Exception();
+		
+		if (attach != null && !attach.isEmpty()) {
+			String fileName = fileService.saveFile(FileService.ACCOUNT, attach);
+			
+			FileDTO fileDTO = new FileDTO();
+			fileDTO.setType(FileService.ACCOUNT);
+			fileDTO.setKeyData(accountDTO.getAccountNumber());
+			fileDTO.setOrigin(attach.getOriginalFilename());
+			fileDTO.setSaved(fileName);
+			
+			result = accountDAO.insertAttach(fileDTO);
+		}
+		
+		if (result != 1) {
+			
+			throw new Exception();
+		}
+		
+		return result;
 	}
 
 	public List<AccountDTO> list() throws Exception {

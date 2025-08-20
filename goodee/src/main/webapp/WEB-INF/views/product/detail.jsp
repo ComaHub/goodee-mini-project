@@ -21,7 +21,19 @@
 			<p>상품명: ${productDTO.name}</p>
 			<p>카테고리: ${productDTO.category}</p>
 			<p>가격: ${productDTO.price}</p>
-			<a href="./update?productNumber=${ productDTO.productNumber }">수정</a>
+			<c:choose>
+				<c:when test="${ logined.admin eq true }">
+					<div class="mb-3 d-flex justify-content-end">
+						<a href="./update?productNumber=${ productDTO.productNumber }" class="btn btn-primary">수정</a>
+					</div>
+				</c:when>
+				<c:otherwise>
+					<div class="mb-3 d-flex justify-content-end">
+						<a href="./like?productNumber=${ productDTO.productNumber }" class="btn btn-outline-danger">찜하기</a>
+						<a href="./buy?productNumber=${ productDTO.productNumber }" class="btn btn-primary">구매하기</a>
+					</div>
+				</c:otherwise>
+			</c:choose>
 		</section>
 	
 	

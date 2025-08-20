@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.goodee.proj.account.groups.Join;
 import com.goodee.proj.account.groups.Login;
@@ -30,14 +31,20 @@ public class AccountController {
 	}
 	
 	@PostMapping("/join")
-	public String join(Model model, @Validated(Join.class) AccountDTO accountDTO, BindingResult bindingResult) throws Exception {
+	public String join(Model model, @Validated(Join.class) AccountDTO accountDTO, 
+			BindingResult bindingResult, MultipartFile attach) throws Exception {
 		
 		if (bindingResult.hasErrors()) {
 			return "/account/join";
 		}
-		int result = accountService.insert(accountDTO);
-		System.out.println(result);
-		return "/index";
+		System.out.println(attach);
+		int result = accountService.insert(accountDTO, attach);
+		
+		if (result > 0) {
+			return "redirect:/";
+		}
+		
+		return "/account/join";
 	}
 	
 	@GetMapping("/login")
@@ -54,7 +61,7 @@ public class AccountController {
 		AccountDTO result = accountService.login(accountDTO);
 		
 		if (result == null) {
-			return "redirect:/account/login";
+			return "/account/login";
 		}
 		
 		session.setAttribute("logined", result);

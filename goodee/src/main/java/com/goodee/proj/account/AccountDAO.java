@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.goodee.proj.common.file.FileDTO;
+
 import jakarta.validation.Valid;
 
 @Mapper
@@ -17,4 +19,5 @@ public interface AccountDAO {
 	AccountDTO detail(AccountDTO accountDTO) throws Exception;
 	int update(AccountDTO accountDTO) throws Exception;
 	int dropOut(AccountDTO accountDTO) throws Exception;
+	int insertAttach(FileDTO fileDTO) throws Exception;
 }

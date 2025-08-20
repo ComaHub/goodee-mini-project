@@ -66,4 +66,6 @@ public class ProductController {
 		
 		return "redirect:/product/update?productNumber=" + productDTO.getProductNumber();
 	}
+	
+	
 }

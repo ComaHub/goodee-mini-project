@@ -19,9 +19,14 @@
 		<h1>Login</h1>
 		<section class="col-10 m-auto">
 			<form:form modelAttribute="accountDTO" method="post">
-				<form:input path="id"/>
-				<form:password path="password"/>
-				<form:button class="btn btn-primary">로그인</form:button>
+				<div class="mb-3 d-flex justify-content-center">
+					<form:input path="id"/>
+					<form:password path="password"/>
+				</div>
+				<div class="mb-3 d-flex justify-content-center">
+					<form:button class="btn btn-primary">로그인</form:button>
+					<a href="./join" class="btn btn-outline-primary">회원가입</a>
+				</div>
 			</form:form>
 		</section>
 	
