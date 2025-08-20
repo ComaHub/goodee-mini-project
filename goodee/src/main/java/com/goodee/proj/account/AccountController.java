@@ -17,7 +17,6 @@ import com.goodee.proj.account.groups.Login;
 import com.goodee.proj.account.groups.Update;
 
 import jakarta.servlet.http.HttpSession;
-import jakarta.validation.Valid;
 
 @Controller
 @RequestMapping("/account/*")
@@ -53,6 +52,11 @@ public class AccountController {
 		}
 		
 		AccountDTO result = accountService.login(accountDTO);
+		
+		if (result == null) {
+			return "redirect:/account/login";
+		}
+		
 		session.setAttribute("logined", result);
 
 		return "redirect:/account/detail";
@@ -62,7 +66,7 @@ public class AccountController {
 	public void detail(Model model, HttpSession session) throws Exception {
 		AccountDTO accountDTO = (AccountDTO) session.getAttribute("logined");
 		accountDTO = accountService.detail(accountDTO);
-		model.addAttribute("account", accountDTO);
+		model.addAttribute("accountDTO", accountDTO);
 	}
 	
 	@GetMapping("/update")
@@ -80,11 +84,32 @@ public class AccountController {
 		}
 		
 		AccountDTO dto = (AccountDTO) session.getAttribute("logined");
-		accountDTO.setNumber(dto.getNumber());
+		accountDTO.setAccountNumber(dto.getAccountNumber());
 		
 		int result = accountService.update(accountDTO);
 		
 		return "redirect:/account/detail";
+	}
+	
+	@PostMapping("/dropOut")
+	public String dropOut(HttpSession session, String password) throws Exception {
+		AccountDTO accountDTO = (AccountDTO) session.getAttribute("logined");
+		accountDTO.setPassword(password);
+		
+		int result = accountService.dropOut(accountDTO);
+		
+		if (result > 0) {
+			return "redirect:/account/logout";
+		}
+		
+		return "redirect:/account/detail";
+	}
+	
+	@GetMapping("/logout")
+	public String logout(HttpSession session) {
+		session.removeAttribute("logined");
+		session.setMaxInactiveInterval(0);
+		return "redirect:/";
 	}
 	
 	@GetMapping("/list")

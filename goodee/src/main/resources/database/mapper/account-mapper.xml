@@ -13,7 +13,7 @@
 	</insert>
 	
 	<select id="list" resultType="AccountDTO">
-		SELECT number, id, name, email, phone, postcode, address, address_detail, admin
+		SELECT account_number, id, name, email, phone, postcode, address, address_detail, admin
 		FROM account
 		WHERE active=1
 	</select>
@@ -21,19 +21,19 @@
 	<update id="updateAdmin">
 		UPDATE account
 		SET admin = #{admin}
-		WHERE number = #{number}
+		WHERE account_number = #{accountNumber}
 	</update>
 	
 	<select id="login">
-		SELECT number, id, name
+		SELECT account_number, id, name, admin
 		FROM account
-		WHERE NOT active = 0 AND id = #{id} AND password = #{password}
+		WHERE active = 1 AND id = #{id} AND password = #{password}
 	</select>
 	
 	<select id="detail" resultType="AccountDTO">
-		SELECT *
+		SELECT id, name, email, phone, postcode, address, address_detail
 		FROM account
-		WHERE number = #{number}
+		WHERE account_number = #{accountNumber}
 	</select>
 	
 	<update id="update" parameterType="AccountDTO">
@@ -44,5 +44,11 @@
 			postcode = #{postcode}, 
 			address = #{address}, 
 			address_detail = #{addressDetail}
+	</update>
+	
+	<update id="dropOut" parameterType="AccountDTO">
+		UPDATE account
+		SET active = 0
+		WHERE account_number = #{accountNumber} AND password = #{password}
 	</update>
 </mapper>

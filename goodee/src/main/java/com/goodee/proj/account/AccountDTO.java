@@ -19,7 +19,7 @@ import lombok.ToString;
 @ToString
 public class AccountDTO {
 
-	private Long number;
+	private Long accountNumber;
 	@NotBlank(groups = {Login.class, Join.class})
 	private String id;
 	private String password;

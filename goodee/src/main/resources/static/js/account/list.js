@@ -6,11 +6,11 @@ const authorities = document.querySelectorAll('.auth');
 
 authorities.forEach(function (a) {
 	a.addEventListener('change', function () {
-		number = a.dataset.number;
+		accountNumber = a.dataset.number;
 		admin = a.value;
 		
 		const params = new URLSearchParams();
-		params.append('number', number);
+		params.append('accountNumber', accountNumber);
 		params.append('admin', admin);
 		
 		fetch('./list', {

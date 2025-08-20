@@ -1,0 +1,92 @@
+-- goodee_mini.account definition
+
+CREATE TABLE `account` (
+  `account_number` bigint NOT NULL AUTO_INCREMENT,
+  `id` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `phone` varchar(255) NOT NULL,
+  `postcode` varchar(10) NOT NULL,
+  `address` varchar(255) NOT NULL,
+  `address_detail` varchar(255) NOT NULL,
+  `admin` bit(1) NOT NULL DEFAULT b'0',
+  `active` bit(1) NOT NULL DEFAULT b'1',
+  PRIMARY KEY (`account_number`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+-- goodee_mini.animal definition
+
+CREATE TABLE `animal` (
+  `animal_number` bigint NOT NULL AUTO_INCREMENT,
+  `date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `name` varchar(255) NOT NULL,
+  `species` varchar(255) NOT NULL,
+  `breed` varchar(255) NOT NULL,
+  `gender` varchar(10) NOT NULL,
+  `weight` decimal(5,2) NOT NULL,
+  `neutered` bit(1) NOT NULL,
+  `status` varchar(255) NOT NULL,
+  PRIMARY KEY (`animal_number`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+-- goodee_mini.attach definition
+
+CREATE TABLE `attach` (
+  `attach_number` bigint NOT NULL AUTO_INCREMENT,
+  `key_data` bigint NOT NULL,
+  `type` int NOT NULL,
+  `origin` varchar(255) NOT NULL,
+  `saved` varchar(255) NOT NULL,
+  PRIMARY KEY (`attach_number`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+-- goodee_mini.product definition
+
+CREATE TABLE `product` (
+  `product_number` bigint NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `category` varchar(255) NOT NULL,
+  `amount` bigint NOT NULL,
+  `price` bigint NOT NULL,
+  PRIMARY KEY (`product_number`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+-- goodee_mini.adoption definition
+
+CREATE TABLE `adoption` (
+  `account_number` bigint NOT NULL,
+  `animal_number` bigint NOT NULL,
+  PRIMARY KEY (`account_number`,`animal_number`),
+  KEY `animal_number` (`animal_number`),
+  CONSTRAINT `adoption_ibfk_1` FOREIGN KEY (`account_number`) REFERENCES `account` (`account_number`),
+  CONSTRAINT `adoption_ibfk_2` FOREIGN KEY (`animal_number`) REFERENCES `animal` (`animal_number`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+-- goodee_mini.cart definition
+
+CREATE TABLE `cart` (
+  `account_number` bigint NOT NULL,
+  `product_number` bigint NOT NULL,
+  PRIMARY KEY (`account_number`,`product_number`),
+  KEY `product_number` (`product_number`),
+  CONSTRAINT `cart_ibfk_1` FOREIGN KEY (`account_number`) REFERENCES `account` (`account_number`),
+  CONSTRAINT `cart_ibfk_2` FOREIGN KEY (`product_number`) REFERENCES `product` (`product_number`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+-- goodee_mini.likes definition
+
+CREATE TABLE `likes` (
+  `account_number` bigint NOT NULL,
+  `product_number` bigint NOT NULL,
+  PRIMARY KEY (`account_number`,`product_number`),
+  KEY `product_number` (`product_number`),
+  CONSTRAINT `likes_ibfk_1` FOREIGN KEY (`account_number`) REFERENCES `account` (`account_number`),
+  CONSTRAINT `likes_ibfk_2` FOREIGN KEY (`product_number`) REFERENCES `product` (`product_number`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;

@@ -8,6 +8,7 @@
 	<meta charset="UTF-8">
 	<title>회원 가입</title>
 	
+	<link href="/css/account/detail.css" rel="stylesheet">
 	<c:import url="/WEB-INF/views/includes/header.jsp"></c:import>
 </head>
 
@@ -20,45 +21,50 @@
 		<section class="col-10 m-auto">
 			<div class="mb-3">
 				<label for="exampleFormControlInput1" class="form-label">ID</label>
-				<p>${ account.id }</p>
-			</div>
-			<div class="mb-3">
-				<label for="exampleFormControlInput1" class="form-label">비밀번호</label>
-				<p>${ account.password }</p>
+				<p>${ accountDTO.id }</p>
 			</div>
 			<div class="mb-3">
 				<label for="exampleFormControlInput1" class="form-label">이름</label>
-				<p>${ account.name }</p>
+				<p>${ accountDTO.name }</p>
 			</div>
 			<div class="mb-3">
 				<label for="exampleFormControlInput1" class="form-label">이메일</label>
-				<p>${ account.email }</p>
+				<p>${ accountDTO.email }</p>
 			</div>
 			<div class="mb-3">
 				<label for="exampleFormControlInput1" class="form-label">전화 번호</label>
-				<p>${ account.phone }</p>
+				<p>${ accountDTO.phone }</p>
 			</div>
 			<div class="mb-3">
 				<label for="exampleFormControlInput1" class="form-label">우편 번호</label>
-				<p>${ account.postcode }</p>
+				<p>${ accountDTO.postcode }</p>
 			</div>
 			<div class="mb-3">
 				<label for="exampleFormControlInput1" class="form-label">주소</label>
-				<p>${ account.address }</p>
+				<p>${ accountDTO.address }</p>
 			</div>
 			<div class="mb-3">
 				<label for="exampleFormControlInput1" class="form-label">상세 주소</label>
-				<p>${ account.addressDetail }</p>
+				<p>${ accountDTO.addressDetail }</p>
 			</div>
-			<div class="mb-3 d-flex justify-content-end">
+			<div class="mb-3 d-flex justify-content-between">
+				<button id="dropOut" class="btn btn-danger">회원 탈퇴</button>
 				<a class="btn btn-outline-primary" href="./update">수정</a>
-				<button id="dropOut" class="btn btn-outline-primary">회원 탈퇴</button>
 			</div>
 		</section>
 		
+		<div id="modal">
+			<form:form modelAttribute="accountDTO" action="./dropOut" method="post">
+				<p>비밀 번호를 입력해주세요</p>
+				<form:input path="password"/>
+				<form:button class="btn btn-danger">회원 탈퇴</form:button>
+			</form:form>
+		</div>
+	
 	
 	</main>
 	<c:import url="/WEB-INF/views/includes/footer.jsp"></c:import>
+	<script type="text/javascript" src="/js/account/detail.js"></script>
 </body>
 
 </html>

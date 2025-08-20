@@ -16,4 +16,5 @@ public interface AccountDAO {
 	AccountDTO login(AccountDTO accountDTO) throws Exception;
 	AccountDTO detail(AccountDTO accountDTO) throws Exception;
 	int update(AccountDTO accountDTO) throws Exception;
+	int dropOut(AccountDTO accountDTO) throws Exception;
 }

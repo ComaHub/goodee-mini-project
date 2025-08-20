@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <div class="container px-5">
@@ -12,7 +13,14 @@
         <li class="nav-item"><a class="nav-link" href="pricing.html">Pricing</a></li>
         <li class="nav-item"><a class="nav-link" href="faq.html">FAQ</a></li>
         <li class="nav-item"><a class="nav-link" href="/product/list">굿즈</a></li>
-        <li class="nav-item"><a class="nav-link" href="/account/login">로그인</a></li>
+        <c:choose>
+        	<c:when test="${ not empty logined }">
+        		<li class="nav-item"><a class="nav-link" href="/account/logout">로그아웃</a></li>
+        	</c:when>
+        	<c:otherwise>
+        		<li class="nav-item"><a class="nav-link" href="/account/login">로그인</a></li>
+        	</c:otherwise>
+        </c:choose>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" id="navbarDropdownBlog" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Blog</a>
           <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownBlog">

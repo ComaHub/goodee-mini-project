@@ -41,7 +41,7 @@
 							<td>${ a.postcode }</td>
 							<td>${ a.address }</td>
 							<td>${ a.addressDetail }</td>
-							<td><select class="auth" data-number="${ a.number }">
+							<td><select class="auth" data-number="${ a.accountNumber }">
 								<option ${ a.admin == true ? 'selected' : '' }>TRUE</option>
 								<option ${ a.admin == false ? 'selected' : '' }>FALSE</option>
 							</select></td>

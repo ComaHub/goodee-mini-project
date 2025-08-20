@@ -5,8 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import jakarta.validation.Valid;
-
 @Service
 public class AccountService {
 
@@ -35,5 +33,9 @@ public class AccountService {
 
 	public int update(AccountDTO accountDTO) throws Exception {
 		return accountDAO.update(accountDTO);
+	}
+
+	public int dropOut(AccountDTO accountDTO) throws Exception {
+		return accountDAO.dropOut(accountDTO);
 	}
 }
