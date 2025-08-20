@@ -3,13 +3,83 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.goodee.proj.animal.AnimalDAO">
-	<insert id="insertAnimal" parameterType="AnimalDTO" useGeneratedKeys="true" keyProperty="number">
+	<resultMap type="AnimalDTO" id="animalResultMap">
+		<id property="animalNumber" column="animal_number" />
+		<result property="date" column="date" />
+		<result property="name" column="name" />
+		<result property="species" column="species" />
+		<result property="breed" column="breed" />
+		<result property="gender" column="gender" />
+		<result property="weight" column="weight" />
+		<result property="neutered" column="neutered" />
+		<result property="status" column="status" />
+		
+		<association property="animalProfileDTO" javaType="AnimalProfileDTO">
+			<id property="attachNumber" column="attach_number" />
+			<result property="keyData" column="key_data" />
+			<result property="type" column="type" />
+			<result property="origin" column="origin" />
+			<result property="saved" column="saved" />
+		</association>
+	</resultMap>
+	
+	<select id="selectAnimal" parameterType="Long" resultMap="animalResultMap">
+		SELECT
+				*
+		FROM animal A
+		INNER JOIN attach T ON T.type = 2 AND A.animal_number = T.key_data
+		<where>
+			A.animal_number = #{animalNumber}
+		</where>
+	</select>
+	
+	<select id="selectAnimalList" resultMap="animalResultMap">
+		SELECT
+				*
+		FROM animal A
+		INNER JOIN attach T ON T.type = 2 AND A.animal_number = T.key_data
+	</select>
+	
+	<select id="selectAnimalProfile" parameterType="Long" resultType="AnimalProfileDTO">
+		SELECT
+				*
+		FROM attach
+		<where>
+			type = 2 AND key_data = #{animalNumber}
+		</where>
+	</select>
+
+	<insert id="insertAnimal" parameterType="AnimalDTO" useGeneratedKeys="true" keyProperty="animalNumber">
 		INSERT INTO animal
 		VALUES (NULL, NOW(), #{name}, #{species}, #{breed}, #{gender}, #{weight}, #{neutered}, #{status})
 	</insert>
 	
-	<insert id="insertAnimalAttach" parameterType="FileDTO">
+	<insert id="insertAnimalAttach" parameterType="AnimalProfileDTO">
 		INSERT INTO attach
 		VALUES (NULL, #{keyData}, #{type}, #{origin}, #{saved})
 	</insert>
+	
+	<update id="updateAnimal" parameterType="AnimalDTO">
+		UPDATE animal
+		SET
+				name = #{name}
+			, species = #{species}
+			, breed = #{breed}
+			, gender = #{gender}
+			, weight = #{weight}
+			, neutered = #{neutered}
+		<where>
+			animal_number = #{animalNumber}
+		</where>
+	</update>
+	
+	<update id="updateAnimalAttach">
+		UPDATE attach
+		SET
+				origin = #{origin}
+			, saved = #{saved}
+		<where>
+			attach_number = #{attachNumber}
+		</where>
+	</update>
 </mapper>

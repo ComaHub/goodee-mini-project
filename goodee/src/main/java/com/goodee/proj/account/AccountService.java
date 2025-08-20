@@ -34,11 +34,11 @@ public class AccountService {
 			fileDTO.setSaved(fileName);
 			
 			result = accountDAO.insertAttach(fileDTO);
-		}
-		
-		if (result != 1) {
 			
-			throw new Exception();
+			if (result != 1) {
+				fileService.deleteFile(fileDTO);
+				throw new Exception();
+			}
 		}
 		
 		return result;
