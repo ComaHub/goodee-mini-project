@@ -15,5 +15,7 @@ public interface AnimalDAO {
 	int insertAnimalAttach(FileDTO fileDTO) throws Exception;
 	int updateAnimal(AnimalDTO animalDTO) throws Exception;
 	int updateAnimalAttach(AnimalProfileDTO animalProfileDTO) throws Exception;
+	int deleteAnimal(Long animalNumber) throws Exception;
+	int deleteAnimalAttach(Long attachNumber) throws Exception;
 
 }
