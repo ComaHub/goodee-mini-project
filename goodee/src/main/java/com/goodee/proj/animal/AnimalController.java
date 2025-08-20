@@ -1,5 +1,7 @@
 package com.goodee.proj.animal;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,11 +10,24 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.goodee.proj.common.file.FileService;
+
+import jakarta.servlet.http.HttpServletResponse;
+
 @Controller
 @RequestMapping("/animal/*")
 public class AnimalController {
 	@Autowired
 	private AnimalService animalService;
+	@Autowired
+	private FileService fileService;
+	
+	@GetMapping("list")
+	public void getAnimalList(Model model) throws Exception {
+		List<AnimalDTO> animalList = animalService.getAnimalList();
+		
+		model.addAttribute("animalList", animalList);
+	}
 	
 	@GetMapping("add")
 	public void getAnimalAdd(AnimalDTO animalDTO) throws Exception {
@@ -37,5 +52,11 @@ public class AnimalController {
 		model.addAttribute("resultMsg", resultMsg);
 		model.addAttribute("resultIcon", resultIcon);
 		return "common/result";
+	}
+	
+	@GetMapping("fileDownload")
+	public void getAnimalFileView(Long fileNum, HttpServletResponse response) throws Exception {
+		AnimalProfileDTO animalProfileDTO = animalService.getAnimalProfile(fileNum);
+		fileService.downloadFile(animalProfileDTO, response);
 	}
 }

@@ -10,7 +10,7 @@ import lombok.ToString;
 @Setter
 @ToString
 public class AnimalDTO {
-	private Long number;
+	private Long animalNumber;
 	private LocalDateTime date;
 	private String name;
 	private String species;
@@ -19,4 +19,6 @@ public class AnimalDTO {
 	private Double weight;
 	private Boolean neutered;
 	private String status;
+	
+	private AnimalProfileDTO animalProfileDTO;
 }

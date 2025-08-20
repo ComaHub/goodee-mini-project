@@ -3,12 +3,48 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.goodee.proj.animal.AnimalDAO">
-	<insert id="insertAnimal" parameterType="AnimalDTO" useGeneratedKeys="true" keyProperty="number">
+	<resultMap type="AnimalDTO" id="animalResultMap">
+		<id property="animalNumber" column="animal_number" />
+		<result property="date" column="date" />
+		<result property="name" column="name" />
+		<result property="species" column="species" />
+		<result property="breed" column="breed" />
+		<result property="gender" column="gender" />
+		<result property="weight" column="weight" />
+		<result property="neutered" column="neutered" />
+		<result property="status" column="status" />
+		
+		<association property="animalProfileDTO" javaType="AnimalProfileDTO">
+			<id property="attachNumber" column="attach_number" />
+			<result property="keyData" column="key_data" />
+			<result property="type" column="type" />
+			<result property="origin" column="origin" />
+			<result property="saved" column="saved" />
+		</association>
+	</resultMap>
+	
+	<select id="selectAnimalList" resultMap="animalResultMap">
+		SELECT
+				*
+		FROM animal A
+		INNER JOIN attach T ON T.type = 2 AND A.animal_number = T.key_data
+	</select>
+	
+	<select id="selectAnimalProfile" parameterType="Long" resultType="AnimalProfileDTO">
+		SELECT
+				*
+		FROM attach
+		<where>
+			attach_number = #{fileNum}
+		</where>
+	</select>
+
+	<insert id="insertAnimal" parameterType="AnimalDTO" useGeneratedKeys="true" keyProperty="animalNumber">
 		INSERT INTO animal
 		VALUES (NULL, NOW(), #{name}, #{species}, #{breed}, #{gender}, #{weight}, #{neutered}, #{status})
 	</insert>
 	
-	<insert id="insertAnimalAttach" parameterType="FileDTO">
+	<insert id="insertAnimalAttach" parameterType="AnimalProfileDTO">
 		INSERT INTO attach
 		VALUES (NULL, #{keyData}, #{type}, #{origin}, #{saved})
 	</insert>

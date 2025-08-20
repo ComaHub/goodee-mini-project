@@ -1,12 +1,17 @@
 package com.goodee.proj.common.file;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.OutputStream;
+import java.net.URLEncoder;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.multipart.MultipartFile;
+
+import jakarta.servlet.http.HttpServletResponse;
 
 @Component
 public class FileService {
@@ -37,4 +42,26 @@ public class FileService {
 		
 		return fileName;
 	}
+
+	public void downloadFile(FileDTO fileDTO, HttpServletResponse response) throws Exception {
+		String filePath = dir + getAttachTypeString(fileDTO.getType());
+		File file = new File(filePath, fileDTO.getSaved());
+		
+		response.setContentLengthLong(file.length());
+		String fileName = URLEncoder.encode(fileDTO.getOrigin(), "UTF-8");
+		
+		response.setHeader("Content-Disposition", "attachment;fileName=\"" + fileName + "\"");
+		response.setHeader("Content-Transfer-Encoding", "binary");
+		
+		FileInputStream fis = new FileInputStream(file);
+		OutputStream os = response.getOutputStream();
+		
+		try (fis; os) {
+			FileCopyUtils.copy(fis, os);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
 }

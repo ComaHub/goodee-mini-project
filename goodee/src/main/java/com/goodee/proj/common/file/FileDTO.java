@@ -8,7 +8,7 @@ import lombok.ToString;
 @Setter
 @ToString
 public class FileDTO {
-	private Long number;
+	private Long attachNumber;
 	private Long keyData;
 	private Integer type;
 	private String origin;
