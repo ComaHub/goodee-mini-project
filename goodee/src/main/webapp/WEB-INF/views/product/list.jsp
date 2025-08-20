@@ -60,7 +60,8 @@
 							<td valign="middle">${ product.category }</td>
 							<td valign="middle">
 								<div class="d-flex gap-4 justify-content-center">
-									<a class="addLikeBtn" data-product-number="${ product.productNumber }" ><span class="material-symbols-outlined">favorite</span></a>
+									<c:if test="${ not isLikeList }"><a class="addLikeBtn" data-product-number="${ product.productNumber }" ><span class="material-symbols-outlined">favorite</span></a></c:if>
+									<c:if test="${ isLikeList }"><a class="removeLikeBtn" data-product-number="${ product.productNumber }" ><span class="material-symbols-outlined">heart_minus</span></a></c:if>
 									<c:if test="${ not isCartList }"><a class="addCartBtn" data-product-number="${ product.productNumber }" ><span class="material-symbols-outlined">add_shopping_cart</span></a></c:if>
 									<c:if test="${ isCartList }"><a class="removeCartBtn" data-product-number="${ product.productNumber }" ><span class="material-symbols-outlined">shopping_cart_off</span></a></c:if>
 									<a><span class="material-symbols-outlined">credit_card</span></a>
