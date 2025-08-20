@@ -62,7 +62,7 @@
 					<c:otherwise>
 						<div class="mb-3 gap-3 d-flex justify-content-center">
 							<a href="./like?productNumber=${ productDTO.productNumber }" class="btn btn-outline-danger">찜하기</a>
-							<a href="/cart/add?productNumber=${ productDTO.productNumber }" class="btn btn-outline-primary">장바구니</a>
+							<a id="addCartBtn" data-product-number="${ productDTO.productNumber }" class="btn btn-outline-primary">장바구니</a>
 							<a href="./buy?productNumber=${ productDTO.productNumber }" class="btn btn-outline-success">구매하기</a>
 						</div>
 					</c:otherwise>
