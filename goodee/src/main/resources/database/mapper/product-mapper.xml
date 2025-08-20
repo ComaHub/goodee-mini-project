@@ -3,16 +3,37 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.goodee.proj.product.ProductDAO">
-	<insert id="insert" parameterType="ProductDTO">
-		INSERT INTO product
-			(name, category, amount, price)
-		VALUES
-			(#{name}, #{category}, #{amount}, #{price})
-	</insert>
+	<resultMap type="ProductDTO" id="productResultMap">
+		<id property="productNumber" column="product_number" />
+		<result property="name" column="name" />
+		<result property="category" column="category" />
+		<result property="amount" column="amount" />
+		<result property="price" column="price" />
+		
+		<association property="productImageDTO" javaType="ProductImageDTO">
+			<id property="attachNumber" column="attach_number" />
+			<result property="keyData" column="key_data" />
+			<result property="type" column="type" />
+			<result property="origin" column="origin" />
+			<result property="saved" column="saved" />
+		</association>
+	</resultMap>
 	
-	<select id="list" parameterType="Paging" resultType="ProductDTO">
-		SELECT *
-		FROM product
+	<select id="selectProduct" parameterType="ProductDTO" resultMap="productResultMap">
+		SELECT
+				*
+		FROM product P
+		INNER JOIN attach A ON A.type = 3 AND P.product_number = A.key_data
+		<where>
+			product_number = #{productNumber}
+		</where>
+	</select>
+	
+	<select id="selectProductList" parameterType="Paging" resultMap="productResultMap">
+		SELECT
+				*
+		FROM product P
+		INNER JOIN attach A ON A.type = 3 AND P.product_number = A.key_data
 		<if test="keyword != null and keyword != ''">
 			<where>
 				name LIKE CONCAT('%', #{keyword} ,'%')
@@ -31,20 +52,58 @@
 		</if>
 	</select>
 	
-	<select id="detail" parameterType="ProductDTO" resultType="ProductDTO">
-		SELECT *
-		FROM product
-		WHERE product_number = #{productNumber}
+	<select id="selectProductImage" resultType="ProductImageDTO">
+		SELECT
+				*
+		FROM attach
+		<where>
+			type = 3 AND key_data = #{productNumber}
+		</where>
 	</select>
+
+	<insert id="insertProduct" parameterType="ProductDTO" useGeneratedKeys="true" keyProperty="productNumber">
+		INSERT INTO product
+		VALUES (NULL, #{name}, #{category}, #{amount}, #{price})
+	</insert>
 	
-	<update id="update" parameterType="ProductDTO">
+	<insert id="insertProductImage" parameterType="ProductImageDTO">
+		INSERT INTO attach
+		VALUES (NULL, #{keyData}, #{type}, #{origin}, #{saved})
+	</insert>
+	
+	<update id="updateProduct" parameterType="ProductDTO">
 		UPDATE product
-		SET name = #{name},
-			category = #{category},
-			amount = #{amount},
-			price = #{price}
-		WHERE product_number = #{productNumber}
+		SET 
+				name = #{name}
+			, category = #{category}
+			, amount = #{amount}
+			, price = #{price}
+		<where>
+			product_number = #{productNumber}
+		</where>
 	</update>
 	
+	<update id="updateProductImage" parameterType="ProductImageDTO">
+		UPDATE attach
+		SET
+				origin = #{origin}
+			, saved = #{saved}
+		<where>
+			attach_number = #{attachNumber}
+		</where>
+	</update>
 	
+	<delete id="deleteProduct" parameterType="Long">
+		DELETE FROM product
+		<where>
+			product_number = #{productNumber}
+		</where>
+	</delete>
+	
+	<delete id="deleteProductImage" parameterType="Long">
+		DELETE FROM attach
+		<where>
+			attach_number = #{attachNumber}
+		</where>
+	</delete>
 </mapper>

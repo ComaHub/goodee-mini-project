@@ -16,25 +16,42 @@
 		<c:import url="/WEB-INF/views/includes/nav.jsp"></c:import>
 	
 		<!-- Contents here! -->
-		<h1>List</h1>
-		<section class="col-10 m-auto">
-			<table class="table">
+		<div class="container px-5 my-5">
+			<div class="row gx-5 justify-content-center">
+        <div class="col-8">
+          <div class="text-center">
+	          <h2 class="fw-bolder">상품 목록</h2>
+	          <p class="lead fw-normal text-muted mb-5">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eaque fugit ratione dicta mollitia. Officiis ad.</p>
+          </div>
+        </div>
+	    </div>
+		</div>
+		
+		<section class="col-6 offset-3">
+			<table class="table text-center">
 				<thead>
 					<tr>
-						<th>상품번호</th>
-						<th>상품명</th>
-						<th>카테고리</th>
-						<th>가격</th>
+						<th class="col-2">이미지</th>
+						<th class="col-3">상품명</th>
+						<th class="col-2">가격</th>
+						<th class="col-2">카테고리</th>
+						<th class="col-3">메뉴</th>
 					</tr>
 				</thead>
 				<tbody>
-					<c:forEach var="p" items="${list}">
+					<c:forEach var="product" items="${ productList }">
 						<tr>
-							<td>${p.productNumber}</td>
-							<td><a href="./detail?productNumber=${ p.productNumber }">
-							${p.name}</a></td>
-							<td>${p.category}</td>
-							<td>${p.price}</td>
+							<td valign="middle"><img width="100" height="100" class="border border-1 border-dark" style="object-fit: cover;" src="/files/product/${ product.productImageDTO.saved }" /></td>
+							<td valign="middle"><a href="./detail?productNumber=${ product.productNumber }">${ product.name }</a></td>
+							<td valign="middle">${ product.price } 원</td>
+							<td valign="middle">${ product.category }</td>
+							<td valign="middle">
+								<div class="d-flex gap-4 justify-content-center">
+									<a href="/liked/add?productNumber=${ productDTO.productNumber }" ><span class="material-symbols-outlined">favorite</span></a>
+									<a href="/cart/add?productNumber=${ productDTO.productNumber }" ><span class="material-symbols-outlined">add_shopping_cart</span></a>
+									<a href="#" ><span class="material-symbols-outlined">credit_card</span></a>
+								</div>
+							</td>
 						</tr>
 					</c:forEach>
 				</tbody>

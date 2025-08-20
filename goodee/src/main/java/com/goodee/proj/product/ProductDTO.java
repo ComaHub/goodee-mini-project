@@ -24,4 +24,6 @@ public class ProductDTO {
 	private Long amount;
 	@NotNull
 	private Long price;
+	
+	private ProductImageDTO productImageDTO;
 }
