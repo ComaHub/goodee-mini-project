@@ -15,8 +15,16 @@ public class AnimalService {
 	@Autowired
 	private FileService fileService;
 	
+	public AnimalDTO getAnimal(Long animalNumber) throws Exception {
+		return animalDAO.selectAnimal(animalNumber);
+	}
+	
 	public List<AnimalDTO> getAnimalList() throws Exception {
 		return animalDAO.selectAnimalList();
+	}
+	
+	public AnimalProfileDTO getAnimalProfile(Long animalNumber) throws Exception {
+		return animalDAO.selectAnimalProfile(animalNumber);
 	}
 	
 	public int addAnimal(AnimalDTO animalDTO, MultipartFile animalAttach) throws Exception {
@@ -38,8 +46,25 @@ public class AnimalService {
 		return result;
 	}
 
-	public AnimalProfileDTO getAnimalProfile(Long fileNum) throws Exception {
-		return animalDAO.selectAnimalProfile(fileNum);
+	public int updateAnimal(AnimalDTO animalDTO, MultipartFile animalAttach) throws Exception {
+		int result = animalDAO.updateAnimal(animalDTO);
+		
+		if (animalAttach != null && !animalAttach.isEmpty()) {
+			AnimalProfileDTO animalProfileDTO = animalDAO.selectAnimalProfile(animalDTO.getAnimalNumber());
+			fileService.deleteFile(animalProfileDTO);
+			
+			String fileName = fileService.saveFile(FileService.ANIMAL, animalAttach);
+			animalProfileDTO.setOrigin(animalAttach.getOriginalFilename());
+			animalProfileDTO.setSaved(fileName);
+			
+			animalDAO.updateAnimalAttach(animalProfileDTO);
+		}
+		
+		return result;
 	}
+
+	
+
+	
 
 }

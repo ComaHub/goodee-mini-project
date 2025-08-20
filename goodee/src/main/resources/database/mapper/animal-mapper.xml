@@ -23,6 +23,16 @@
 		</association>
 	</resultMap>
 	
+	<select id="selectAnimal" parameterType="Long" resultMap="animalResultMap">
+		SELECT
+				*
+		FROM animal A
+		INNER JOIN attach T ON T.type = 2 AND A.animal_number = T.key_data
+		<where>
+			A.animal_number = #{animalNumber}
+		</where>
+	</select>
+	
 	<select id="selectAnimalList" resultMap="animalResultMap">
 		SELECT
 				*
@@ -35,7 +45,7 @@
 				*
 		FROM attach
 		<where>
-			attach_number = #{fileNum}
+			type = 2 AND key_data = #{animalNumber}
 		</where>
 	</select>
 
@@ -48,4 +58,28 @@
 		INSERT INTO attach
 		VALUES (NULL, #{keyData}, #{type}, #{origin}, #{saved})
 	</insert>
+	
+	<update id="updateAnimal" parameterType="AnimalDTO">
+		UPDATE animal
+		SET
+				name = #{name}
+			, species = #{species}
+			, breed = #{breed}
+			, gender = #{gender}
+			, weight = #{weight}
+			, neutered = #{neutered}
+		<where>
+			animal_number = #{animalNumber}
+		</where>
+	</update>
+	
+	<update id="updateAnimalAttach">
+		UPDATE attach
+		SET
+				origin = #{origin}
+			, saved = #{saved}
+		<where>
+			attach_number = #{attachNumber}
+		</where>
+	</update>
 </mapper>
