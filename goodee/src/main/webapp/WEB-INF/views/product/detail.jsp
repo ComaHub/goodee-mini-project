@@ -55,7 +55,8 @@
 				<c:choose>
 					<c:when test="${ logined.admin eq true }">
 						<div class="mb-3 gap-3 d-flex justify-content-center">
-							<a href="./update?productNumber=${ productDTO.productNumber }" class="btn btn-primary">수정</a>
+							<button type="button" id="updateBtn" data-product-number="${ productDTO.productNumber }" class="btn btn-primary">상품 수정</button>
+							<button type="button" id="deleteBtn" data-product-number="${ productDTO.productNumber }" class="btn btn-danger">상품 삭제</button>
 						</div>
 					</c:when>
 					<c:otherwise>
@@ -72,6 +73,7 @@
 	
 	</main>
 	<c:import url="/WEB-INF/views/includes/footer.jsp"></c:import>
+	<script src="/js/product/product-detail.js"></script>
 </body>
 
 </html>

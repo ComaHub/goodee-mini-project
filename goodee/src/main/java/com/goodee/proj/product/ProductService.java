@@ -59,4 +59,20 @@ public class ProductService {
 		return result;
 	}
 
+	public int deleteProduct(Long productNumber) throws Exception {
+		ProductImageDTO productImageDTO = productDAO.selectProductImage(productNumber);
+		
+		if (productImageDTO != null) {
+			productDAO.deleteProductImage(productImageDTO.getAttachNumber());
+		}
+		
+		int result = productDAO.deleteProduct(productNumber);
+		
+		if (result > 0) {
+			fileService.deleteFile(productImageDTO);
+		}
+		
+		return result;
+	}
+
 }

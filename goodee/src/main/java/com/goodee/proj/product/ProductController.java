@@ -94,5 +94,25 @@ public class ProductController {
 		return "common/result";
 	}
 	
+	@GetMapping("delete")
+	public String getProductDelete(Long productNumber, Model model) throws Exception {
+		int result = productService.deleteProduct(productNumber);
+		
+		String resultMsg = "상품 삭제 중 오류가 발생했습니다.";
+		String resultIcon = "warning";
+		
+		if (result > 0) {
+			resultMsg = "상품이 삭제되었습니다.";
+			resultIcon = "success";
+			
+			String url = "list";
+			model.addAttribute("url", url);
+		}
+		
+		model.addAttribute("resultMsg", resultMsg);
+		model.addAttribute("resultIcon", resultIcon);
+		return "common/result";
+	}
+	
 	
 }

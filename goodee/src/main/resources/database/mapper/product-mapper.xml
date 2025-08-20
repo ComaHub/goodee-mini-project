@@ -76,4 +76,18 @@
 			attach_number = #{attachNumber}
 		</where>
 	</update>
+	
+	<delete id="deleteProduct" parameterType="Long">
+		DELETE FROM product
+		<where>
+			product_number = #{productNumber}
+		</where>
+	</delete>
+	
+	<delete id="deleteProductImage" parameterType="Long">
+		DELETE FROM attach
+		<where>
+			attach_number = #{attachNumber}
+		</where>
+	</delete>
 </mapper>
