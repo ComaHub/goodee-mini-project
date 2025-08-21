@@ -15,6 +15,7 @@ public class InterceptorConfig implements WebMvcConfigurer {
 		// 관리자 권한 체크
 		registry.addInterceptor(new AdminCheckerInterceptor())
 			.addPathPatterns("/account/list")
+			.addPathPatterns("/animal/add", "/animal/update", "/animal/delete")
 			.addPathPatterns("/product/add", "/product/update", "/product/delete");
 		// 로그인 체크
 		registry.addInterceptor(new LoginCheckerInterceptor())
