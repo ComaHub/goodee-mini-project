@@ -2,35 +2,43 @@
  * 
  */
 
-const payBtn = document.getElementById('');
+const SJPayBtnArr = document.querySelectorAll('.SJPayBtn');
 
-payBtn.addEventListener('click', function() {
-	const data = {
-		"create": {
-			"mode": "development",
-			"clientId": "",
-			"chainId": "",
-			"openType": "popup"
-		},
-		"open": {
-			"merchantPayKey": "${ logined.accountNumber }-${ productDTO.productNumber }",
-			"productName": "${ productDTO.name }",
-			"productCount": "1",
-			"totalPayAmount": "${ productDTO.price }",
-			"taxScopeAmount": "${ productDTO.price }",
-			"taxExScopeAmount": "0",
-			"returnUrl": "./detail?productNumber=${ productDTO.productNumber }",
+SJPayBtnArr.forEach(function(payBtn) {
+	payBtn.addEventListener('click', function() {
+		
+		const productNumber = payBtn.dataset.productNumber;
+		
+		const data = {
+			"productNumber": productNumber,
+			"create": {
+				"mode": "development",
+				"clientId": "",
+				"chainId": "",
+				"openType": "popup"
+			},
+			"open": {
+				"merchantPayKey": "${ logined.accountNumber }-${ productDTO.productNumber }",
+				"productName": "${ productDTO.name }",
+				"productCount": "1",
+				"totalPayAmount": "${ productDTO.price }",
+				"taxScopeAmount": "${ productDTO.price }",
+				"taxExScopeAmount": "0",
+				"returnUrl": "",
+			}
 		}
-	}
-	
-	fetch("/url", {
-		method: post,
-		body: JSON.stringify(data)
-	})
-	.then(r => r.json)
-	.then(r => {
-		console.log(r);
-		const oPay = Naver.Pay.create(r.create);
-		oPay.open(r.open);
+		
+		fetch("/naverPay/purchase", {
+			method: 'post',
+			headers : {"Content-Type" : "application/json"},
+			body: JSON.stringify(data)
+		})
+		.then(r => r.json())
+		.then(r => {
+			console.log(r);
+			const oPay = Naver.Pay.create(r.create);
+			oPay.open(r.open);
+		});
 	});
-});
+})
+
