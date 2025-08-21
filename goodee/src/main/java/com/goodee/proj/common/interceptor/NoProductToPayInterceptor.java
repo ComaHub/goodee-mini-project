@@ -11,9 +11,10 @@ public class NoProductToPayInterceptor implements HandlerInterceptor {
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+		String productNumber = request.getParameter("productNumber");
 		String[] checkedProducts = request.getParameterValues("checkedProduct");
 		
-		if (checkedProducts == null) {
+		if (productNumber == null && checkedProducts == null) {
 			request.setAttribute("resultMsg", "구매하실 제품을 선택 후 결제해주세요.");
 			request.setAttribute("resultIcon", "warning");
 			request.setAttribute("url", "/cart/list");
