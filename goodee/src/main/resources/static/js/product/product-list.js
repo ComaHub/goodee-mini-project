@@ -144,29 +144,6 @@ document.querySelectorAll(".removeLikeBtn").forEach((btn) => {
 	})
 });
 
-document.querySelectorAll(".comaPayBtn").forEach((btn) => {
-	btn.addEventListener("click", (event) => {
-		event.preventDefault();
-		
-		Swal.fire({
-		  text: "제품을 구매하시겠습니까?",
-		  icon: "question",
-		  showCancelButton: true,
-		  confirmButtonColor: "#3085d6",
-		  cancelButtonColor: "#d33",
-		  confirmButtonText: "구매",
-			cancelButtonText: "취소",
-			heightAuto: false
-		}).then((result) => {
-		  if (result.isConfirmed) {
-				const productNumber = event.target.parentElement.getAttribute("data-product-number");
-				
-				location.href = "/comapay/checkout?productNumber=" + productNumber;
-			}
-		});
-	})
-});
-
 if (document.querySelector("#checkAll") != null) {
 	const checkAll = document.querySelector("#checkAll");
 	const checkboxes = document.querySelectorAll(".checkedProduct");
@@ -200,5 +177,51 @@ if (document.querySelector("#checkAll") != null) {
 			
 			checkAll.checked = false;
 		})
+	})
+}
+
+document.querySelectorAll(".comaPayBtn").forEach((btn) => {
+	btn.addEventListener("click", (event) => {
+		event.preventDefault();
+		
+		Swal.fire({
+		  text: "제품을 구매하시겠습니까?",
+		  icon: "question",
+		  showCancelButton: true,
+		  confirmButtonColor: "#3085d6",
+		  cancelButtonColor: "#d33",
+		  confirmButtonText: "구매",
+			cancelButtonText: "취소",
+			heightAuto: false
+		}).then((result) => {
+		  if (result.isConfirmed) {
+				const productNumber = event.target.parentElement.getAttribute("data-product-number");
+				
+				location.href = "/comapay/checkout?productNumber=" + productNumber;
+			}
+		});
+	})
+});
+
+if (document.querySelector("#comaPayAllBtn") != null) {
+	document.querySelector("#comaPayAllBtn").addEventListener("click", () => {
+		Swal.fire({
+		  text: "선택한 제품을 구매하시겠습니까?",
+		  icon: "question",
+		  showCancelButton: true,
+		  confirmButtonColor: "#3085d6",
+		  cancelButtonColor: "#d33",
+		  confirmButtonText: "구매",
+			cancelButtonText: "취소",
+			heightAuto: false
+		}).then((result) => {
+		  if (result.isConfirmed) {
+				const form = document.querySelector("#cartForm");
+				
+				form.setAttribute("method", "POST");
+				form.setAttribute("action", "/comapay/checkout");
+				form.submit();
+			}
+		});
 	})
 }
