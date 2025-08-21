@@ -143,3 +143,62 @@ document.querySelectorAll(".removeLikeBtn").forEach((btn) => {
 		});
 	})
 });
+
+document.querySelectorAll(".comaPayBtn").forEach((btn) => {
+	btn.addEventListener("click", (event) => {
+		event.preventDefault();
+		
+		Swal.fire({
+		  text: "제품을 구매하시겠습니까?",
+		  icon: "question",
+		  showCancelButton: true,
+		  confirmButtonColor: "#3085d6",
+		  cancelButtonColor: "#d33",
+		  confirmButtonText: "구매",
+			cancelButtonText: "취소",
+			heightAuto: false
+		}).then((result) => {
+		  if (result.isConfirmed) {
+				const productNumber = event.target.parentElement.getAttribute("data-product-number");
+				
+				location.href = "/comapay/checkout?productNumber=" + productNumber;
+			}
+		});
+	})
+});
+
+if (document.querySelector("#checkAll") != null) {
+	const checkAll = document.querySelector("#checkAll");
+	const checkboxes = document.querySelectorAll(".checkedProduct");
+	
+	checkAll.addEventListener("change", () => {
+		if (checkAll.checked) {
+			checkboxes.forEach((checkbox) => {
+				checkbox.checked = true;
+			})
+			
+			return;
+		}
+		
+		checkboxes.forEach((checkbox) => {
+			checkbox.checked = false;
+		})
+	})
+	
+	checkboxes.forEach((checkbox) => {
+		checkbox.addEventListener("change", () => {
+			let count = 0;
+			
+			checkboxes.forEach((check) => {
+				if (check.checked) count++;
+			})
+			
+			if (checkboxes.length == count) {
+				checkAll.checked = true;
+				return;
+			}
+			
+			checkAll.checked = false;
+		})
+	})
+}
