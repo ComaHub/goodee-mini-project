@@ -20,37 +20,37 @@
 		<div class="my-5 text-center">
 			<h2 class="fw-bolder">회원 정보</h2>
 		</div>
-		<section class="col-10 m-auto">
+		<section class="col-8 m-auto">
 			<div class="mb-3">
 				<img alt="" src="/files/account/${fileDTO.saved}" height="300">
 			</div>
 			<div class="mb-3">
 				<label for="exampleFormControlInput1" class="form-label">ID</label>
-				<p>${ accountDTO.id }</p>
+				<p class="form-control">${ accountDTO.id }</p>
 			</div>
 			<div class="mb-3">
 				<label for="exampleFormControlInput1" class="form-label">이름</label>
-				<p>${ accountDTO.name }</p>
+				<p class="form-control">${ accountDTO.name }</p>
 			</div>
 			<div class="mb-3">
 				<label for="exampleFormControlInput1" class="form-label">이메일</label>
-				<p>${ accountDTO.email }</p>
+				<p class="form-control">${ accountDTO.email }</p>
 			</div>
 			<div class="mb-3">
 				<label for="exampleFormControlInput1" class="form-label">전화 번호</label>
-				<p>${ accountDTO.phone }</p>
+				<p class="form-control">${ accountDTO.phone }</p>
 			</div>
 			<div class="mb-3">
 				<label for="exampleFormControlInput1" class="form-label">우편 번호</label>
-				<p>${ accountDTO.postcode }</p>
+				<p class="form-control">${ accountDTO.postcode }</p>
 			</div>
 			<div class="mb-3">
 				<label for="exampleFormControlInput1" class="form-label">주소</label>
-				<p>${ accountDTO.address }</p>
+				<p class="form-control">${ accountDTO.address }</p>
 			</div>
 			<div class="mb-3">
 				<label for="exampleFormControlInput1" class="form-label">상세 주소</label>
-				<p>${ accountDTO.addressDetail }</p>
+				<p class="form-control">${ accountDTO.addressDetail }</p>
 			</div>
 			<div class="mb-3 d-flex justify-content-between">
 				<button id="dropOut" class="btn btn-danger">회원 탈퇴</button>
@@ -58,12 +58,23 @@
 			</div>
 		</section>
 		
-		<div id="modal">
-			<form:form modelAttribute="accountDTO" action="./dropOut" method="post">
-				<p>비밀 번호를 입력해주세요</p>
-				<form:input path="password"/>
-				<form:button class="btn btn-danger">회원 탈퇴</form:button>
-			</form:form>
+		<div id="modal" class="modal bg-black bg-opacity-25" tabindex="1">
+			<div class="modal-dialog" tabindex="2">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">Modal title</h5>
+						<button type="button" id="btn-close" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body">
+						<form:form modelAttribute="accountDTO" action="./dropOut" method="post">
+							<p>비밀 번호를 입력해주세요</p>
+							<form:input path="password" cssClass="form-control mb-3"/>
+							<form:errors path="password"/>
+							<form:button class="btn btn-danger">회원 탈퇴</form:button>
+						</form:form>
+					</div>
+				</div>
+			</div>
 		</div>
 	
 	

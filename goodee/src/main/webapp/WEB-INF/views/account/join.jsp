@@ -17,8 +17,10 @@
 		<c:import url="/WEB-INF/views/includes/nav.jsp"></c:import>
 	
 		<!-- Contents here! -->
-		<h2>Join</h2>
-		<section class="mb-3 col-10 m-auto">
+		<div class="my-5 text-center">
+			<h2 class="fw-bolder">회원 가입</h2>
+		</div>
+		<section class="mb-3 col-8 m-auto">
 			<form:form modelAttribute="accountDTO" method="post" enctype="multipart/form-data">
 				<div class="mb-3">
 					<label for="exampleFormControlInput1" class="form-label">ID</label>

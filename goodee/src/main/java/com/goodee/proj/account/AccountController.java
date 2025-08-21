@@ -71,7 +71,7 @@ public class AccountController {
 		
 		session.setAttribute("logined", result);
 
-		return "redirect:/account/detail";
+		return "redirect:/";
 	}
 	
 	@GetMapping("/detail")
