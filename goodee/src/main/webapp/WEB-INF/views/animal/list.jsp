@@ -23,9 +23,11 @@
 	          <p class="lead fw-normal text-muted mb-5">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eaque fugit ratione dicta mollitia. Officiis ad.</p>
           </div>
           
-          <div class="text-center mb-5">
-          	<a href="add" class="btn btn-primary">보호 동물 등록</a>
-          </div>
+          <c:if test="${ sessionScope.logined.admin }">
+	          <div class="text-center mb-5">
+	          	<a href="add" class="btn btn-primary">보호 동물 등록</a>
+	          </div>
+          </c:if>
         </div>
 	    </div>
 	    <div class="row gx-5">

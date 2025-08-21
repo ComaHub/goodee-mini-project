@@ -40,37 +40,51 @@
 	    </div>
 		</div>
 		
-		<section class="col-6 offset-3">
-			<table class="table text-center">
-				<thead>
-					<tr>
-						<th class="col-2">이미지</th>
-						<th class="col-3">상품명</th>
-						<th class="col-2">가격</th>
-						<th class="col-2">카테고리</th>
-						<th class="col-3">메뉴</th>
-					</tr>
-				</thead>
-				<tbody>
-					<c:forEach var="product" items="${ productList }">
+		<section class="col-8 offset-2">
+			<form id="cartForm">
+				<table class="table text-center">
+					<thead>
 						<tr>
-							<td valign="middle"><img width="100" height="100" class="border border-1 border-dark" style="object-fit: cover;" src="/files/product/${ product.productImageDTO.saved }" /></td>
-							<td valign="middle"><a href="./detail?productNumber=${ product.productNumber }">${ product.name }</a></td>
-							<td valign="middle">${ product.price } 원</td>
-							<td valign="middle">${ product.category }</td>
-							<td valign="middle">
-								<div class="d-flex gap-4 justify-content-center">
-									<c:if test="${ not isLikeList }"><a class="addLikeBtn" data-product-number="${ product.productNumber }" ><span class="material-symbols-outlined">favorite</span></a></c:if>
-									<c:if test="${ isLikeList }"><a class="removeLikeBtn" data-product-number="${ product.productNumber }" ><span class="material-symbols-outlined">heart_minus</span></a></c:if>
-									<c:if test="${ not isCartList }"><a class="addCartBtn" data-product-number="${ product.productNumber }" ><span class="material-symbols-outlined">add_shopping_cart</span></a></c:if>
-									<c:if test="${ isCartList }"><a class="removeCartBtn" data-product-number="${ product.productNumber }" ><span class="material-symbols-outlined">shopping_cart_off</span></a></c:if>
-									<a><span class="material-symbols-outlined">credit_card</span></a>
-								</div>
-							</td>
+							<c:if test="${ isCartList }"><th class="col-1"><input type="checkbox" class="form-check-input mt-0" id="checkAll" /></th></c:if>
+							<th class="col-2">이미지</th>
+							<th class="col-3">상품명</th>
+							<th class="col-2">가격</th>
+							<th class="col-1">카테고리</th>
+							<th class="col-3">메뉴</th>
 						</tr>
-					</c:forEach>
-				</tbody>
-			</table>
+					</thead>
+					<tbody>
+						
+						<c:forEach var="product" items="${ productList }">
+							<tr>
+								<c:if test="${ isCartList }"><td valign="middle"><input type="checkbox" class="form-check-input mt-0 checkedProduct" name="checkedProduct" value="${ product.productNumber }" /></td></c:if>
+								<td valign="middle"><img width="100" height="100" class="border border-1 border-dark" style="object-fit: cover;" src="/files/product/${ product.productImageDTO.saved }" /></td>
+								<td valign="middle"><a href="./detail?productNumber=${ product.productNumber }">${ product.name }</a></td>
+								<td valign="middle">${ product.price } 원</td>
+								<td valign="middle">${ product.category }</td>
+								<td valign="middle">
+									<div class="d-flex gap-4 justify-content-center">
+										<c:if test="${ not isLikeList }"><a class="addLikeBtn" data-product-number="${ product.productNumber }" ><span class="material-symbols-outlined">favorite</span></a></c:if>
+										<c:if test="${ isLikeList }"><a class="removeLikeBtn" data-product-number="${ product.productNumber }" ><span class="material-symbols-outlined">heart_minus</span></a></c:if>
+										<c:if test="${ not isCartList }"><a class="addCartBtn" data-product-number="${ product.productNumber }" ><span class="material-symbols-outlined">add_shopping_cart</span></a></c:if>
+										<c:if test="${ isCartList }"><a class="removeCartBtn" data-product-number="${ product.productNumber }" ><span class="material-symbols-outlined">shopping_cart_off</span></a></c:if>
+										<a class="comaPayBtn" data-product-number="${ product.productNumber }" ><span class="material-symbols-outlined">credit_card</span></a>
+										<a class="SJPayBtn" data-product-number="${ product.productNumber }" ><span class="material-symbols-outlined">local_atm</span></a>
+									</div>
+								</td>
+							</tr>
+						</c:forEach>
+						
+					</tbody>
+				</table>
+				
+				<c:if test="${ isCartList }">
+					<div class="d-flex gap-3 justify-content-end align-items-center">
+						<button type="button" class="btn btn-primary" id="comaPayAllBtn">ComaPay 결제</button>
+						<button type="button" class="btn btn-success" id="SJPayAllBtn">SJPay 결제</button>
+					</div>
+				</c:if>
+			</form>
 			<c:if test="${ logined.admin and not isCartList and not isLikeList }">
 				<div class="mb-3 d-flex justify-content-end">
 					<a class="btn btn-primary" href="/product/add">추가</a>
