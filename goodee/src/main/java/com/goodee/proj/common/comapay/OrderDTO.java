@@ -1,4 +1,4 @@
-package com.goodee.proj.cart;
+package com.goodee.proj.common.comapay;
 
 import java.util.List;
 
@@ -9,9 +9,11 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class CartDTO {
+public class OrderDTO {
+	private Long orderNumber;
 	private Long accountNumber;
 	private Long productNumber;
+	private Long paymentNumber;
 	
 	private List<Long> productNumbers;
 }

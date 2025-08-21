@@ -22,10 +22,16 @@ async function confirm() {
 
   if (!response.ok) {
     window.location.href = `/comapay/fail?message=${json.message}&code=${json.code}`;
+		return;
   }
 
-  // 결제 성공 비즈니스 로직을 구현하세요.
-  console.log(json);
+  fetch("result", {
+		method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(requestData),
+	});
 }
 
 confirm();

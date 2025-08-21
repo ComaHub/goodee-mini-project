@@ -14,6 +14,7 @@ fetch("valid?valid=" + totalPrice, {
 
 async function main() {
 	const payBtn = document.querySelector("#payBtn");
+	const orderId = crypto.randomUUID().substring(0, 8) + "-" + userData.customerId;
 	
 	const clientKey = "test_gck_docs_Ovk5rk1EwkEbP0W43n07xlzm";
 	const tossPayments = TossPayments(clientKey);
@@ -36,13 +37,13 @@ async function main() {
 	
 	payBtn.addEventListener("click", async function() {
 		await widgets.requestPayment({
-			orderId : "testOrder6",
-			orderName : "테스트",
+			orderId : orderId,
+			orderName : userData.orderName,
 			successUrl : window.location.origin + "/comapay/success",
 			failUrl : window.location.origin + "/comapay/fail",
-			customerEmail: "test@example.com",
-      customerName: "테스터",
-      customerMobilePhone: "01012341234"
+			customerEmail: userData.customerEmail,
+      customerName: userData.customerName,
+      customerMobilePhone: userData.customerMobilePhone
 		})
 	})
 }

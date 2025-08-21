@@ -66,6 +66,15 @@
 	
 	</main>
 	<c:import url="/WEB-INF/views/includes/footer.jsp"></c:import>
+	<script>
+		const userData = {
+			customerId : "${ sessionScope.logined.id }",
+			orderName : "${ productList.get(0).getName() } 등 ${ productList.size() }개",
+			customerEmail : "${ sessionScope.logined.email }",
+			customerName : "${ sessionScope.logined.name }",
+			customerMobilePhone : "${ sessionScope.logined.phone.replaceAll("-", "") }"
+		}
+	</script>
 	<script src="/js/payment/comapay-checkout.js"></script>
 </body>
 

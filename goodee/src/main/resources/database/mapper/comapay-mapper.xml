@@ -30,4 +30,17 @@
     </foreach>
 		</where>
 	</select>
+	
+	<insert id="insertPayment" parameterType="PaymentDTO" useGeneratedKeys="true" keyProperty="paymentNumber">
+		INSERT INTO payment
+		VALUES (NULL, #{paymentType}, #{paymentId}, #{orderId})
+	</insert>
+	
+	<insert id="insertOrder" parameterType="OrderDTO">
+		INSERT INTO orders
+		VALUES
+		<foreach collection="productNumbers" item="productNum" separator=",">
+			(NULL, #{accountNumber}, #{productNum}, #{paymentNumber})
+		</foreach>
+	</insert>
 </mapper>

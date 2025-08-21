@@ -5,6 +5,7 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.List;
@@ -21,7 +22,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.goodee.proj.account.AccountDTO;
+import com.goodee.proj.cart.CartService;
 import com.goodee.proj.product.ProductDTO;
+import com.goodee.proj.product.ProductService;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -30,6 +34,10 @@ import jakarta.servlet.http.HttpSession;
 public class ComapayController {
 	@Autowired
 	private ComapayService comapayService;
+	@Autowired
+	private CartService cartService;
+	@Autowired
+	private ProductService productService;
 
 	@GetMapping("checkout")
 	public void getComapayCheckout(Long productNumber, HttpSession session) throws Exception {
@@ -99,5 +107,34 @@ public class ComapayController {
 		JSONObject result = (JSONObject) parser.parse(response.body());
 		
 		return ResponseEntity.status(code).body(result);
+	}
+	
+	@SuppressWarnings("unchecked")
+	@PostMapping("result")
+	public void postComapayResult(@RequestBody HashMap<String, Object> map, HttpSession session) throws Exception {
+		AccountDTO accountDTO = (AccountDTO) session.getAttribute("logined");
+		List<ProductDTO> productList = (List<ProductDTO>) session.getAttribute("productList");
+		
+		List<Long> productNumbers = new ArrayList<>();
+		for (ProductDTO productDTO : productList) {
+			productNumbers.add(productDTO.getProductNumber());
+		}
+		
+		PaymentDTO paymentDTO = new PaymentDTO();
+		paymentDTO.setPaymentType("TOSS");
+		paymentDTO.setPaymentId((String) map.get("paymentKey"));
+		paymentDTO.setOrderId((String) map.get("orderId"));
+		
+		OrderDTO orderDTO = new OrderDTO();
+		orderDTO.setAccountNumber(accountDTO.getAccountNumber());
+		orderDTO.setProductNumbers(productNumbers);
+		
+		comapayService.addOrderResult(paymentDTO, orderDTO);
+		
+		cartService.removeCartList(accountDTO.getAccountNumber(), productNumbers);
+		
+		productService.updateProductAmount(productNumbers);
+		
+		session.removeAttribute("productList");
 	}
 }
