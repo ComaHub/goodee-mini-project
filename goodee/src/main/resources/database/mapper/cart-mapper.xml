@@ -70,4 +70,14 @@
 			account_number = #{accountNumber} AND product_number = #{productNumber}
 		</where>
 	</delete>
+	
+	<delete id="deleteCartList">
+		DELETE FROM cart
+		<where>
+			account_number = #{accountNumber} AND product_number IN 
+			<foreach collection="productNumbers" item="productNum" open="(" close=")" separator=",">
+				#{productNum}
+			</foreach>
+		</where>
+	</delete>
 </mapper>

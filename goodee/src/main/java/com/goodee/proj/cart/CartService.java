@@ -45,4 +45,12 @@ public class CartService {
 		
 		return cartDAO.deleteCart(cartDTO);
 	}
+
+	public int removeCartList(Long accountNumber, List<Long> productNumbers) throws Exception {
+		CartDTO cartDTO = new CartDTO();
+		cartDTO.setAccountNumber(accountNumber);
+		cartDTO.setProductNumbers(productNumbers);
+		
+		return cartDAO.deleteCartList(cartDTO);
+	}
 }
