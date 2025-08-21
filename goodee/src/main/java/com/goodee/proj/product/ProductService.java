@@ -63,6 +63,10 @@ public class ProductService {
 		
 		return result;
 	}
+	
+	public int updateProductAmount(List<Long> productNumbers) throws Exception {
+		return productDAO.updateProductAmount(productNumbers);
+	}
 
 	public int deleteProduct(Long productNumber) throws Exception {
 		ProductImageDTO productImageDTO = productDAO.selectProductImage(productNumber);
@@ -79,5 +83,8 @@ public class ProductService {
 		
 		return result;
 	}
+
+
+	
 
 }

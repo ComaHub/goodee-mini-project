@@ -94,6 +94,18 @@
 		</where>
 	</update>
 	
+	<update id="updateProductAmount" parameterType="java.util.List">
+		UPDATE product
+		SET
+				amount = amount - 1
+		<where>
+			product_number IN
+			<foreach collection="productNumbers" item="productNum" open="(" close=")" separator=",">
+				#{productNum}
+			</foreach>
+		</where>
+	</update>
+	
 	<delete id="deleteProduct" parameterType="Long">
 		DELETE FROM product
 		<where>

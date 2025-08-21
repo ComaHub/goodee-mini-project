@@ -14,5 +14,6 @@ public interface CartDAO {
 	Long totalCount(Map<String, Object> map);
 	int insertCart(CartDTO cartDTO) throws Exception;
 	int deleteCart(CartDTO cartDTO) throws Exception;
+	int deleteCartList(CartDTO cartDTO) throws Exception;
 
 }

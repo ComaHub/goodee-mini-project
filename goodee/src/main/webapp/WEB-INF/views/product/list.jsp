@@ -59,7 +59,7 @@
 							<tr>
 								<c:if test="${ isCartList }"><td valign="middle"><input type="checkbox" class="form-check-input mt-0 checkedProduct" name="checkedProduct" value="${ product.productNumber }" /></td></c:if>
 								<td valign="middle"><img width="100" height="100" class="border border-1 border-dark" style="object-fit: cover;" src="/files/product/${ product.productImageDTO.saved }" /></td>
-								<td valign="middle"><a href="./detail?productNumber=${ product.productNumber }">${ product.name }</a></td>
+								<td valign="middle"><a href="/product/detail?productNumber=${ product.productNumber }">${ product.name }</a></td>
 								<td valign="middle">${ product.price } 원</td>
 								<td valign="middle">${ product.category }</td>
 								<td valign="middle">

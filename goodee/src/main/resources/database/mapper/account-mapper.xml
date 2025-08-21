@@ -49,7 +49,7 @@
 	</update>
 	
 	<select id="login">
-		SELECT account_number, id, name, admin
+		SELECT account_number, id, name, email, phone, admin
 		FROM account
 		WHERE active = 1 AND id = #{id} AND password = #{password}
 	</select>

@@ -19,6 +19,7 @@ public interface ProductDAO {
 	int insertProductImage(ProductImageDTO productImageDTO) throws Exception;
 	int updateProduct(ProductDTO productDTO) throws Exception;
 	int updateProductImage(ProductImageDTO productImageDTO) throws Exception;
+	int updateProductAmount(List<Long> productNumbers) throws Exception;
 	int deleteProduct(Long productNumber) throws Exception;
 	int deleteProductImage(Long attachNumber) throws Exception;
 }
