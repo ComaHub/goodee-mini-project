@@ -41,6 +41,17 @@ public class NaverPayController {
 		return result;
 	}
 	
+	@PostMapping("/purchaseCart")
+	@ResponseBody
+	public Map<String, Object> purchaseCart(@RequestBody Map<String, Object> params, 
+			HttpSession session) throws Exception {
+		AccountDTO accountDTO = (AccountDTO) session.getAttribute("logined");
+		Map<String, Object> result = naverPayService.purchaseCart(params, accountDTO);
+		
+		return result;
+	}
+	
+	
 	@GetMapping("/approve")
 	public String approve(String resultCode, String paymentId) {
 		
