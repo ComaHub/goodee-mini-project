@@ -29,6 +29,9 @@ public class KakaoPayService {
 
     private final ComapayController comapayController;
 
+    @Value("${custom.ip}")
+    private String serverId;
+    
 	@Value("${kpay.client.id}")
 	private String clientId;
 	@Value("${kpay.client.secret}")
@@ -74,9 +77,9 @@ public class KakaoPayService {
 		data.put("quantity", quantity);
 		data.put("total_amount", total_amount);
 		data.put("tax_free_amount", 0);
-		data.put("approval_url", "http://localhost/kakaoPay/approve");
-		data.put("fail_url", "http://localhost/kakaoPay/fail");
-		data.put("cancel_url", "http://localhost/kakaoPay/cancel");
+		data.put("approval_url", "http://" + serverId + "/kakaoPay/approve");
+		data.put("fail_url", "http://" + serverId + "/kakaoPay/fail");
+		data.put("cancel_url", "http://" + serverId + "/kakaoPay/cancel");
 		
 		HttpEntity<Map> request = new HttpEntity<>(data, headers);
 		
