@@ -24,6 +24,7 @@
 		<result property="paymentType" column="payment_type" />
 		<result property="paymentId" column="payment_id" />
 		<result property="orderId" column="order_id" />
+		<result property="paymentStatus" column="payment_status" />
 		
 		<collection property="productDTOs" javaType="java.util.List" resultMap="productResultMap" />
 	</resultMap>
@@ -49,6 +50,18 @@
 		INNER JOIN attach A ON A.type = 3 AND P.product_number = A.key_data
 		<where>
 			O.account_number = #{accountNumber}
+		</where>
+	</select>
+	
+	<select id="selectOrderByPaymentId" parameterType="String" resultMap="paymentResultMap">
+		SELECT
+				*
+		FROM payment PAY
+		INNER JOIN orders O USING (payment_number)
+		INNER JOIN product P ON O.product_number = P.product_number
+		INNER JOIN attach A ON A.type = 3 AND P.product_number = A.key_data
+		<where>
+			PAY.payment_id = #{paymentId}
 		</where>
 	</select>
 	

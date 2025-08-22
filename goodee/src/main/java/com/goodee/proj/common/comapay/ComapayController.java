@@ -143,7 +143,7 @@ public class ComapayController {
 		if (paymentDTO.getPaymentId().equals(map.get("paymentKey"))) {
 			paymentDTO.setPaymentStatus("COMPLETED");
 		} else {
-			// 일치하지 않는 경우 결제 취소로 이어지는 로직 구현
+			// TODO 일치하지 않는 경우 결제 취소로 이어지는 로직 구현
 		}
 		
 		OrderDTO orderDTO = new OrderDTO();
@@ -161,8 +161,59 @@ public class ComapayController {
 	}
 	
 	@GetMapping("cancel")
-	public void getComapayCancel(String paymentId, Model model) throws Exception {
+	public void getComapayCancel(String paymentId, HttpSession session) throws Exception {
+		PaymentDTO paymentDTO = comapayService.getOrder(paymentId);
+		session.setAttribute("cancelOrder", paymentDTO);
+	}
+	
+	@SuppressWarnings("unchecked")
+	@PostMapping("cancel")
+	public String postComapayCancel(String cancelReason, HttpSession session, Model model) throws Exception {
+		PaymentDTO paymentDTO = (PaymentDTO) session.getAttribute("cancelOrder");
+		String uri = "https://api.tosspayments.com/v1/payments/" + paymentDTO.getPaymentId() + "/cancel";
 		
+		if (cancelReason == null || cancelReason.equals("")) {
+			cancelReason = "없음";
+		}
 		
+		JSONObject jsonObj = new JSONObject();
+		jsonObj.put("cancelReason", cancelReason);
+		
+		String tossSecretKey = secretKey;
+		Base64.Encoder encoder = Base64.getEncoder();
+		byte[] encodedBytes = encoder.encode((tossSecretKey + ":").getBytes(StandardCharsets.UTF_8));
+		String authorizations = "Basic " + new String(encodedBytes);
+		
+		HttpClient client = HttpClient.newHttpClient();
+		HttpRequest request = HttpRequest.newBuilder()
+																		 .uri(URI.create(uri))
+																		 .header("Authorization", authorizations)
+																		 .header("Content-Type", "application/json")
+																		 .POST(HttpRequest.BodyPublishers.ofString(jsonObj.toString(), StandardCharsets.UTF_8))
+																		 .build();
+		
+		HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+		int code = response.statusCode();
+		System.out.println(code);
+		
+		if (code != 200) {
+			model.addAttribute("resultMsg", "결제 취소 중 오류가 발생했습니다.");
+			model.addAttribute("resultIcon", "warning");
+			model.addAttribute("url", "/comapay/cancel?paymentId=" + paymentDTO.getPaymentId());
+			return "common/result";
+		}
+		
+		return "redirect:canceled";
+	}
+	
+	@GetMapping("canceled")
+	public void getComapayCancelResult(HttpSession session, Model model) throws Exception {
+		PaymentDTO paymentDTO = (PaymentDTO) session.getAttribute("cancelOrder");
+		
+		paymentDTO.setPaymentStatus("CANCELED");
+		comapayService.updateCancelResult(paymentDTO);
+		
+		model.addAttribute("cancelOrder", paymentDTO);
+		session.removeAttribute("cancelOrder");
 	}
 }
