@@ -197,7 +197,6 @@ public class ComapayController {
 		
 		HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 		int code = response.statusCode();
-		System.out.println(code);
 		
 		if (code != 200) {
 			model.addAttribute("resultMsg", "결제 취소 중 오류가 발생했습니다.");
