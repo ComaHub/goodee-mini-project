@@ -44,6 +44,18 @@ CREATE TABLE `attach` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 
+-- goodee_mini.payment definition
+
+CREATE TABLE `payment` (
+  `payment_number` bigint NOT NULL AUTO_INCREMENT,
+  `payment_type` varchar(10) NOT NULL,
+  `payment_id` varchar(255) NOT NULL,
+  `order_id` varchar(255) NOT NULL,
+  `payment_status` varchar(50) NOT NULL,
+  PRIMARY KEY (`payment_number`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
 -- goodee_mini.product definition
 
 CREATE TABLE `product` (
@@ -90,4 +102,26 @@ CREATE TABLE `likes` (
   CONSTRAINT `likes_ibfk_1` FOREIGN KEY (`account_number`) REFERENCES `account` (`account_number`),
   CONSTRAINT `likes_ibfk_2` FOREIGN KEY (`product_number`) REFERENCES `product` (`product_number`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+-- goodee_mini.orders definition
+
+CREATE TABLE `orders` (
+  `order_number` bigint NOT NULL AUTO_INCREMENT,
+  `account_number` bigint NOT NULL,
+  `product_number` bigint NOT NULL,
+  `payment_number` bigint NOT NULL,
+  PRIMARY KEY (`order_number`),
+  KEY `account_number` (`account_number`),
+  KEY `product_number` (`product_number`),
+  KEY `payment_number` (`payment_number`),
+  CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`account_number`) REFERENCES `account` (`account_number`),
+  CONSTRAINT `orders_ibfk_2` FOREIGN KEY (`product_number`) REFERENCES `product` (`product_number`),
+  CONSTRAINT `orders_ibfk_3` FOREIGN KEY (`payment_number`) REFERENCES `payment` (`payment_number`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+
+
+
 
