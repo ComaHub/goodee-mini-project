@@ -3,7 +3,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <div>
 	<form:form modelAttribute="paging" method="get">
-		<div class="mb-3 d-flex justify-content-center">
+		<div class="col-6 offset-3 gap-2 my-5 d-flex justify-content-center">
 			<form:input path="keyword" class="form-control w-50"/>
 			<form:button class="btn btn-primary">검색</form:button>
 		</div>

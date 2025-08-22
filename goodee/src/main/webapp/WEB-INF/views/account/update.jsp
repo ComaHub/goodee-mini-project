@@ -24,7 +24,7 @@
 			
 			<div class="my-5">
 				<form:form modelAttribute="accountDTO" method="POST" enctype="multipart/form-data">					
-					<div class="col-6 offset-3 mb-3">
+					<div class="col-8 offset-2 mb-3">
 						<img id="preview" width="150" height="150" style="object-fit: cover;" class="border border-1 border-dark p-1 rounded me-3" src="/files/account/${fileDTO.saved}"/>
 						<label for="attach">
 							<div class="btn btn-outline-primary">프로필 사진 수정</div>

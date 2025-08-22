@@ -69,7 +69,6 @@
 										<c:if test="${ not isCartList }"><a class="addCartBtn" data-product-number="${ product.productNumber }" ><span class="material-symbols-outlined">add_shopping_cart</span></a></c:if>
 										<c:if test="${ isCartList }"><a class="removeCartBtn" data-product-number="${ product.productNumber }" ><span class="material-symbols-outlined">shopping_cart_off</span></a></c:if>
 										<a class="comaPayBtn" data-product-number="${ product.productNumber }" ><span class="material-symbols-outlined">credit_card</span></a>
-										<a class="SJPayBtn" data-product-number="${ product.productNumber }" ><span class="material-symbols-outlined">local_atm</span></a>
 									</div>
 								</td>
 							</tr>
@@ -80,14 +79,13 @@
 				
 				<c:if test="${ isCartList }">
 					<div class="d-flex gap-3 justify-content-end align-items-center">
-						<button type="button" class="btn btn-primary" id="comaPayAllBtn">ComaPay 결제</button>
-						<button type="button" class="btn btn-success" id="SJPayAllBtn">SJPay 결제</button>
+						<button type="button" class="btn btn-primary" id="comaPayAllBtn">선택 상품 결제</button>
 					</div>
 				</c:if>
 			</form>
 			<c:if test="${ logined.admin and not isCartList and not isLikeList }">
 				<div class="mb-3 d-flex justify-content-end">
-					<a class="btn btn-primary" href="/product/add">추가</a>
+					<a class="btn btn-primary" href="/product/add">상품 추가</a>
 				</div>
 			</c:if>
 			<!-- 페이징 -->

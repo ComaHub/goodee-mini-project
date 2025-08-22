@@ -26,7 +26,7 @@
 				<form:form modelAttribute="animalDTO" method="POST" enctype="multipart/form-data">
 					<form:hidden path="animalNumber"/>
 					
-					<div class="col-6 offset-3 mb-3">
+					<div class="col-8 offset-2 mb-3">
 						<img id="preview" width="150" height="150" style="object-fit: cover;" class="border border-1 border-dark p-1 rounded me-3" <c:if test="${ not empty animalDTO.animalProfileDTO }">src="/files/animal/${ animalDTO.animalProfileDTO.saved }"</c:if> />
 						<label for="animalAttach">
 							<c:if test="${ empty animalDTO.animalProfileDTO }"><div class="btn btn-outline-primary">프로필 사진 등록</div></c:if>
