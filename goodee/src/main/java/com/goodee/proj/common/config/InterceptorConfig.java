@@ -27,9 +27,9 @@ public class InterceptorConfig implements WebMvcConfigurer {
 		
 		// 로그인 체크
 		registry.addInterceptor(new LoginCheckerInterceptor())
-			.addPathPatterns("/account/detail", "/account/update", "/account/delete")
+			.addPathPatterns("/account/detail", "/account/update", "/account/delete", "/account/cart")
 			.addPathPatterns("/product/like", "/cart/**", "/product/buy", "/comapay/**", "/like/**");
-		
+    
 		// 구매 요청 시 체크된 제품이 없는 경우
 		registry.addInterceptor(noProductToPayInterceptor)
 						.addPathPatterns("/comapay/checkout");
