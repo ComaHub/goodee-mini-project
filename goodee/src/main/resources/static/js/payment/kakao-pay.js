@@ -15,7 +15,7 @@ SJPayBtnArr.forEach(function(payBtn) {
 			"productNumberArr": productNumberArr
 		}
 		
-		fetch("/kakaoPay/purchaseCart", {
+		fetch("/kakaoPay/purchase", {
 			method: 'post',
 			headers : {"Content-Type" : "application/json"},
 			body: JSON.stringify(data)
@@ -44,7 +44,7 @@ SJPayAllBtn.addEventListener('click', function() {
 		"productNumberArr": productNumberArr
 	}
 
-	fetch("/naverPay/purchaseCart", {
+	fetch("/kakaoPay/purchase", {
 		method: 'post',
 		headers : {"Content-Type" : "application/json"},
 		body: JSON.stringify(data)
