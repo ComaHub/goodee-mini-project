@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -35,21 +36,30 @@ public class KakaoPayController {
 	}
 	
 	@GetMapping("/approve")
-	public void approve(@RequestParam("pg_token") String pgToken, HttpSession session) throws Exception {
+	public void approve(@RequestParam("pg_token") String pgToken, HttpSession session, 
+			Model model) throws Exception {
 		Map<String, Object> res = kakaoPayService.approve(pgToken, session);
+		
+		model.addAttribute("res", res);
 	}
 	
 	@GetMapping("/list")
-	public void order() {
+	public void order() throws Exception {
 	}
 
 	
 	@PostMapping("/list")
 	@ResponseBody
-	public List<Map<String, Object>> order(HttpSession session) throws Exception {
+	public List<Map<String, Object>> order(HttpSession session, Model model) throws Exception {
 		AccountDTO accountDTO = (AccountDTO) session.getAttribute("logined");
 		List<Map<String, Object>> list = kakaoPayService.list(accountDTO);
 		
 		return list;
+	}
+	
+	@PostMapping("/cancel")
+	public void cancel(HttpSession session) {
+		AccountDTO accountDTO = (AccountDTO) session.getAttribute("logined");
+		kakaoPayService.cancel(accountDTO);
 	}
 }

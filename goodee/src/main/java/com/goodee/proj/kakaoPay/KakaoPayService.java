@@ -58,7 +58,7 @@ public class KakaoPayService {
 		
 		Map<String, Object> data = new HashMap<>();
 		
-		String orderId = UUID.randomUUID().toString();
+		String orderId = UUID.randomUUID().toString().substring(0, 9) + accountDTO.getId();
 		
 		data.put("cid", clientId);
 		data.put("partner_order_id", orderId);
@@ -163,6 +163,8 @@ public class KakaoPayService {
 		
 		for (PaymentDTO p : paymentList) {
 			Map<String, String> data = new HashMap<>();
+			data.put("cid", clientId);
+			data.put("tid", p.getPaymentId());
 			
 			HttpEntity<Map> request = new HttpEntity<Map>(data, headers);
 			
@@ -175,5 +177,10 @@ public class KakaoPayService {
 		}
 		
 		return resList;
+	}
+
+
+	public void cancel(AccountDTO accountDTO) {
+		
 	}
 }
