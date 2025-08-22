@@ -14,7 +14,7 @@ fetch("valid?valid=" + totalPrice, {
 
 async function main() {
 	const payBtn = document.querySelector("#payBtn");
-	const orderId = crypto.randomUUID().substring(0, 8) + "-" + userData.customerId;
+	const orderId = userData.orderIdFirst + "-" + userData.customerId;
 	const customerKey = "8crlm7AwWJgTgs1S-gPMT";
 	
 	const tossPayments = TossPayments(clientKey);

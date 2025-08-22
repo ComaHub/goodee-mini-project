@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -52,6 +53,7 @@ public class ComapayController {
 		session.setAttribute("productList", productList);
 		
 		model.addAttribute("clientKey", clientKey);
+		model.addAttribute("orderId", UUID.randomUUID().toString().substring(0, 8));
 	}
 	
 	@PostMapping("checkout")
@@ -60,6 +62,7 @@ public class ComapayController {
 		session.setAttribute("productList", productList);
 		
 		model.addAttribute("clientKey", clientKey);
+		model.addAttribute("orderId", UUID.randomUUID().toString().substring(0, 8));
 	}
 	
 	@GetMapping("valid")

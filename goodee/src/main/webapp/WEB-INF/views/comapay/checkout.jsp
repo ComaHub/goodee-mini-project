@@ -67,6 +67,7 @@
 		const userData = {
 			customerId : "${ sessionScope.logined.id }",
 			orderName : "${ productList.get(0).getName() } 등 ${ productList.size() }개",
+			orderIdFirst : "${ requestScope.orderId }",
 			customerEmail : "${ sessionScope.logined.email }",
 			customerName : "${ sessionScope.logined.name }",
 			customerMobilePhone : "${ sessionScope.logined.phone.replaceAll("-", "") }"
