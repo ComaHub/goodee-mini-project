@@ -6,7 +6,7 @@
 
 <head>
 	<meta charset="UTF-8">
-	<title>결제</title>
+	<title>구매 취소</title>
 	
 	<c:import url="/WEB-INF/views/includes/header.jsp"></c:import>
 	<script src="https://js.tosspayments.com/v2/standard"></script>
@@ -19,12 +19,12 @@
 		<!-- Contents here! -->
 		<section class="col-4 offset-4 mb-5">
 			<div class="text-center mt-5">
-	      <h2 class="fw-bolder">결제 요청</h2>
+	      <h2 class="fw-bolder">구매 취소</h2>
 	      <p class="lead fw-normal text-muted mb-5">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eaque fugit ratione dicta mollitia. Officiis ad.</p>
       </div>
       
       <div class="text-center mt-5">
-	      <h4 class="fw-bolder">구매 품목</h4>
+	      <h4 class="fw-bolder">취소 품목</h4>
       </div>
       
       <div class="mt-4">
@@ -39,7 +39,7 @@
 					</thead>
 					<tbody>
 						
-						<c:forEach var="product" items="${ productList }">
+						<c:forEach var="product" items="${ cancelOrder.productDTOs }">
 							<tr>
 								<td valign="middle"><img width="100" height="100" class="border border-1 border-dark" style="object-fit: cover;" src="/files/product/${ product.productImageDTO.saved }" /></td>
 								<td valign="middle"><a href="/product/detail?productNumber=${ product.productNumber }">${ product.name }</a></td>
@@ -56,25 +56,18 @@
       	<h5 class="fw-bolder">총 결제 금액: <span id="totalPrice"></span>원</h5>
       </div>
       
-      <div class="d-grid col-6 offset-3 mt-5">
-	      <button class="btn btn-primary" id="payBtn">결제하기</button>
-      </div>
+      <form method="POST">
+      	<div class="d-grid col-6 offset-3 mt-5 text-center">
+      		<label for="cancelReason" class="form-label">구매 취소 사유를 입력해주세요</label>
+      		<input type="text" class="form-control" id="cancelReason" name="cancelReason" />
+		      <button type="submit" class="btn btn-primary mt-5" id="cancelBtn">구매취소</button>
+      	</div>
+      </form>
 		</section>
 	
 	</main>
 	<c:import url="/WEB-INF/views/includes/footer.jsp"></c:import>
-	<script>
-		const userData = {
-			customerId : "${ sessionScope.logined.id }",
-			orderName : "${ productList.get(0).getName() } 등 ${ productList.size() }개",
-			customerEmail : "${ sessionScope.logined.email }",
-			customerName : "${ sessionScope.logined.name }",
-			customerMobilePhone : "${ sessionScope.logined.phone.replaceAll("-", "") }"
-		}
-		
-		const clientKey = "${ requestScope.clientKey }"
-	</script>
-	<script src="/js/payment/comapay-checkout.js"></script>
+	<script src="/js/payment/comapay-cancel.js"></script>
 </body>
 
 </html>
