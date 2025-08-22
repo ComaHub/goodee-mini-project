@@ -119,6 +119,5 @@ public class ProductController {
 		model.addAttribute("resultIcon", resultIcon);
 		return "common/result";
 	}
-	
-	
+
 }

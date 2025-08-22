@@ -17,6 +17,8 @@ import com.goodee.proj.account.groups.Join;
 import com.goodee.proj.account.groups.Login;
 import com.goodee.proj.account.groups.Update;
 import com.goodee.proj.common.Paging;
+import com.goodee.proj.common.comapay.ComapayService;
+import com.goodee.proj.common.comapay.PaymentDTO;
 import com.goodee.proj.common.file.FileDTO;
 import com.goodee.proj.common.file.FileService;
 
@@ -28,6 +30,8 @@ public class AccountController {
 
 	@Autowired
 	private AccountService accountService;
+	@Autowired
+	private ComapayService comapayService;
 	@Autowired
 	private FileService fileService;
 	
@@ -148,5 +152,13 @@ public class AccountController {
 		int result = accountService.updateAdmin(accountDTO);
 	}
 	
-	
+	@GetMapping("order")
+	public void getAccountOrder(HttpSession session, Model model) throws Exception {
+		AccountDTO accountDTO = (AccountDTO) session.getAttribute("logined");
+		
+		List<PaymentDTO> orderList = comapayService.getOrderList(accountDTO.getAccountNumber());
+		model.addAttribute("orderList", orderList);
+		
+		System.out.println(orderList.get(0).getProductDTOs().get(0).getProductImageDTO().getSaved());
+	}
 }

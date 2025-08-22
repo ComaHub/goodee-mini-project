@@ -16,6 +16,7 @@
             <a class="nav-link dropdown-toggle" id="navbarDropdownBlog" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">My Page</a>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownBlog">
               <li><a class="dropdown-item" href="/account/detail">My Info</a></li>
+              <li><a class="dropdown-item" href="/account/order">My Order</a></li>
               <li><a class="dropdown-item" href="/cart/list">My Cart</a></li>
               <li><a class="dropdown-item" href="/like/list">Liked Product</a></li>
               <c:if test="${ logined.admin eq true }">
