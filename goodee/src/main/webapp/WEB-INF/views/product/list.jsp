@@ -98,6 +98,9 @@
 	
 	</main>
 	<c:import url="/WEB-INF/views/includes/footer.jsp"></c:import>
+	<script>
+		const username = "${ sessionScope.logined.name }";
+	</script>
 	<script src="/js/product/product-list.js"></script>
 	<script src="/js/payment/kakao-pay.js"></script>
 </body>

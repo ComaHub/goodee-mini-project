@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <!DOCTYPE html>
 <html>
 
@@ -18,8 +19,8 @@
         <div class="row gx-5 align-items-center justify-content-center">
           <div class="col-6">
             <div class="my-5">
-              <h1 class="display-5 fw-bolder text-white mb-2">Introduction to an Animal Shelter for Stray Animals</h1>
-              <p class="lead fw-normal text-white-50 mb-4">Welcome to our animal shelter, a safe haven for stray and abandoned animals. We provide food, medical care, and loving attention while working to find them forever homes. Join us in giving these animals a second chance at life.</p>
+              <h1 class="display-5 fw-bolder text-white mb-2"><spring:message code="index.header.title" /></h1>
+              <p class="lead fw-normal text-white-50 mb-4"><spring:message code="index.header.content" /></p>
               <div class="gap-3 d-flex justify-content-start">
               	<c:if test="${ empty logined }">
 	                <a class="btn btn-primary btn-lg px-4 me-sm-3" href="/account/join">Register</a>
