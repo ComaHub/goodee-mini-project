@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
 import com.goodee.proj.account.AccountDTO;
+import com.goodee.proj.common.comapay.ComapayDAO;
 import com.goodee.proj.common.comapay.OrderDTO;
 import com.goodee.proj.common.comapay.PaymentDTO;
 import com.goodee.proj.product.ProductDAO;
@@ -34,7 +35,7 @@ public class KakaoPayService {
 	@Autowired
 	ProductDAO productDAO;
 	@Autowired
-	KakaoPayDAO kakaoPayDAO;
+	ComapayDAO comapayDAO;
 	
 	public Map<String, Object> purchase(Map<String, Object> params, HttpSession session) throws Exception {
 		AccountDTO accountDTO = (AccountDTO) session.getAttribute("logined");
@@ -120,14 +121,14 @@ public class KakaoPayService {
 			return res;
 		}
 		
-		int result = kakaoPayDAO.insertPayment(paymentDTO);
+		int result = comapayDAO.insertPayment(paymentDTO);
 		if (result != 1) throw new Exception();
 		
 		OrderDTO orderDTO = new OrderDTO();
 		
 		orderDTO.setProductNumbers(productNumberList);
 		orderDTO.setPaymentNumber(paymentDTO.getPaymentNumber());
-		result = kakaoPayDAO.insertOrder(orderDTO);
+		result = comapayDAO.insertOrder(orderDTO);
 		if (result != 1) throw new Exception();
 		
 		return res;
