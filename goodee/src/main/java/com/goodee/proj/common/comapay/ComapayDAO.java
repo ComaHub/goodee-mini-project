@@ -10,6 +10,7 @@ import com.goodee.proj.product.ProductDTO;
 public interface ComapayDAO {
 
 	List<ProductDTO> selectCheckedProductList(List<Long> productNumbers) throws Exception;
+	List<PaymentDTO> selectOrderList(Long accountNumber) throws Exception;
 	int insertPayment(PaymentDTO paymentDTO) throws Exception;
 	int insertOrder(OrderDTO orderDTO) throws Exception;
 

@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.goodee.proj.common.Paging;
+import com.goodee.proj.common.comapay.PaymentDTO;
 import com.goodee.proj.common.file.FileDTO;
 import com.goodee.proj.common.file.FileService;
 
@@ -104,4 +105,5 @@ public class AccountService {
 	public Long totalCount(Paging paging) {
 		return accountDAO.totalCount(paging);
 	}
+
 }

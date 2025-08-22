@@ -1,5 +1,9 @@
 package com.goodee.proj.common.comapay;
 
+import java.util.List;
+
+import com.goodee.proj.product.ProductDTO;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -12,4 +16,6 @@ public class PaymentDTO {
 	private String paymentType;
 	private String paymentId;
 	private String orderId;
+	
+	private List<ProductDTO> productDTOs;
 }

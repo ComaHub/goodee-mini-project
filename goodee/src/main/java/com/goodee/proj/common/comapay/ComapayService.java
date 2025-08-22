@@ -27,4 +27,8 @@ public class ComapayService {
 		
 		return result;
 	}
+
+	public List<PaymentDTO> getOrderList(Long accountNumber) throws Exception {
+		return comapayDAO.selectOrderList(accountNumber);
+	}
 }
