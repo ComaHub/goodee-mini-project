@@ -1,4 +1,4 @@
-package com.goodee.proj.KakaoPay;
+package com.goodee.proj.kakaoPay;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -16,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
 import com.goodee.proj.account.AccountDTO;
-import com.goodee.proj.common.comapay.ComapayDAO;
+import com.goodee.proj.common.comapay.ComapayController;
 import com.goodee.proj.common.comapay.OrderDTO;
 import com.goodee.proj.common.comapay.PaymentDTO;
 import com.goodee.proj.product.ProductDAO;
@@ -27,6 +27,8 @@ import jakarta.servlet.http.HttpSession;
 @Service
 public class KakaoPayService {
 
+    private final ComapayController comapayController;
+
 	@Value("${kpay.client.id}")
 	private String clientId;
 	@Value("${kpay.client.secret}")
@@ -35,7 +37,12 @@ public class KakaoPayService {
 	@Autowired
 	ProductDAO productDAO;
 	@Autowired
-	ComapayDAO comapayDAO;
+	KakaoPayDAO kakaoPayDAO;
+
+
+    KakaoPayService(ComapayController comapayController) {
+        this.comapayController = comapayController;
+    }
 
 	
 	public Map<String, Object> purchase(Map<String, Object> params, HttpSession session) throws Exception {
@@ -129,7 +136,7 @@ public class KakaoPayService {
 			return res;
 		}
 		paymentDTO.setPaymentStatus("COMPLETED");
-		int result = comapayDAO.insertPayment(paymentDTO);
+		int result = kakaoPayDAO.insertPayment(paymentDTO);
 		if (result != 1) throw new Exception();
 		
 		OrderDTO orderDTO = new OrderDTO();
@@ -137,9 +144,36 @@ public class KakaoPayService {
 		orderDTO.setAccountNumber(accountDTO.getAccountNumber());
 		orderDTO.setProductNumbers(productNumberList);
 		orderDTO.setPaymentNumber(paymentDTO.getPaymentNumber());
-		result = comapayDAO.insertOrder(orderDTO);
+		result = kakaoPayDAO.insertOrder(orderDTO);
 		if (result <= 0) throw new Exception();
 		
+		System.out.println(res);
+		
 		return res;
+	}
+
+	public List<Map<String, Object>> list(AccountDTO accountDTO) throws Exception {
+		List<PaymentDTO> paymentList = kakaoPayDAO.paymentList(accountDTO);
+		
+		HttpHeaders headers = new HttpHeaders();
+		headers.set("Authorization", "SECRET_KEY " + clientSecret);
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		
+		List<Map<String, Object>> resList = new ArrayList<>();
+		
+		for (PaymentDTO p : paymentList) {
+			Map<String, String> data = new HashMap<>();
+			
+			HttpEntity<Map> request = new HttpEntity<Map>(data, headers);
+			
+			RestTemplate template = new RestTemplate();
+			String url = "https://open-api.kakaopay.com/online/v1/payment/order";
+			
+			Map<String, Object> res = template.postForObject(url, request, Map.class);
+			
+			resList.add(res);
+		}
+		
+		return resList;
 	}
 }
