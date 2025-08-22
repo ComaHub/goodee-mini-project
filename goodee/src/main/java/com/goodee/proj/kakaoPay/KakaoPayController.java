@@ -40,6 +40,11 @@ public class KakaoPayController {
 	}
 	
 	@GetMapping("/list")
+	public void order() {
+	}
+
+	
+	@PostMapping("/list")
 	@ResponseBody
 	public List<Map<String, Object>> order(HttpSession session) throws Exception {
 		AccountDTO accountDTO = (AccountDTO) session.getAttribute("logined");

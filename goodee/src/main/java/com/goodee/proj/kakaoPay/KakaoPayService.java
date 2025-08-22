@@ -147,6 +147,8 @@ public class KakaoPayService {
 		result = kakaoPayDAO.insertOrder(orderDTO);
 		if (result <= 0) throw new Exception();
 		
+		System.out.println(res);
+		
 		return res;
 	}
 
