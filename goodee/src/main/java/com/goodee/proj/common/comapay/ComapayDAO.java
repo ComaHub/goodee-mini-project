@@ -13,5 +13,6 @@ public interface ComapayDAO {
 	List<PaymentDTO> selectOrderList(Long accountNumber) throws Exception;
 	int insertPayment(PaymentDTO paymentDTO) throws Exception;
 	int insertOrder(OrderDTO orderDTO) throws Exception;
+	int updatePayment(PaymentDTO paymentDTO) throws Exception;
 
 }

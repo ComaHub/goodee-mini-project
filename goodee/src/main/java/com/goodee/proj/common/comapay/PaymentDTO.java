@@ -16,6 +16,7 @@ public class PaymentDTO {
 	private String paymentType;
 	private String paymentId;
 	private String orderId;
+	private String paymentStatus;
 	
 	private List<ProductDTO> productDTOs;
 }

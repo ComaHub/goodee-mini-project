@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <!DOCTYPE html>
 <html>
 
@@ -55,10 +56,6 @@
       	<h5 class="fw-bolder">총 결제 금액: <span id="totalPrice"></span>원</h5>
       </div>
       
-      <div id="payment-method"></div>
-      
-      <div id="agreement"></div>
-      
       <div class="d-grid col-6 offset-3">
 	      <button class="btn btn-primary" id="payBtn">결제하기</button>
       </div>
@@ -74,6 +71,8 @@
 			customerName : "${ sessionScope.logined.name }",
 			customerMobilePhone : "${ sessionScope.logined.phone.replaceAll("-", "") }"
 		}
+		
+		const clientKey = "${ requestScope.clientKey }"
 	</script>
 	<script src="/js/payment/comapay-checkout.js"></script>
 </body>

@@ -158,7 +158,5 @@ public class AccountController {
 		
 		List<PaymentDTO> orderList = comapayService.getOrderList(accountDTO.getAccountNumber());
 		model.addAttribute("orderList", orderList);
-		
-		System.out.println(orderList.get(0).getProductDTOs().get(0).getProductImageDTO().getSaved());
 	}
 }
