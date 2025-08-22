@@ -31,6 +31,11 @@ if (document.querySelector("#addCartBtn") != null) {
 	document.querySelector("#addCartBtn").addEventListener("click", (event) => {
 		event.preventDefault();
 		
+		if (username == null || username == "") {
+			Swal.fire({ text: "로그인한 사용자만 이용 가능합니다.", icon: "warning" });
+			return;
+		}
+		
 		const productNumber = event.target.getAttribute("data-product-number");
 				
 		Swal.fire({
@@ -80,6 +85,11 @@ if (document.querySelector("#addCartBtn") != null) {
 if (document.querySelector("#addLikeBtn") != null) {
 	document.querySelector("#addLikeBtn").addEventListener("click", (event) => {
 		event.preventDefault();
+		
+		if (username == null || username == "") {
+			Swal.fire({ text: "로그인한 사용자만 이용 가능합니다.", icon: "warning" });
+			return;
+		}
 		
 		const productNumber = event.target.getAttribute("data-product-number");
 				
