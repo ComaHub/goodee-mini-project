@@ -119,4 +119,11 @@
 			attach_number = #{attachNumber}
 		</where>
 	</delete>
+	
+	<select id="selectListByArr" parameterType="long[]" resultType="ProductDTO">
+		SELECT *
+		FROM product
+		WHERE product_number IN 
+		<foreach collection="productNumberArr" item="n" open="(" close=")" separator=",">#{n}</foreach>
+	</select>
 </mapper>

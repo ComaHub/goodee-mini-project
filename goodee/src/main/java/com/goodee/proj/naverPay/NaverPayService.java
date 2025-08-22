@@ -1,6 +1,7 @@
 	package com.goodee.proj.naverPay;
 	
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -50,6 +51,43 @@ import com.goodee.proj.product.ProductDTO;
 			open.put("productName", productDTO.getName());
 			long productCount = Long.parseLong((String) open.get("productCount"));
 			long totalPayAmount = productDTO.getPrice() * productCount;
+			open.put("totalPayAmount", totalPayAmount);
+			open.put("taxScopeAmount", totalPayAmount);
+//			open.put("returnUrl", "http://localhost/naverPay/approve");
+			open.put("returnUrl", "https://developers.pay.naver.com/user/sand-box/payment");
+			
+			Map<String, Object> result = new HashMap<>();
+			result.put("create", create);
+			result.put("open", open);
+			
+			return result;
+		}
+		
+		public Map<String, Object> purchaseCart(Map<String, Object> params, AccountDTO accountDTO) throws Exception {
+			
+			List<String> strList = (List) params.get("productNumberArr");
+			long[] productNumberArr = strList.stream().mapToLong(Long::parseLong).toArray();
+			
+			List<ProductDTO> list = productDAO.selectListByArr(productNumberArr);
+			
+			Map<String, Object> create = (Map) params.get("create");
+			Map<String, Object> open = (Map) params.get("open");
+			
+			create.put("clientId", clientId);
+			create.put("chainId", chainId);
+			
+			open.put("merchantPayKey", accountDTO.getAccountNumber() + "-" + list.get(0).getProductNumber());
+			open.put("productName", list.get(0).getName());
+			
+			long productCount = Long.parseLong((String) open.get("productCount"));
+			
+			long totalPayAmount = 0;
+			
+			for (ProductDTO p : list) {
+				totalPayAmount += p.getPrice();
+				System.out.println(totalPayAmount);
+			}
+				
 			open.put("totalPayAmount", totalPayAmount);
 			open.put("taxScopeAmount", totalPayAmount);
 //			open.put("returnUrl", "http://localhost/naverPay/approve");

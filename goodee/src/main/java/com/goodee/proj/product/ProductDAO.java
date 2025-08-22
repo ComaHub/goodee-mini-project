@@ -22,4 +22,5 @@ public interface ProductDAO {
 	int updateProductAmount(List<Long> productNumbers) throws Exception;
 	int deleteProduct(Long productNumber) throws Exception;
 	int deleteProductImage(Long attachNumber) throws Exception;
+	List<ProductDTO> selectListByArr(long[] productNumberArr) throws Exception;
 }
