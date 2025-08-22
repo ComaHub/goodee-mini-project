@@ -143,7 +143,7 @@ public class ComapayController {
 		if (paymentDTO.getPaymentId().equals(map.get("paymentKey"))) {
 			paymentDTO.setPaymentStatus("COMPLETED");
 		} else {
-			// 일치하지 않는 경우 결제 취소로 이어지는 로직 구현
+			// TODO 일치하지 않는 경우 결제 취소로 이어지는 로직 구현
 		}
 		
 		OrderDTO orderDTO = new OrderDTO();
