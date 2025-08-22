@@ -1,5 +1,6 @@
-package com.goodee.proj.KakaoPay;
+package com.goodee.proj.kakaoPay;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.goodee.proj.account.AccountDTO;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -36,4 +39,12 @@ public class KakaoPayController {
 		Map<String, Object> res = kakaoPayService.approve(pgToken, session);
 	}
 	
+	@GetMapping("/list")
+	@ResponseBody
+	public List<Map<String, Object>> order(HttpSession session) throws Exception {
+		AccountDTO accountDTO = (AccountDTO) session.getAttribute("logined");
+		List<Map<String, Object>> list = kakaoPayService.list(accountDTO);
+		
+		return list;
+	}
 }

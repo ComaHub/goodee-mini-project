@@ -6,7 +6,7 @@
 
 <head>
 	<meta charset="UTF-8">
-	<title>N페이</title>
+	<title>K페이</title>
 	
 	<link href="/css/account/detail.css" rel="stylesheet">
 	<c:import url="/WEB-INF/views/includes/header.jsp"></c:import>
