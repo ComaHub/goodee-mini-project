@@ -74,7 +74,6 @@
 					<a class="btn btn-outline-primary" href="./update">정보 수정</a>
      		</div>
      	</div>
-     	
 		</section>
 		
 		<div class="modal fade" id="dropModal" tabindex="-1" aria-labelledby="dropModalLabel" aria-hidden="true">

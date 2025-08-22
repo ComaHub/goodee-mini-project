@@ -6,7 +6,7 @@
 
 <head>
 	<meta charset="UTF-8">
-	<title></title>
+	<title>로그인</title>
 	
 	<c:import url="/WEB-INF/views/includes/header.jsp"></c:import>
 </head>
@@ -19,7 +19,7 @@
 		<div class="my-5 text-center">
 			<h2 class="fw-bolder">로그인</h2>
 		</div>
-		<section class="h-25 col-10 m-auto">
+		<section class="h-25 col-8 m-auto">
 			<div class="h-100 d-flex flex-column justify-content-center">
 				<form:form modelAttribute="accountDTO" method="post">
 					<div class="mb-3 d-flex justify-content-center">
