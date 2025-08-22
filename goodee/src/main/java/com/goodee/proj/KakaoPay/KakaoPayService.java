@@ -16,7 +16,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
 import com.goodee.proj.account.AccountDTO;
-import com.goodee.proj.common.comapay.ComapayDAO;
 import com.goodee.proj.common.comapay.OrderDTO;
 import com.goodee.proj.common.comapay.PaymentDTO;
 import com.goodee.proj.product.ProductDAO;
@@ -35,7 +34,7 @@ public class KakaoPayService {
 	@Autowired
 	ProductDAO productDAO;
 	@Autowired
-	ComapayDAO comapayDAO;
+	KakaoPayDAO kakaoPayDAO;
 	
 	public Map<String, Object> purchase(Map<String, Object> params, HttpSession session) throws Exception {
 		AccountDTO accountDTO = (AccountDTO) session.getAttribute("logined");
@@ -66,8 +65,6 @@ public class KakaoPayService {
 		data.put("fail_url", "http://localhost/kakaoPay/fail");
 		data.put("cancel_url", "http://localhost/kakaoPay/cancel");
 		
-		System.out.println(data);
-		
 		HttpEntity<Map> request = new HttpEntity<>(data, headers);
 		
 		RestTemplate template = new RestTemplate();
@@ -95,10 +92,10 @@ public class KakaoPayService {
 	@Transactional(rollbackFor = Exception.class)
 	public Map<String, Object> approve(String pgToken, HttpSession session) throws Exception {
 		PaymentDTO paymentDTO = (PaymentDTO) session.getAttribute("paymentDTO");
-		OrderDTO orderDTO = (OrderDTO) session.getAttribute("orderDTO");
+		List<Long> productNumberList = (List) session.getAttribute("productNumberList");
 		
 		session.removeAttribute("paymentDTO");
-		session.removeAttribute("orderDTO");
+		session.removeAttribute("productNumberList");
 		
 		HttpHeaders headers = new HttpHeaders();
 		headers.set("Authorization", "SECRET_KEY " + clientSecret);
@@ -123,53 +120,75 @@ public class KakaoPayService {
 			return res;
 		}
 		
-		int result = comapayDAO.insertPayment(paymentDTO);
+		int result = kakaoPayDAO.insertPayment(paymentDTO);
 		if (result != 1) throw new Exception();
 		
-		List<Long> list = new ArrayList<>();
-		list.add(orderDTO.getProductNumber());
-		orderDTO.setProductNumbers(list);
+		OrderDTO orderDTO = new OrderDTO();
+		
+		orderDTO.setProductNumbers(productNumberList);
 		orderDTO.setPaymentNumber(paymentDTO.getPaymentNumber());
-		result = comapayDAO.insertOrder(orderDTO);
+		result = kakaoPayDAO.insertOrder(orderDTO);
 		if (result != 1) throw new Exception();
 		
 		return res;
 	}
 	
-//	public Map<String, Object> purchaseCart(Map<String, Object> params, AccountDTO accountDTO) throws Exception {
-//		
-//		List<String> strList = (List) params.get("productNumberArr");
-//		long[] productNumberArr = strList.stream().mapToLong(Long::parseLong).toArray();
-//		
-//		List<ProductDTO> list = productDAO.selectListByArr(productNumberArr);
-//		
-//		Map<String, Object> create = (Map) params.get("create");
-//		Map<String, Object> open = (Map) params.get("open");
-//		
-//		create.put("clientId", clientId);
-//		create.put("chainId", chainId);
-//		
-//		open.put("merchantPayKey", accountDTO.getAccountNumber() + "-" + list.get(0).getProductNumber());
-//		open.put("productName", list.get(0).getName());
-//		
-//		long productCount = Long.parseLong((String) open.get("productCount"));
-//		
-//		long totalPayAmount = 0;
-//		
-//		for (ProductDTO p : list) {
-//			totalPayAmount += p.getPrice();
-//			System.out.println(totalPayAmount);
-//		}
-//			
-//		open.put("totalPayAmount", totalPayAmount);
-//		open.put("taxScopeAmount", totalPayAmount);
-////		open.put("returnUrl", "http://localhost/naverPay/approve");
-//		open.put("returnUrl", "https://developers.pay.naver.com/user/sand-box/payment");
-//		
-//		Map<String, Object> result = new HashMap<>();
-//		result.put("create", create);
-//		result.put("open", open);
-//		
-//		return result;
-//	}
+	public Map<String, Object> purchaseCart(Map<String, Object> params, HttpSession session) throws Exception {
+		AccountDTO accountDTO = (AccountDTO) session.getAttribute("logined");
+		HttpHeaders headers = new HttpHeaders();
+		headers.set("Authorization", "SECRET_KEY " + clientSecret);
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		
+		List<String> strList = (List) params.get("productNumberArr");
+		long[] productNumberArr = strList.stream().mapToLong(Long::parseLong).toArray();
+		
+		List<ProductDTO> list = productDAO.selectListByArr(productNumberArr);
+		
+		Map<String, Object> data = new HashMap<>();
+		
+		String orderId = UUID.randomUUID().toString();
+		
+		data.put("cid", clientId);
+		data.put("partner_order_id", orderId);
+		data.put("partner_user_id", "test");
+		data.put("item_name", list.get(0).getName());
+		long quantity = list.size();
+		
+		long total_amount = 0;
+		for (ProductDTO p : list) {
+			total_amount += p.getPrice();
+		}
+		
+		data.put("quantity", quantity);
+		data.put("total_amount", total_amount);
+		data.put("tax_free_amount", 0);
+		data.put("approval_url", "http://localhost/kakaoPay/approve");
+		data.put("fail_url", "http://localhost/kakaoPay/fail");
+		data.put("cancel_url", "http://localhost/kakaoPay/cancel");
+		
+		HttpEntity<Map> request = new HttpEntity<>(data, headers);
+		
+		RestTemplate template = new RestTemplate();
+		String url = "https://open-api.kakaopay.com/online/v1/payment/ready";
+		
+		Map<String, Object> res = template.postForObject(url, request, Map.class);
+		
+		String tid = (String) res.get("tid");
+		PaymentDTO paymentDTO = new PaymentDTO();
+		paymentDTO.setPaymentType("Kakao");
+		paymentDTO.setPaymentId(tid);
+		paymentDTO.setOrderId(orderId);
+		
+		session.setAttribute("paymentDTO", paymentDTO);
+		
+		
+		List<Long> productNumberList = new ArrayList<>();
+		for (ProductDTO p : list) {
+			productNumberList.add(p.getProductNumber());
+		}
+		
+		session.setAttribute("productNumberList", productNumberList);
+		
+		return res;
+	}
 }

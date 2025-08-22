@@ -6,14 +6,16 @@ const SJPayBtnArr = document.querySelectorAll('.SJPayBtn');
 
 SJPayBtnArr.forEach(function(payBtn) {
 	payBtn.addEventListener('click', function() {
+		const productNumberArr = [];
 		
 		const productNumber = payBtn.dataset.productNumber;
+		productNumberArr.push(productNumber);
 		
 		const data = {
-			"productNumber": productNumber,
+			"productNumberArr": productNumberArr
 		}
 		
-		fetch("/kakaoPay/purchase", {
+		fetch("/kakaoPay/purchaseCart", {
 			method: 'post',
 			headers : {"Content-Type" : "application/json"},
 			body: JSON.stringify(data)
@@ -39,22 +41,7 @@ SJPayAllBtn.addEventListener('click', function() {
 	});
 
 	const data = {
-		"productNumberArr": productNumberArr,
-		"create": {
-			"mode": "development",
-			"clientId": "",
-			"chainId": "",
-			"openType": "popup"
-		},
-		"open": {
-			"merchantPayKey": "${ logined.accountNumber }-${ productDTO.productNumber }",
-			"productName": "${ productDTO.name }",
-			"productCount": "1",
-			"totalPayAmount": "${ productDTO.price }",
-			"taxScopeAmount": "${ productDTO.price }",
-			"taxExScopeAmount": "0",
-			"returnUrl": "",
-		}
+		"productNumberArr": productNumberArr
 	}
 
 	fetch("/naverPay/purchaseCart", {
@@ -65,8 +52,7 @@ SJPayAllBtn.addEventListener('click', function() {
 	.then(r => r.json())
 	.then(r => {
 		console.log(r);
-		const oPay = Naver.Pay.create(r.create);
-		oPay.open(r.open);
+		location.href=r.next_redirect_pc_url;
 	});
 	
 });
