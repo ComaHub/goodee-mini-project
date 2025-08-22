@@ -1,6 +1,8 @@
 package com.goodee.proj.KakaoPay;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -10,10 +12,12 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
 import com.goodee.proj.account.AccountDTO;
 import com.goodee.proj.common.comapay.ComapayDAO;
+import com.goodee.proj.common.comapay.OrderDTO;
 import com.goodee.proj.common.comapay.PaymentDTO;
 import com.goodee.proj.product.ProductDAO;
 import com.goodee.proj.product.ProductDTO;
@@ -77,15 +81,24 @@ public class KakaoPayService {
 		paymentDTO.setPaymentId(tid);
 		paymentDTO.setOrderId(orderId);
 		
-		comapayDAO.insertPayment(paymentDTO);
+		OrderDTO orderDTO = new OrderDTO();
+		orderDTO.setAccountNumber(accountDTO.getAccountNumber());
+		orderDTO.setProductNumber(productNumber);
+		orderDTO.setPaymentNumber(paymentDTO.getPaymentNumber());
 		
-		session.setAttribute("orderId", orderId);
+		session.setAttribute("paymentDTO", paymentDTO);
+		session.setAttribute("orderDTO", orderDTO);
 		
 		return res;
 	}
 
-	public Map<String, Object> approve(String pgToken, String orderId) {
-		PaymentDTO paymentDTO = comapayDAO.get
+	@Transactional(rollbackFor = Exception.class)
+	public Map<String, Object> approve(String pgToken, HttpSession session) throws Exception {
+		PaymentDTO paymentDTO = (PaymentDTO) session.getAttribute("paymentDTO");
+		OrderDTO orderDTO = (OrderDTO) session.getAttribute("orderDTO");
+		
+		session.removeAttribute("paymentDTO");
+		session.removeAttribute("orderDTO");
 		
 		HttpHeaders headers = new HttpHeaders();
 		headers.set("Authorization", "SECRET_KEY " + clientSecret);
@@ -93,8 +106,8 @@ public class KakaoPayService {
 		
 		Map<String, Object> params = new HashMap<>();
 		params.put("cid", clientId);
-		params.put("tid", purchase.get("tid"));
-		params.put("partner_order_id", purchase.get("partner_order_id"));
+		params.put("tid", paymentDTO.getPaymentId());
+		params.put("partner_order_id", paymentDTO.getOrderId());
 		params.put("partner_user_id", "test");
 		params.put("pg_token", pgToken);
 		
@@ -104,6 +117,21 @@ public class KakaoPayService {
 		String url = "https://open-api.kakaopay.com/online/v1/payment/approve";
 		
 		Map<String, Object> res = template.postForObject(url, request, Map.class);
+		
+		if (res.get("error_code") != null) {
+			System.out.println(res);
+			return res;
+		}
+		
+		int result = comapayDAO.insertPayment(paymentDTO);
+		if (result != 1) throw new Exception();
+		
+		List<Long> list = new ArrayList<>();
+		list.add(orderDTO.getProductNumber());
+		orderDTO.setProductNumbers(list);
+		orderDTO.setPaymentNumber(paymentDTO.getPaymentNumber());
+		result = comapayDAO.insertOrder(orderDTO);
+		if (result != 1) throw new Exception();
 		
 		return res;
 	}

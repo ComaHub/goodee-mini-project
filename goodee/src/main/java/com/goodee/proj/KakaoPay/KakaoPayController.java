@@ -31,9 +31,8 @@ public class KakaoPayController {
 	}
 	
 	@GetMapping("/approve")
-	public void approve(@RequestParam("pg_token") String pgToken, HttpSession session) {
-		String orderId = (String) session.getAttribute("orderId");
-		Map<String, Object> res = kakaoPayService.approve(pgToken, orderId);
+	public void approve(@RequestParam("pg_token") String pgToken, HttpSession session) throws Exception {
+		Map<String, Object> res = kakaoPayService.approve(pgToken, session);
 	}
 	
 //	@PostMapping("/purchaseCart")

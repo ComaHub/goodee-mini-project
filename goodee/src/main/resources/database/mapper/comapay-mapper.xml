@@ -64,4 +64,10 @@
 			(NULL, #{accountNumber}, #{productNum}, #{paymentNumber})
 		</foreach>
 	</insert>
+	
+	<select id="selectPayment" parameterType="PaymentDTO" resultType="PaymentDTO">
+		SELECT *
+		FROM payment
+		WHERE payment_number = #{paymentNumber}
+	</select>
 </mapper>
