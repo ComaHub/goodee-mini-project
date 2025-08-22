@@ -71,13 +71,22 @@ public class ComapayController {
 	}
 	
 	@GetMapping("success")
-	public String getComapaySuccess(String amount, String orderId, HttpSession session) throws Exception {
+	public String getComapaySuccess(String amount, String orderId, String paymentKey, HttpSession session) throws Exception {
 		String valid = (String) session.getAttribute("valid");
 		
 		if (!amount.equals(valid)) {
 			return "redirect:comapay/fail?code=410&message=결제%20금액이%20일치하지%20않습니다.&orderId=" + orderId;
 		}
 		
+		PaymentDTO paymentDTO = new PaymentDTO();
+		paymentDTO.setPaymentType("TOSS");
+		paymentDTO.setPaymentId(paymentKey);
+		paymentDTO.setOrderId(orderId);
+		paymentDTO.setPaymentStatus("READY");
+		
+		comapayService.addOrderReady(paymentDTO);
+		
+		session.setAttribute("paymentDTO", paymentDTO);
 		session.removeAttribute("valid");
 		return "comapay/success";
 	}
@@ -129,10 +138,13 @@ public class ComapayController {
 			productNumbers.add(productDTO.getProductNumber());
 		}
 		
-		PaymentDTO paymentDTO = new PaymentDTO();
-		paymentDTO.setPaymentType("TOSS");
-		paymentDTO.setPaymentId((String) map.get("paymentKey"));
-		paymentDTO.setOrderId((String) map.get("orderId"));
+		PaymentDTO paymentDTO = (PaymentDTO) session.getAttribute("paymentDTO");
+		
+		if (paymentDTO.getPaymentId().equals(map.get("paymentKey"))) {
+			paymentDTO.setPaymentStatus("COMPLETED");
+		} else {
+			// 일치하지 않는 경우 결제 취소로 이어지는 로직 구현
+		}
 		
 		OrderDTO orderDTO = new OrderDTO();
 		orderDTO.setAccountNumber(accountDTO.getAccountNumber());
@@ -145,5 +157,12 @@ public class ComapayController {
 		productService.updateProductAmount(productNumbers);
 		
 		session.removeAttribute("productList");
+		session.removeAttribute("paymentDTO");
+	}
+	
+	@GetMapping("cancel")
+	public void getComapayCancel(String paymentId, Model model) throws Exception {
+		
+		
 	}
 }

@@ -54,7 +54,7 @@
 	
 	<insert id="insertPayment" parameterType="PaymentDTO" useGeneratedKeys="true" keyProperty="paymentNumber">
 		INSERT INTO payment
-		VALUES (NULL, #{paymentType}, #{paymentId}, #{orderId})
+		VALUES (NULL, #{paymentType}, #{paymentId}, #{orderId}, #{paymentStatus})
 	</insert>
 	
 	<insert id="insertOrder" parameterType="OrderDTO">
@@ -64,4 +64,13 @@
 			(NULL, #{accountNumber}, #{productNum}, #{paymentNumber})
 		</foreach>
 	</insert>
+	
+	<update id="updatePayment" parameterType="PaymentDTO">
+		UPDATE payment
+		SET
+				payment_status = #{paymentStatus}
+		<where>
+			payment_number = #{paymentNumber}
+		</where>
+	</update>
 </mapper>
