@@ -82,10 +82,6 @@
 	     			<button type="button" id="updateBtn" data-animal-number="${ animalDTO.animalNumber }" class="btn btn-success">수정</button>
 	     			<button type="button" id="deleteBtn" data-animal-number="${ animalDTO.animalNumber }" class="btn btn-danger">삭제</button>
      			</c:if>
-     		
-     			<c:if test="${ not sessionScope.logined.admin }">
-	     			<button type="button" id="adoptBtn" class="btn btn-primary">입양 신청</button>
-     			</c:if>
      		</div>
      	</div>
      	

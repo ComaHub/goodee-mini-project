@@ -2,6 +2,11 @@ document.querySelectorAll(".addCartBtn").forEach((btn) => {
 	btn.addEventListener("click", (event) => {
 		event.preventDefault();
 		
+		if (username == null || username == "") {
+			Swal.fire({ text: "로그인한 사용자만 이용 가능합니다.", icon: "warning" });
+			return;
+		}
+		
 		const productNumber = event.target.parentElement.getAttribute("data-product-number");
 		
 		Swal.fire({
@@ -52,6 +57,11 @@ document.querySelectorAll(".removeCartBtn").forEach((btn) => {
 	btn.addEventListener("click", (event) => {
 		event.preventDefault();
 		
+		if (username == null || username == "") {
+			Swal.fire({ text: "로그인한 사용자만 이용 가능합니다.", icon: "warning" });
+			return;
+		}
+		
 		Swal.fire({
 		  text: "장바구니에서 제거하시겠습니까?",
 		  icon: "question",
@@ -74,6 +84,11 @@ document.querySelectorAll(".removeCartBtn").forEach((btn) => {
 document.querySelectorAll(".addLikeBtn").forEach((btn) => {
 	btn.addEventListener("click", (event) => {
 		event.preventDefault();
+		
+		if (username == null || username == "") {
+			Swal.fire({ text: "로그인한 사용자만 이용 가능합니다.", icon: "warning" });
+			return;
+		}
 		
 		const productNumber = event.target.parentElement.getAttribute("data-product-number");
 		
@@ -124,6 +139,11 @@ document.querySelectorAll(".addLikeBtn").forEach((btn) => {
 document.querySelectorAll(".removeLikeBtn").forEach((btn) => {
 	btn.addEventListener("click", (event) => {
 		event.preventDefault();
+		
+		if (username == null || username == "") {
+			Swal.fire({ text: "로그인한 사용자만 이용 가능합니다.", icon: "warning" });
+			return;
+		}
 		
 		Swal.fire({
 		  text: "찜 목록에서 제거하시겠습니까?",
@@ -184,6 +204,11 @@ document.querySelectorAll(".comaPayBtn").forEach((btn) => {
 	btn.addEventListener("click", (event) => {
 		event.preventDefault();
 		
+		if (username == null || username == "") {
+			Swal.fire({ text: "로그인한 사용자만 이용 가능합니다.", icon: "warning" });
+			return;
+		}
+		
 		Swal.fire({
 		  text: "제품을 구매하시겠습니까?",
 		  icon: "question",
@@ -205,6 +230,11 @@ document.querySelectorAll(".comaPayBtn").forEach((btn) => {
 
 if (document.querySelector("#comaPayAllBtn") != null) {
 	document.querySelector("#comaPayAllBtn").addEventListener("click", () => {
+		if (username == null || username == "") {
+			Swal.fire({ text: "로그인한 사용자만 이용 가능합니다.", icon: "warning" });
+			return;
+		}
+		
 		Swal.fire({
 		  text: "선택한 제품을 구매하시겠습니까?",
 		  icon: "question",
