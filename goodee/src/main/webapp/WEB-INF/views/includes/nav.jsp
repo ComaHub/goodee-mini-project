@@ -10,7 +10,6 @@
         <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
         <li class="nav-item"><a class="nav-link" href="/animal/list">Animal</a></li>
         <li class="nav-item"><a class="nav-link" href="/product/list">Product</a></li>
-        <li class="nav-item"><a class="nav-link" href="contact.html">Donation</a></li>
         <c:if test="${ not empty sessionScope.logined }">
         	<li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" id="navbarDropdownBlog" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">My Page</a>
