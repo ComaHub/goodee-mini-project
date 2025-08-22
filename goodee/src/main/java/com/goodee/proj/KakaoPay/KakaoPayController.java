@@ -19,6 +19,7 @@ public class KakaoPayController {
 
 	@Autowired
 	KakaoPayService kakaoPayService;
+
 	
 	@PostMapping("/purchase")
 	@ResponseBody
@@ -33,16 +34,6 @@ public class KakaoPayController {
 	@GetMapping("/approve")
 	public void approve(@RequestParam("pg_token") String pgToken, HttpSession session) throws Exception {
 		Map<String, Object> res = kakaoPayService.approve(pgToken, session);
-	}
-	
-	@PostMapping("/purchaseCart")
-	@ResponseBody
-	public Map<String, Object> purchaseCart(@RequestBody Map<String, Object> params, 
-			HttpSession session) throws Exception {
-		
-		Map<String, Object> result = kakaoPayService.purchaseCart(params, session);
-		
-		return result;
 	}
 	
 }
