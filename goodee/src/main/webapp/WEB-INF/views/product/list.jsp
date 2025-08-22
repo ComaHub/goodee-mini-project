@@ -99,8 +99,7 @@
 	</main>
 	<c:import url="/WEB-INF/views/includes/footer.jsp"></c:import>
 	<script src="/js/product/product-list.js"></script>
-	<script src="https://nsp.pay.naver.com/sdk/js/naverpay.min.js"></script>
-	<script src="/js/payment/naver-pay.js"></script>
+	<script src="/js/payment/kakao-pay.js"></script>
 </body>
 
 </html>
