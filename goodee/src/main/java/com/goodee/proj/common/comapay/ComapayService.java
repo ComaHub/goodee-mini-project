@@ -18,9 +18,13 @@ public class ComapayService {
 		
 		return comapayDAO.selectCheckedProductList(productNumbers);
 	}
+	
+	public int addOrderReady(PaymentDTO paymentDTO) throws Exception {
+		return comapayDAO.insertPayment(paymentDTO);
+	}
 
 	public int addOrderResult(PaymentDTO paymentDTO, OrderDTO orderDTO) throws Exception {
-		int result = comapayDAO.insertPayment(paymentDTO);
+		int result = comapayDAO.updatePayment(paymentDTO);
 		
 		orderDTO.setPaymentNumber(paymentDTO.getPaymentNumber());
 		result = comapayDAO.insertOrder(orderDTO);
@@ -31,4 +35,6 @@ public class ComapayService {
 	public List<PaymentDTO> getOrderList(Long accountNumber) throws Exception {
 		return comapayDAO.selectOrderList(accountNumber);
 	}
+
+	
 }
