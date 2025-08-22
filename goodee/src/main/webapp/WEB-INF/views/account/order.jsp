@@ -30,7 +30,17 @@
 			<div class="col-6 offset-3 my-5">
 				<div class="col-8 offset-2 mb-3 d-flex justify-content-between align-items-center">
 					<h5><span class="material-symbols-outlined align-bottom">box</span> 주문번호: ${ order.orderId }</h5>
-					<c:if test="${ order.paymentType eq 'TOSS' }"><button type="button" class="btn btn-outline-danger" id="cancelBtn" data-payment-id="${ order.paymentId }">구매취소</button></c:if>
+					<c:if test="${ order.paymentType eq 'TOSS' }">
+						<c:choose>
+							<c:when test="${ order.paymentStatus ne 'CANCELED' }">
+								<button type="button" class="btn btn-outline-danger cancelBtn" data-payment-id="${ order.paymentId }">구매취소</button>
+							</c:when>
+							
+							<c:otherwise>
+								<button type="button" class="btn btn-danger disabled">취소됨</button>
+							</c:otherwise>
+						</c:choose>
+					</c:if>
 				</div>
 				
 				<div class="col-8 offset-2 mb-3">

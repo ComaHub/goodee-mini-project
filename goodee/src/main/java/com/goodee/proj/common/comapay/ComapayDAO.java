@@ -15,5 +15,6 @@ public interface ComapayDAO {
 	int insertOrder(OrderDTO orderDTO) throws Exception;
 	PaymentDTO selectPayment(PaymentDTO paymentDTO) throws Exception;
 	int updatePayment(PaymentDTO paymentDTO) throws Exception;
+	PaymentDTO selectOrderByPaymentId(String paymentId) throws Exception;
 
 }
