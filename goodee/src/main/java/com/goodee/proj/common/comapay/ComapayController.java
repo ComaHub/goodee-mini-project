@@ -13,6 +13,7 @@ import java.util.List;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -38,19 +39,27 @@ public class ComapayController {
 	private CartService cartService;
 	@Autowired
 	private ProductService productService;
+	@Value("${toss.client.key}")
+	private String clientKey;
+	@Value("${toss.secret.key}")
+	private String secretKey;
 
 	@GetMapping("checkout")
-	public void getComapayCheckout(Long productNumber, HttpSession session) throws Exception {
+	public void getComapayCheckout(Long productNumber, HttpSession session, Model model) throws Exception {
 		Long[] checkedProduct = new Long[] {productNumber};
 		
 		List<ProductDTO> productList = comapayService.getCheckedProductList(checkedProduct);
 		session.setAttribute("productList", productList);
+		
+		model.addAttribute("clientKey", clientKey);
 	}
 	
 	@PostMapping("checkout")
-	public void postComapayCheckout(Long[] checkedProduct, HttpSession session) throws Exception {
+	public void postComapayCheckout(Long[] checkedProduct, HttpSession session, Model model) throws Exception {
 		List<ProductDTO> productList = comapayService.getCheckedProductList(checkedProduct);
 		session.setAttribute("productList", productList);
+		
+		model.addAttribute("clientKey", clientKey);
 	}
 	
 	@GetMapping("valid")
@@ -87,9 +96,9 @@ public class ComapayController {
 		jsonObj.put("amount", map.get("amount"));
 		jsonObj.put("paymentKey", map.get("paymentKey"));
 		
-		String widgetSecretKey = "test_gsk_docs_OaPz8L5KdmQXkzRz3y47BMw6";
+		String tossSecretKey = secretKey;
 		Base64.Encoder encoder = Base64.getEncoder();
-		byte[] encodedBytes = encoder.encode((widgetSecretKey + ":").getBytes(StandardCharsets.UTF_8));
+		byte[] encodedBytes = encoder.encode((tossSecretKey + ":").getBytes(StandardCharsets.UTF_8));
 		String authorizations = "Basic " + new String(encodedBytes);
 		
 		HttpClient client = HttpClient.newHttpClient();
